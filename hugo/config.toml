@@ -1,6 +1,5 @@
-baseURL = 'http://example.org/'
-languageCode = 'en-us'
-title = 'Developer Documentation'
+baseURL = "http://example.org/"
+languageCode = "en-us"
 
 DefaultContentLanguage = "en"
 
@@ -10,7 +9,7 @@ theme = "hugo-theme-learn"
 [outputs]
 home = [ "HTML", "RSS", "JSON"]
 
-title = "Hugo Learn Documentation"
+title = "TKey Developer Documentation"
 theme = "hugo-theme-learn"
 themesdir = "../.."
 metaDataFormat = "yaml"
@@ -18,7 +17,7 @@ defaultContentLanguageInSubdir= true
 
 [params]
   editURL = "https://github.com/tillitis/docs-experiment/edit/master/hugo/content/"
-  description = "Documentation for Hugo Learn Theme"
+  description = "Documentation for TKey apps development"
   #  author = ""
   showVisitedLinks = true
   disableBreadcrumb = false
