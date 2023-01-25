@@ -1,2 +1,4 @@
-<p>tillitis</p>
+<a id="logo" href='{{ (cond (and (ne .Site.Params.landingPageURL nil)
+                   (.Site.IsMultiLingual)) .Site.Params.landingPageURL
+                   "/") }}'>tillitis</a>
 
