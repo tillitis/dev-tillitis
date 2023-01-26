@@ -24,7 +24,8 @@ defaultContentLanguageInSubdir= true
   disableNextPrev = false
   disableLandingPageButton = false
   disableMermaid = false
-  customMermaidURL = "https://unpkg.com/mermaid@8.8.0/dist/mermaid.min.js"
+  # Commented out to use the theme's vendored mermaid:
+  # customMermaidURL = "https://unpkg.com/mermaid@8.8.0/dist/mermaid.min.js"
   titleSeparator = "::"
 
 [Languages]
