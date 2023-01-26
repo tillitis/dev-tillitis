@@ -1,4 +1,4 @@
-baseURL = "http://example.org/"
+baseURL = "http://hack.org/mc/tmp/tillitis"
 languageCode = "en-us"
 
 DefaultContentLanguage = "en"
@@ -38,7 +38,7 @@ landingPageName = "<i class='fas fa-home'></i> Home"
 [[Languages.en.menu.shortcuts]]
 name = "<i class='fab fa-fw fa-github'></i> GitHub repo"
 identifier = "ds"
-url = "https://github.com/tilitis/"
+url = "https://github.com/tillitis/"
 weight = 10
 
 [[Languages.en.menu.shortcuts]]
