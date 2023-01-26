@@ -1,4 +1,4 @@
-baseURL = "http://hack.org/mc/tmp/tillitis"
+baseURL = "https://hack.org/"
 languageCode = "en-us"
 
 DefaultContentLanguage = "en"
@@ -22,7 +22,7 @@ defaultContentLanguageInSubdir= true
   showVisitedLinks = true
   disableBreadcrumb = false
   disableNextPrev = false
-  disableLandingPageButton = true
+  disableLandingPageButton = false
   disableMermaid = false
   customMermaidURL = "https://unpkg.com/mermaid@8.8.0/dist/mermaid.min.js"
   titleSeparator = "::"
@@ -38,10 +38,10 @@ landingPageName = "<i class='fas fa-home'></i> Home"
 [[Languages.en.menu.shortcuts]]
 name = "<i class='fab fa-fw fa-github'></i> GitHub repo"
 identifier = "ds"
-url = "https://github.com/tillitis/"
+url = "https://github.com/tillitis/tillitis-tkey1-apps"
 weight = 10
 
 [[Languages.en.menu.shortcuts]]
-name = "<i class='fas fa-fw fa-bullhorn'></i> Credits"
+name = "<i class='fas fa-fw fa-bullhorn'></i> Tillitis AB"
 url = "https://tillitis.se/"
 weight = 30
