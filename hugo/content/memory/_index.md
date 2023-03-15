@@ -1,8 +1,7 @@
-+++
-title = "Memory Map"
-date = 2023-01-25T16:19:52+01:00
-weight = 2
-+++
+---
+title: Memory Map
+weight: 3
+---
 
 ## Introduction
 

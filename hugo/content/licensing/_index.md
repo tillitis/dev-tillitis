@@ -1,12 +1,7 @@
-+++
-title = "Licensing"
-date = 2023-02-20T16:30:52+01:00
-weight = 1
-chapter = true
-pre = "<b>1. </b>"
-+++
-
-### Chapter 1
+---
+title: Licensing
+weight: 100
+---
 
 # Licensing
 Unless otherwise noted, the TKey hardware and software are licensed under the terms and conditions of [GNU General Public License v2.0](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html), explained in short below.

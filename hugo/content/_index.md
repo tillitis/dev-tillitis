@@ -1,7 +1,6 @@
-+++
-title = "Tillitis TKey Developer Documentation"
-date = 2023-01-25T16:19:52+01:00
-+++
+---
+title: Tillitis TKey Developer Documentation
+---
 
 # Tillitis TKey Developer Documentation
 
