@@ -200,3 +200,5 @@ print stuff.
 
 `libcommon` is compiled with no debug output by default. Rebuild
 `libcommon` without `-DNODEBUG` to get the debug output.
+
+TODO Give examples on how to use gdb with qemu.
