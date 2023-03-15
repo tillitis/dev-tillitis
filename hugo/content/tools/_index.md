@@ -71,15 +71,12 @@ $ /path/to/qemu/build/qemu-system-riscv32 -nographic -M tk1,fifo=chrid -bios fir
 ```
 
 It tells you what serial port it is using, for instance `/dev/pts/1`.
-This is what you need to use as `--port` when running the host
+This is what you need to use as `--port` when running the client
 programs.
 
-The TK1 machine running on QEMU (which in turn runs the firmware, and
-then the TKey program) can output some memory access (and other)
-logging. You can add `-d guest_errors` to the qemu command line to
-make QEMU send these to stderr.
+## Software Development Kit, or, Building our TKey programs
 
-## Building our TKey programs
+There not yet any stand-alone Software Development Kit. Instead, we
 
 Clone our TKey program repo:
 
@@ -106,31 +103,34 @@ There is a separate section below which explains running in QEMU.
 
 ## Running TKey programs
 
-Plug the USB stick into your computer. If the LED in one of the outer
-corners of the USB stick is flashing white, then it has been
-programmed with the standard FPGA bitstream (including the firmware).
-If it is not then please refer to
+Plug the TKey into your computer. If the LED in one of the outer
+corners of the TKey is white, then it has been programmed with the
+standard FPGA bitstream (including the firmware). If it is not then
+please refer to
 [quickstart.md](https://github.com/tillitis/tillitis-key1/blob/main/doc/quickstart.md)
 (in the tillitis-key1 repository) for instructions on initial
-programming of the USB stick.
+programming of an unprovisioned TKey.
+
+The examples below refer to files in the
+[tillitis-key1-apps repository](https://github.com/tillitis/tillitis-key1-apps).
 
 ### Users on Linux
 
 Running `lsusb` should list the USB stick as `1207:8887 Tillitis
 MTA1-USB-V1`. On Linux, the TKey's serial port device path is
 typically `/dev/ttyACM0` (but it may end with another digit, if you
-have other devices plugged in). The host programs tries to auto-detect
-serial ports of TKey USB sticks, but if more than one is found you'll
-need to choose one using the `--port` flag.
+have other devices plugged in). The client programs tries to
+auto-detect TKeys, but if more than one is found you'll need to choose
+one using the `--port` flag.
 
 However, you should make sure that you can read and write to the
 serial port as your regular user.
 
 One way to accomplish this is by installing the provided
 `system/60-tkey.rules` in `/etc/udev/rules.d/` and running `udevadm
-control --reload`. Now when a TKey is plugged in, its device path
-(like `/dev/ttyACM0`) should be read/writable by you who are logged in
-locally (see `loginctl`).
+control --reload`. Now when a TKey is plugged in its device path (like
+`/dev/ttyACM0`) should be accessible by anyone logged in on the
+console (see `loginctl`).
 
 Another way is becoming a member of the group that owns the serial
 port. On Ubuntu that group is `dialout`, and you can do it like this:
@@ -144,14 +144,10 @@ $ sudo usermod -a -G dialout exampleuser
 ```
 
 For the change to take effect everywhere you need to logout from your
-system, and then log back in again. Then logout from your system and
-log back in again. You can also (following the above example) run
-`newgrp dialout` in the terminal that you're working in.
+system and then log back in again. You can also run `newgrp dialout`
+in the terminal that you're working in.
 
-Your TKey is now running the firmware. Its LED flashing white,
-indicating that it is ready to receive an app to run.
-
-#### User on MacOS
+### Users on MacOS
 
 You can check that the OS has found and enumerated the USB stick by
 running:
@@ -165,9 +161,27 @@ There should be an entry with `"USB Vendor Name" = "Tillitis"`.
 Looking in the `/dev` directory, there should be a device named like
 `/dev/tty.usbmodemXYZ`. Where XYZ is a number, for example 101. This
 is the device path that might need to be passed as `--port` when
-running the host programs.
+running the client programs.
 
-## Developing TKey program
+### Running a program
+
+You can use `tkey-runapp` from
+[tillitis-key1-apps](https://github.com/tillitis/tillitis-key1-apps)
+to upload a program to the TKey.
+
+```
+$ tkey-runapp apps/blink/app.bin
+```
+
+This should auto-detect any attached TKeys and upload and start a very
+small TKey program that blinks the LED in many different colours.
+
+Many client programs embed the TKey program they want to use in their
+own binary, auto-detect any TKeys and uploads the program
+automatically. See, for instance, `tkey-ssh-agent` which embeds the
+TKey program `signer`.
+
+## Developing TKey programs
 
 TKey programs and libraries are kept under the `apps` directory. A C
 runtime is provided as `apps/libcrt0/libcrt0.a` which you can link
@@ -188,7 +202,7 @@ Special memory areas for memory mapped hardware functions are
 available at base 0xc000\_0000 and an offset. See [the memory
 map](../memory/). and the include file `tk1_mem.h`.
 
-### Debugging
+### Debugging TKey programs
 
 If you're running the app on our qemu emulator we have added a debug
 port on 0xfe00\_1000 (`TK1_MMIO_QEMU_DEBUG`). Anything written there
@@ -201,4 +215,21 @@ print stuff.
 `libcommon` is compiled with no debug output by default. Rebuild
 `libcommon` without `-DNODEBUG` to get the debug output.
 
+The emulator can output some memory access (and other) logs. You can
+add `-d guest_errors` to the qemu command line to make QEMU send these
+to stderr.
+
+You can also use the qemu monitor for debugging, e.g. `info
+registers`, or run qemu with `-d in_asm` or `-d trace:riscv_trap` for
+tracing.
+
 TODO Give examples on how to use gdb with qemu.
+
+## Developing client programs
+
+TODO write about the Go modules
+
+- [Go doc for github.com/tillitis/tillitis-key1-apps/tk1](https://pkg.go.dev/github.com/tillitis/tillitis-key1-apps/tk1)
+- [Go doc for
+github.com/tillitis/tillitis-key1-apps/tk1sign](https://pkg.go.dev/github.com/tillitis/tillitis-key1-apps/tk1sign)
+
