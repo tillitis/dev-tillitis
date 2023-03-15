@@ -3,10 +3,20 @@ title: Memory Map
 weight: 3
 ---
 
-## Introduction
+# Memory map
 
-We map hardware functions into Memory Mapped Input/Output (MMIO)
-addresses.
+## Addressing
+
+```
+31st bit                              0th bit
+v                                     v
+0000 0000 0000 0000 0000 0000 0000 0000
+```
+
+- Bits [31 .. 30] (2 bits): Top level prefix (described below)
+- Bits [29 .. 24] (6 bits): Core select. We want to support at least 16 cores
+- Bits [23 ..  0] (24 bits): Memory/in-core address.
+
 
 ## Assigned top level prefixes
 
@@ -17,36 +27,22 @@ addresses.
 | reserved | 0b10     |                                      |
 | MMIO     | 0b11     | 6 bits for core select, 24 bits rest |
 
-## Addressing
+## Address prefixes
 
-```
-31st bit                              0th bit
-v                                     v
-0000 0000 0000 0000 0000 0000 0000 0000
+| *name*      | *prefix* |
+|-------------|----------|
+| ROM         | 0x00     |
+| RAM         | 0x40     |
+| MMIO        | 0xc0     |
+| MMIO TRNG   | 0xc0     |
+| MMIO TIMER  | 0xc1     |
+| MMIO UDS    | 0xc2     |
+| MMIO UART   | 0xc3     |
+| MMIO TOUCH  | 0xc4     |
+| MMIO FW_RAM | 0xd0     |
+| MMIO TK1    | 0xff     |
 
-- Bits [31 .. 30] (2 bits): Top level prefix (described above)
-- Bits [29 .. 24] (6 bits): Core select. We want to support at least 16 cores
-- Bits [23 ..  0] (24 bits): Memory/in-core address.
-```
-
-The memory exposes SoC functionality to the software when in firmware
-mode. It is a set of memory mapped registers (MMIO), starting at base
-address `0xc000_0000`. For specific offsets/bitmasks, see the file
-[tk1_mem.h](../../hw/application_fpga/fw/tk1_mem.h) (in this repo).
-
-## Assigned core prefixes
-
-| *name* | *prefix* |
-|--------|----------|
-| ROM    | 0x00     |
-| RAM    | 0x40     |
-| TRNG   | 0xc0     |
-| TIMER  | 0xc1     |
-| UDS    | 0xc2     |
-| UART   | 0xc3     |
-| TOUCH  | 0xc4     |
-| FW_RAM | 0xd0     |
-| TK1    | 0xff     |
+TODO fill in rest
 
 ## MMIO
 
