@@ -1,9 +1,9 @@
 ---
-title: Tools
+title: Tools & libraries
 weight: 2
 ---
 
-# Tools
+# Tools & libraries
 
 ## Toolchain
 
