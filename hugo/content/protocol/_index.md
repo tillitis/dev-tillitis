@@ -53,7 +53,7 @@ command frame, with a header indicating a data length of 512 bytes, is
 Note that the host sets the frame ID tag. The ID tag in a given command
 MUST be preserved in the corresponding response to the command.
 
-#### Command frame examples
+## Command frame examples
 
 Note that these examples mostly don't take into account that the first
 byte in the data (following the command header byte) typically is
@@ -70,7 +70,7 @@ Some examples to clarify endpoints and commands:
   with 32 bytes of data. The data could be a 32 byte challenge to be
   signed using a private key derived in the TK1.
 
-### Response frame format
+## Response frame format
 A response consists of a single header byte followed by one or more bytes.
 
 The bits in the response header byte should be interpreted as:
@@ -103,7 +103,7 @@ response frame, with a header indicating a data length of 512 bytes, is
 Note that the ID in a response MUST be the same ID as was present in the
 header of the command being responded to.
 
-#### Response frame examples
+## Response frame examples
 
 Note that these examples mostly don't take into account that the first
 byte in the data (following the response header byte) typically is
