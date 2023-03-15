@@ -1,4 +1,4 @@
-# TKey Developer Handbook
+# Tillitis TKey Developer Handbook
 
 Source of the [Tillitis TKey Developer Handbook](https://dev.tillitis.se/).
 
