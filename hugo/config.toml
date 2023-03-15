@@ -28,17 +28,18 @@ enableGitInfo = true
   weight = 1
 
 [menu]
-[[menu.before]]
-  name = "Tillitis AB"
-  url = "https://tillitis.se/"
-  weight = 10
+# [[menu.before]]
 
-[[menu.before]]
+[[menu.after]]
   name = "Tillitis Github"
   url = "https://github.com/tillitis"
+  weight = 10
+
+[[menu.after]]
+  name = "Tillitis AB"
+  url = "https://tillitis.se/"
   weight = 20
 
-# [[menu.after]]
 [params]
   # (Optional, default light) Sets color theme: light, dark or auto.
   # Theme 'auto' switches between dark and light modes based on browser/os preferences
