@@ -5,11 +5,10 @@ weight: 1
 
 # Introduction
 
-The Tillitis TKey is a small computer in a USB stick form factor with
-a single USB C connector that can run small uploaded programs. The
-purpose of the TKey is to provide a secure environment for programs
-that provide some security function. Some examples of such security
-functions are:
+The Tillitis TKey is a small computer in a USB stick form factor that
+can run small uploaded programs. The purpose of the TKey is to provide
+a secure environment for programs that provide some security function.
+Some examples of such security functions are:
 
 - TOTP token generators.
 - Signing oracles.
@@ -28,7 +27,7 @@ Specifications:
 - 2 kiB firmware RAM.
 - 6 kiB ROM.
 - True random number generator.
-- USB CDC.
+- USB CDC over type C connector.
 - Timer.
 - Two level of hardware privilege modes: firmware mode/app mode.
 - CPU-controlled LED
