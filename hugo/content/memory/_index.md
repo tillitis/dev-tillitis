@@ -59,9 +59,11 @@ MMIO begins at `0xc000_0000` but please use the constants in [tk1_mem.h](https:/
 |-------------------|-------|-----------|--------|----------|-----------|-------------------------------------------------------------------------|
 | `TRNG_STATUS`     | r     | r         |        |          |           | TRNG_STATUS_READY_BIT is 1 when an entropy word is available.           |
 | `TRNG_ENTROPY`    | r     | r         | 4B     | u32      |           | Entropy word. Reading a word will clear status.                         |
-| `TIMER_CTRL`      | r/w   | r/w       |        |          |           | If TIMER_STATUS_READY_BIT in TIMER_STATUS is 1, writing anything here   |
-|                   |       |           |        |          |           | starts the timer. If the same bit is 0 then writing stops the timer.    |
-| `TIMER_STATUS`    | r     | r         |        |          |           | TIMER_STATUS_READY_BIT is 1 when timer is ready to start running.       |
+| `TIMER_CTRL`      | r/w   | r/w       |        |          |           | If TIMER_STATUS_RUNNING_BIT in TIMER_STATUS is 0, setting               |
+|                   |       |           |        |          |           | TIMER_CTRL_START_BIT here starts the timer.                             |
+|                   |       |           |        |          |           | If TIMER_STATUS_RUNNING_BIT in TIMER_STATUS is 1, setting               |
+|                   |       |           |        |          |           | TIMER_CTRL_STOP_BIT here stops the timer.                               |
+| `TIMER_STATUS`    | r     | r         |        |          |           | TIMER_STATUS_RUNNING_BIT is 1 when the timer is running.                |
 | `TIMER_PRESCALER` | r/w   | r/w       | 4B     |          |           | Prescaler init value. Write blocked when running.                       |
 | `TIMER_TIMER`     | r/w   | r/w       | 4B     |          |           | Timer init or current value while running. Write blocked when running.  |
 | `UDS_FIRST`       | r[^3] | invisible | 4B     | u8[32]   |           | First word of Unique Device Secret key.                                 |
@@ -71,11 +73,12 @@ MMIO begins at `0xc000_0000` but please use the constants in [tk1_mem.h](https:/
 | `UART_STOPBITS`   | r/w   |           |        |          |           | TBD                                                                     |
 | `UART_RX_STATUS`  | r     | r         | 1B     | u8       |           | Non-zero when there is data to read                                     |
 | `UART_RX_DATA`    | r     | r         | 1B     | u8       |           | Data to read. Only LSB contains data                                    |
+| `UART_RX_BYTES`   | r     | r         | 4B     | u32      |           | Number of bytes received from the host and not yet read by SW, FW.      |
 | `UART_TX_STATUS`  | r     | r         | 1B     | u8       |           | Non-zero when it's OK to write data                                     |
 | `UART_TX_DATA`    | w     | w         | 1B     | u8       |           | Data to send. Only LSB contains data                                    |
 | `TOUCH_STATUS`    | r/w   | r/w       |        |          |           | TOUCH_STATUS_EVENT_BIT is 1 when touched. After detecting a touch       |
 |                   |       |           |        |          |           | event (reading a 1), write anything here to acknowledge it.             |
-| `FW_RAM`          | r/w   | invisible | 1 kiB  | u8[1024] |           | Firmware-only RAM.                                                      |
+| `FW_RAM`          | r/w   | invisible | 2 kiB  | u8[2048] |           | Firmware-only RAM.                                                      |
 | `UDI`             | r     | invisible | 8B     | u64      |           | Unique Device ID (UDI).                                                 |
 | `QEMU_DEBUG`      | w     | w         |        | u8       |           | Debug console (only in QEMU)                                            |
 | `NAME0`           | r     | r         | 4B     | char[4]  | "tk1 "    | ID of core/stick                                                        |
@@ -92,5 +95,7 @@ MMIO begins at `0xc000_0000` but please use the constants in [tk1_mem.h](https:/
 | `BLAKE2S`         | r/w   | r         | 4B     | u32      |           | Function pointer to a BLAKE2S function in the firmware                  |
 | `CDI_FIRST`       | r/w   | r         | 32B    | u8[32]   |           | Compound Device Identifier (CDI). UDS+measurement...                    |
 | `CDI_LAST`        |       | r         |        |          |           | Last word of CDI                                                        |
+| `RAM_ASLR`        | w     | invisible | 4B     | u32      |           | Address Space Randomization seed value for the RAM                      |
+| `RAM_SCRAMBLE`    | w     | invisible | 4B     | u32      |           | Data scrambling seed value for the RAM                                  |
 
 [^3]: The UDS can only be read *once* per power-cycle.
