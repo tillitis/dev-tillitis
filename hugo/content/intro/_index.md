@@ -8,12 +8,13 @@ weight: 1
 The Tillitis TKey is a small computer in a USB stick form factor with
 a single USB C connector that can run small uploaded programs. The
 purpose of the TKey is to provide a secure environment for programs
-that provides some security function. Some examples of such
-security functions are:
+that provide some security function. Some examples of such security
+functions are:
 
 - TOTP token generators.
 - Signing oracles.
 - Secure random numbers.
+- Encryption.
 
 There is no way of storing programs. They have to be uploaded
 every time you insert the TKey.
@@ -34,15 +35,14 @@ Specifications:
 - No persistent storage.
 
 The unique feature of the TKey is that it measures the TKey program
-when it is being loaded onto the device. The measurement (a hash
-digest using BLAKE2s), combined with a Unique Device Secret (UDS) is
-used to derive a base secret we call Compound Device Identifier (CDI)
-for the TKey program.
+before starting it. The measurement (a hash digest using BLAKE2s),
+combined with a Unique Device Secret (UDS) is used to derive a base
+secret we call Compound Device Identifier (CDI) for the TKey program.
 
-The consequence of this is that if the TKey program is altered, the
-CDI will also change. Conversely, if the keys derived from the CDI are
-the same as the last time the TKey program was loaded onto the same
-device, the program can be trusted not to have been altered.
+This means that if the TKey program is altered, the CDI will also
+change. If the keys derived from the CDI are the same as the last time
+the TKey program was loaded onto the same device, the program can be
+trusted not to have been altered.
 
 The UDS is unique per device. The same program uploaded to another
 TKey device will result in a different CDI.
@@ -59,19 +59,10 @@ All of the TKey software, firmware, FPGA Verilog source code,
 schematics and PCB design files are open source. Like all trustworthy
 security software and hardware should be. This in itself makes it
 different, as other security tokens utilize at least some closed
-source hardware for its security-critical operations.
+source hardware for security-critical operations.
 
 ## Getting started
 
 * [tillitis-key1-apps repository](https://github.com/tillitis/tillitis-key1-apps),
   with client and TKey programs.
-* [Quickstart](doc/quickstart.md) to initial programming of the TKey
-  (only required for the DevKit)
-* [Toolchain setup](doc/toolchain_setup.md)
-
-Note that development is ongoing. For example, changes might be made
-to the measuring and derivation of key material, causing the
-public/private keys of a signer app to change. To avoid unexpected
-changes, please use a tagged release. Read the [Release
-Notes](doc/release_notes.md) to keep up to date with changes and new
-releases.
+* [Toolchain setup](../tools/).
