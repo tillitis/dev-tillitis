@@ -1,16 +1,19 @@
-# docs-experiment
+# TKey Developer Handbook
 
-A test repo for documentation technologies and processes.
+Source of the [Tillitis TKey Developer Handbook](https://dev.tillitis.se/).
 
-## Hugo
-
-See under `hugo` for an example using [Hugo](https://gohugo.io/). 
+We use [Hugo](https://gohugo.io/) to generate static web pages from
+source written in Markdown files compatible with
+[CommonMark](https://spec.commonmark.org/current/). [Mermaid
+diagrams](https://mermaid.js.org/intro/) are supported, too.
 
 You need to install Hugo before using it to generate a Hugo website.
 
 Read up on how [Hugo's front
 matter](https://gohugo.io/content-management/front-matter/) works to
-add titles and dates to your files.
+add titles to your files.
+
+To look at the result:
 
 ```
 % cd hugo
@@ -22,40 +25,44 @@ Web Server is available at http://localhost:1313/
 
 Point your browser at http://localhost:1313/ to see our documentation.
 
-Please observe that this is just an example with cut and pasted
-documentation and a Hugo theme chosen by random.
+## Editing Hugo pages
 
-### Editing Hugo pages
+All real content is under `hugo/content` and 
 
-All real content is under `hugo/content` and are Markdown files
-compatible with [CommonMark](https://spec.commonmark.org/current/).
-[Mermaid diagrams](https://mermaid.js.org/intro/) are supported, too.
-
-#### To create a new chapter
+## To create a new chapter
 
 Create a directory, for instance `building`.
 
-Create an `_index.md` containing something like:
+Create an `_index.md` containing something a like:
 
 ```
-+++
-title = "Building"
-date = 2023-01-25T16:19:52+01:00
-weight = 1
-chapter = true
-pre = "<b>1. </b>"
-+++
+---
+title: Building
+weight: 1
+---
 
-### Chapter 1
-
-# Building apps
+# Building TKey Programs
   
 ```
 
-#### Write content in a chapter
+## Write content in a chapter
 
 If you're not going to edit an existing file, create a new one with
 your favourite editor.
 
-In the front matter (the stuff inside `+++` in the beginning of the
-file) you can specify the internal order with `weight = 1`.
+Please keep lines wrapped at 70 characters.
+
+In the front matter (the stuff inside `---` in the beginning of the
+file) you can specify the internal order with `weight: 1`.
+
+Please give at least a title:
+
+```
+---
+title: Building
+weight: 1
+---
+
+# Building TKey Programs
+  
+```
