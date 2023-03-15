@@ -77,6 +77,9 @@ programs.
 ## Software Development Kit, or, Building our TKey programs
 
 There not yet any stand-alone Software Development Kit. Instead, we
+provide examples in the
+[tillitis-key1-apps](https://github.com/tillitis/tillitis-key1-apps)
+Github repo.
 
 Clone our TKey program repo:
 
