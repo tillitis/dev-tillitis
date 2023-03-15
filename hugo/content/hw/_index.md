@@ -12,6 +12,20 @@ weight: 3
 
 No interrupts are used.
 
+Illegal instruction halts the CPU and another hardware core blinks the
+LED red forever.
+
+## Execution monitor
+
+The execution monitor can be used to set up a watch that the program
+counter doesn't reach certain memory. You set a start and end address.
+
+When the monitor sees the program counter is about to enter a
+forbidden memory area it feeds it an illegal instruction which halts
+the CPU.
+
+TODO Add how to set up.
+
 ## FW ROM
 
 The ROM memory containing the firmware. After reset the CPU will
@@ -21,6 +35,14 @@ read from the ROM to load, measure and start applications.
 
 128 kiB RAM. The memory is cleared by firmware before a TKey program
 is loaded.
+
+## ASLR
+
+TODO
+
+## RAM Scrambler
+
+TODO
 
 ## Timer
 
