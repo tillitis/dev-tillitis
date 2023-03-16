@@ -7,9 +7,10 @@ weight: 3
 
 ## CPU
 
-32 bit RISC-V running at 18 MHz. Architecture: RV32IC_Zmmul
-(`-march=rv32iczmmul`).
+TKey has a 32-bit RISC-V running at 18 MHz with an RV32IC_Zmmul
+(`-march=rv32iczmmul`) architecture.
 
+[comment]: What does this mean?
 No interrupts are used.
 
 Illegal instruction halts the CPU and another hardware core blinks the
