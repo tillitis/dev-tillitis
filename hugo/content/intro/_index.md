@@ -5,63 +5,66 @@ weight: 1
 
 # Introduction
 
-The Tillitis TKey is a small computer in a USB stick form factor that
-can run small uploaded programs. The purpose of the TKey is to provide
-a secure environment for programs that provide some security function.
-Some examples of such security functions are:
+Tillitis' TKey is a small computer in a USB stick form factor that
+can run small programs which are uploaded to it. The purpose of 
+TKey is to be a secure environment for programs that provide 
+security function. Some examples of such security functions are:
 
-- TOTP token generators.
-- Signing oracles.
-- Secure random numbers.
-- Encryption.
+- Time-based one-time password (TOTP) token generators
+- Signing oracles
+- Secure random numbers
+- Encryption
 
-There is no way of storing programs. They have to be uploaded
-every time you insert the TKey.
+There is no way of storing programs on TKey. Programs have to be uploaded
+to TKey every time you insert the TKey.
 
-Specifications:
+TKey specifications:
 
-- 32 bit RISC-V CPU @ 18 MHz.
-- Execution monitor.
-- Hardware-assisted ASLR and RAM scrambling.
-- 128 kiB RAM.
-- 2 kiB firmware RAM.
-- 6 kiB ROM.
-- True random number generator.
-- USB CDC over type C connector.
-- Timer.
-- Two level of hardware privilege modes: firmware mode/app mode.
+- 32 bit RISC-V CPU @ 18 MHz
+- Execution monitor
+- Hardware-assisted ASLR and RAM scrambling
+- 128 kB RAM for TKey programs
+- 2 kB firmware RAM
+- 6 kB ROM
+- True random number generator
+- USB communications device class (CDC) over type C connector
+- Timer
+- Two level of hardware privilege modes: firmware mode/program mode
 - CPU-controlled LED
-- No persistent storage.
+- No persistent storage
 
-The unique feature of the TKey is that it measures the TKey program
-before starting it. The measurement (a hash digest using BLAKE2s),
-combined with a Unique Device Secret (UDS) is used to derive a base
+A unique feature of the TKey is that it measures each TKey program
+before starting it. A hash digest measurement (using BLAKE2s)
+combined with a Unique Device Secret (UDS) make up a base
 secret we call Compound Device Identifier (CDI) for the TKey program.
 
-This means that if the TKey program is altered, the CDI will also
-change. If the keys derived from the CDI are the same as the last time
-the TKey program was loaded onto the same device, the program can be
+If the TKey program is altered, the CDI is also changed. If the keys 
+derived from the CDI are the same as the last time the given 
+TKey program was loaded onto the same TKey, the program can be
 trusted not to have been altered.
 
-The UDS is unique per device. The same program uploaded to another
-TKey device will result in a different CDI.
+The UDS is unique per TKey. The same program uploaded to another
+TKey results in a different CDI.
 
-The key derivation can also be combined with a User Supplied Secret
-(USS). This means that keys derived are both based on something the
-user has: the specific device, and something the user knows: the USS.
+The derived keys can also be combined with a User Supplied Secret
+(USS). Then the keys are based on both something the
+user has - the specific TKey - and something the user knows - the USS.
 
+This is the algorithm for the CDI:
 ```go
 cdi = blake2s(UDS, blake2s(program), USS)
 ```
 
 All of the TKey software, firmware, FPGA Verilog source code,
-schematics and PCB design files are open source. Like all trustworthy
+schematics, and PCB design files are open source. Like all trustworthy
 security software and hardware should be. This in itself makes it
 different, as other security tokens utilize at least some closed
 source hardware for security-critical operations.
 
-## Getting started
+## Getting Started
 
 * [tillitis-key1-apps repository](https://github.com/tillitis/tillitis-key1-apps),
-  with client and TKey programs.
+  with TKey programs and client programs.
+  
+  VB: Write an explaination like for previous bullet.
 * [Toolchain setup](../tools/).
