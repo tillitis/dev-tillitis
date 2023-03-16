@@ -55,10 +55,10 @@ cdi = blake2s(UDS, blake2s(program), USS)
 ```
 
 All of the TKey software, firmware, FPGA Verilog source code,
-schematics and PCB design files are open source. Like all trustworthy
-security software and hardware should be. This in itself makes it
-different, as other security tokens utilize at least some closed
-source hardware for security-critical operations.
+schematics and PCB design files are released under open licenses like
+all trustworthy security software and hardware should be. This in
+itself makes it different, as other security tokens use at least some
+closed source hardware for security-critical operations.
 
 ## Getting started
 
