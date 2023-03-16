@@ -11,14 +11,17 @@ TKey has a 32-bit RISC-V running at 18 MHz with an RV32IC_Zmmul
 (`-march=rv32iczmmul`) architecture.
 
 VB: What does this mean?
+
 No interrupts are used.
 
 VB: Illegal instruction from and to?
+
 Any illegal instruction from XXXXX to YYYYY halts the CPU and makes the red TKey LED flash.
 
 ## Execution monitor
 
-VB: First introduce what the execution monitor is. "The TKey firmware contains an execution monitor that "
+VB: First introduce what the execution monitor is. For example: "The TKey firmware contains an execution monitor that can prevent..."
+
 VB: The relation between the objects in the first sentence is not clear.
 VB: Where and why do you set start and end addresses?
 The execution monitor can be used to set up a watch that the program counter doesn't reach certain memory. You set a start and end address.
