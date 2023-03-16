@@ -49,7 +49,7 @@ from the ROM when loading, measuring, and starting applications.
 
 ## RAM
 
-The RAM is 128 kiB. 
+The RAM is 128 kB. 
 The firmware clears the RAM before loading a TKey program into the RAM.
 
 ## ASLR
