@@ -3,44 +3,52 @@ title: Hardware
 weight: 3
 ---
 
-# Hardware cores
+# Hardware Functions
+
+The TKey hardware contains the following hardware functions:
+* CPU
+* Execution monitor
+* Firmware ROM
+* RAM
+* ASLR
+* RAM Scrambler
+* Timer
+* UART
+* TRNG
+* Touch sensor
 
 ## CPU
 
-TKey has a 32-bit RISC-V running at 18 MHz with an RV32IC_Zmmul
+The CPU is a 32-bit RISC-V running at 18 MHz with an RV32IC_Zmmul
 (`-march=rv32iczmmul`) architecture.
 
 VB: What does this mean?
 
 No interrupts are used.
 
-VB: Illegal instruction from and to? Or "If the CPU encounters an illegal instruction..."
-
-Any illegal instruction from XXXXX to YYYYY halts the CPU and makes the red TKey LED flash.
+If the CPU encounters an illegal instruction, it halts and flashes the red LED.
 
 ## Execution monitor
 
-VB: First introduce what the execution monitor is. For example: "The TKey firmware contains an execution monitor that can prevent..."
-
-VB: The relation between the objects in the first sentence is not clear. "Watch" can be misunderstood as a timer instead of a guard.
+VB: "Watch" can be misunderstood as a timekeeper instead of a guard.
 
 VB: Where and why do you set start and end addresses? Explain.
 
-The execution monitor can be used to set up a watch that the program counter doesn't reach certain memory. You set a start and end address.
+The execution monitor can limit the program counter from reaching a certain memory utilization. You set a start and end address.
 
-If the program counter is about to enter a forbidden memory area, the execution monitor feeds the monitor an illegal instruction which halts the CPU.
+If the program counter is about to enter a forbidden memory area, the execution monitor feeds the execution monitor an illegal instruction which halts the CPU.
 
 TODO Add how to set up.
 
-## FW ROM
+## Firmware ROM
 
-The ROM memory containing the firmware. After reset the CPU will
-read from the ROM to load, measure and start applications.
+The ROM contains the firmware. After a reset, the CPU reads
+from the ROM when loading, measuring, and starting applications.
 
 ## RAM
 
-128 kiB RAM. The memory is cleared by firmware before a TKey program
-is loaded.
+The RAM is 128 kiB. 
+The firmware clears the RAM before loading a TKey program into the RAM.
 
 ## ASLR
 
@@ -52,11 +60,15 @@ TODO
 
 ## Timer
 
-A general purpose 32 bit timer. The timer will count down every cycle
+VB: The first sentence is incomplete. Say what the timer is or 
+"The firmware has a general purpose 32-bit timer".
+VB: What is the initial value? Worth mentioning?
+
+The general purpose 32-bit timer counts down every cycle
 from the initial value to one. In order to handle long time sequences
-(minutes, hours, days) there is also a 32 bit prescaler. Since the CPU
-is running at 18 MHz setting the prescaler to 18_000_000 means the
-timer will tick every second.
+(minutes, hours, days) there is also a 32-bit prescaler. 
+If the prescaler is set to 18_000_000, the timer ticks every second
+because the CPU is running at 18 MHz.
 
 ## UART
 
