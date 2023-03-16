@@ -1,19 +1,16 @@
-# Tillitis TKey Developer Handbook
+# docs-experiment
 
-Source of the [Tillitis TKey Developer Handbook](https://dev.tillitis.se/).
+A test repo for documentation technologies and processes.
 
-We use [Hugo](https://gohugo.io/) to generate static web pages from
-source written in Markdown files compatible with
-[CommonMark](https://spec.commonmark.org/current/). [Mermaid
-diagrams](https://mermaid.js.org/intro/) are supported, too.
+## Hugo
+
+See under `hugo` for an example using [Hugo](https://gohugo.io/). 
 
 You need to install Hugo before using it to generate a Hugo website.
 
 Read up on how [Hugo's front
 matter](https://gohugo.io/content-management/front-matter/) works to
-add titles to your files.
-
-To look at the result:
+add titles and dates to your files.
 
 ```
 % cd hugo
@@ -25,44 +22,40 @@ Web Server is available at http://localhost:1313/
 
 Point your browser at http://localhost:1313/ to see our documentation.
 
-## Editing Hugo pages
+Please observe that this is just an example with cut and pasted
+documentation and a Hugo theme chosen by random.
 
-All real content is under `hugo/content` and 
+### Editing Hugo pages
 
-## To create a new chapter
+All real content is under `hugo/content` and are Markdown files
+compatible with [CommonMark](https://spec.commonmark.org/current/).
+[Mermaid diagrams](https://mermaid.js.org/intro/) are supported, too.
+
+#### To create a new chapter
 
 Create a directory, for instance `building`.
 
-Create an `_index.md` containing something a like:
+Create an `_index.md` containing something like:
 
 ```
----
-title: Building
-weight: 1
----
++++
+title = "Building"
+date = 2023-01-25T16:19:52+01:00
+weight = 1
+chapter = true
+pre = "<b>1. </b>"
++++
 
-# Building TKey Programs
+### Chapter 1
+
+# Building apps
   
 ```
 
-## Write content in a chapter
+#### Write content in a chapter
 
 If you're not going to edit an existing file, create a new one with
 your favourite editor.
 
-Please keep lines wrapped at 70 characters.
-
-In the front matter (the stuff inside `---` in the beginning of the
-file) you can specify the internal order with `weight: 1`.
-
-Please give at least a title:
-
-```
----
-title: Building
-weight: 1
----
-
-# Building TKey Programs
-  
-```
+In the front matter (the stuff inside `+++` in the beginning of the
+file) you can specify the internal order with `weight = 1`.
