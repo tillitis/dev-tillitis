@@ -14,7 +14,7 @@ VB: What does this mean?
 
 No interrupts are used.
 
-VB: Illegal instruction from and to?
+VB: Illegal instruction from and to? Or "If the CPU encounters an illegal instruction..."
 
 Any illegal instruction from XXXXX to YYYYY halts the CPU and makes the red TKey LED flash.
 
@@ -22,9 +22,9 @@ Any illegal instruction from XXXXX to YYYYY halts the CPU and makes the red TKey
 
 VB: First introduce what the execution monitor is. For example: "The TKey firmware contains an execution monitor that can prevent..."
 
-VB: The relation between the objects in the first sentence is not clear.
+VB: The relation between the objects in the first sentence is not clear. "Watch" can be misunderstood as a timer instead of a guard.
 
-VB: Where and why do you set start and end addresses?
+VB: Where and why do you set start and end addresses? Explain.
 
 The execution monitor can be used to set up a watch that the program counter doesn't reach certain memory. You set a start and end address.
 
