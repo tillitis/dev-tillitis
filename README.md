@@ -1,16 +1,13 @@
-# docs-experiment
+# Developer Handbook
 
-A test repo for documentation technologies and processes.
+Source of [Tillitis TKey Developer Handbook](https://dev.tillitis.se/).
 
 ## Hugo
 
-See under `hugo` for an example using [Hugo](https://gohugo.io/). 
+See under `hugo` for our static site source. You need to install
+[Hugo](https://gohugo.io/) before using it to generate a Hugo website.
 
-You need to install Hugo before using it to generate a Hugo website.
-
-Read up on how [Hugo's front
-matter](https://gohugo.io/content-management/front-matter/) works to
-add titles and dates to your files.
+To see the Developer Handbook:
 
 ```
 % cd hugo
@@ -25,37 +22,38 @@ Point your browser at http://localhost:1313/ to see our documentation.
 Please observe that this is just an example with cut and pasted
 documentation and a Hugo theme chosen by random.
 
-### Editing Hugo pages
+## Editing pages
 
 All real content is under `hugo/content` and are Markdown files
 compatible with [CommonMark](https://spec.commonmark.org/current/).
 [Mermaid diagrams](https://mermaid.js.org/intro/) are supported, too.
 
-#### To create a new chapter
+## First page
 
-Create a directory, for instance `building`.
+The first page is in `hugo/content/_index.md`.
+
+## To create a new chapter
+
+Create a directory, for instance `tools`.
 
 Create an `_index.md` containing something like:
 
-```
-+++
-title = "Building"
-date = 2023-01-25T16:19:52+01:00
-weight = 1
-chapter = true
-pre = "<b>1. </b>"
-+++
+```yaml
+---
+title: Tools & libraries
+weight: 2
+---
 
-### Chapter 1
+# Tools & libraries
 
-# Building apps
-  
+Text about tools and libraries.
 ```
 
-#### Write content in a chapter
+## Write content in a chapter
 
 If you're not going to edit an existing file, create a new one with
 your favourite editor.
 
-In the front matter (the stuff inside `+++` in the beginning of the
-file) you can specify the internal order with `weight = 1`.
+In the front matter (the stuff inside `---` in the beginning of the
+file) you can specify the internal order with `weight: 2` to get it in
+second place in the table of contents.
