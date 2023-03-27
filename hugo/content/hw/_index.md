@@ -3,34 +3,59 @@ title: Hardware
 weight: 3
 ---
 
-# Hardware cores
+# TKey hardware design
+
+The TKey hardware design consists of a FPGA device and some support
+components mounted on the PCB.  The FPGA design contain the TKey
+System on Chip (SoC) that TKey host apps are loaded and executed.
+Communication between the Tkey SoC and the client is handled by a
+small Microcontroller (MCU) that handles conversion between USB and
+UART.
+
+The SoC, called application_gpga consists of a CPU and a number of
+cores attached to the through the memory sub system. The following is
+a description of the CPU and the cores from a developer point of
+view.
 
 ## CPU
 
-TKey has a 32-bit RISC-V running at 18 MHz with an RV32IC_Zmmul
-(`-march=rv32iczmmul`) architecture.
+TKey has a 32-bit RISC-V running at 18 MHz. The CPU supports the RV32
+instruction set with RV32IC_Zmmul (`-march=rv32iczmmul`) extentions.
 
-[comment]: What does this mean?
-No interrupts are used.
+This means that the base RV23I as well as compressed instructions are
+supported. The subset of the M(ath) extensin that includes
+multiplication, but not division is supported.
 
-Illegal instruction halts the CPU and another hardware core blinks the
-LED red forever.
+There is no support for interrupts.
+
+Illegal, unsupported instructions halts the CPU. CPU halting is
+detected by the HW and will blink the RGB LED with Red to indicate the
+error state.  LED red forever.
 
 ## Execution monitor
 
-The execution monitor can be used to set up a watch that the program
-counter doesn't reach certain memory. You set a start and end address.
+The execution monitor can be used by TKey apps to prevent the CPU from
+trying to execute instructions from a defined memory area.
 
-When the monitor sees the program counter is about to enter a
-forbidden memory area it feeds it an illegal instruction which halts
-the CPU.
+When the excution monitor detects that the CPU is requesting
+instructions from the area, the monitor will force the CPU to read an
+illegal instruction. This will halt the CPU until reset.
 
-TODO Add how to set up.
+The execution monitor is set up by writing the start and end address
+to the registers in the TK1 core. When the addresses has been reset,
+the monitor is enabled by writing to the monitor control
+register. When enabled the monitor can not be disabled and the
+addresses can't be altered.
+
+Note that the monitor also protects the FW RAM. This area is always
+protected.
+
 
 ## FW ROM
 
-The ROM memory containing the firmware. After reset the CPU will
-read from the ROM to load, measure and start applications.
+The ROM memory contains the the firmware. After reset the CPU will
+read from the ROM to load, measure and start applications. The ROM
+image is part of the FPGA bitstream.
 
 ## RAM
 
@@ -39,11 +64,35 @@ is loaded.
 
 ## ASLR
 
-TODO
+The TKey hardware includes a simple form of RAM memory protection.
+The memory protection is based on two separate mechanisms:
+
+1. Address Space Layout Randomisation (ASLR)
+2. Address dependent data scrambling
+
+The ASLR is implemented by XORing the CPU address with the contents of
+the ADDR_RAM_ASLR register in the tk1 core. The result is used as the
+RAM address. The ASLR is set up by the FW as part of loading the Tkey
+device app. The ASLR will be transparent to the app, and developers
+does not have to do anything to use it.
+
+For more information about the ASLR, please see the tillitis key
+system description.
+
 
 ## RAM Scrambler
 
-TODO
+The data scrambling is implemented by XORing the data written to the
+RAM with the contents of the ADDR_RAM_SCRAMBLE register in the tk1
+core as well as XORing with the CPU address. This means that the same
+data written to two different addresses will be scrambled
+differently. The same pair or XOR operations is also performed on the
+data read out from the RAM.
+
+The data scrambling is set up by the FW as part of loading the Tkey
+device app. The scrambling will be transparent to the app, and
+developers does not have to do anything to use it.
+
 
 ## Timer
 
@@ -92,9 +141,9 @@ events.
 
 `TOUCH_STATUS`
 
-#### TKey
+#### TK1
 
-The TKey core contains several functions, and acts as main hardware
+The TK1 core contains several functions, and acts as main hardware
 interface between firmware and TKey programs. The core includes:
 
 - Read access to the 64 bit FPGA design name, expressed as ASCII
