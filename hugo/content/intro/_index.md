@@ -8,10 +8,10 @@ weight: 1
 <img src="../images/tkey-interaction-points.png" alt="TKey with interaction points marked" title="TKey with interaction points marked" width="85%">
 
 The Tillitis TKey is a small computer in a USB stick form factor that
-can run small applications which are loaded onto it (called device
-applications). The purpose of TKey is to be a secure environment for
-applications that provide security function. Some examples of such
-security functions are:
+can run small device applications which are loaded onto it. The
+purpose of TKey is to be a secure environment for applications that
+provide security function. Some examples of such security functions
+are:
 
 - Time-based one-time password (TOTP) token generators
 - Signing oracles
