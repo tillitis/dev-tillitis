@@ -8,7 +8,7 @@ weight: 3
 The TKey hardware design consists of a FPGA device and some support
 components mounted on the PCB. The FPGA design contain the TKey System
 on Chip (SoC) that TKey host apps are loaded and executed.
-Communication between the Tkey SoC and the client is handled by a
+Communication between the TKey SoC and the client is handled by a
 small microcontroller (MCU) that handles conversion between USB and
 UART.
 
@@ -72,7 +72,7 @@ memory protection is based on two separate mechanisms:
 The ASLR is implemented by XORing the CPU address with the contents of
 the `ADDR_RAM_ASLR` register in the TK1 core. The result is used as
 the RAM address. The ASLR is set up by the FW as part of loading the
-Tkey device app. The ASLR will be transparent to the app, and
+TKey device app. The ASLR will be transparent to the app, and
 developers does not have to do anything to use it.
 
 For more information about the ASLR, please see the Tillitis Key
@@ -89,7 +89,7 @@ data written to two different addresses will be scrambled differently.
 The same pair or XOR operations is also performed on the data read out
 from the RAM.
 
-The data scrambling is set up by the FW as part of loading the Tkey
+The data scrambling is set up by the FW as part of loading the TKey
 device app. The scrambling will be transparent to the app, and
 developers does not have to do anything to use it.
 

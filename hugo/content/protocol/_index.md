@@ -36,10 +36,10 @@ The bits in the command header byte should be interpreted as:
 * Bits [6..5] (2 bits). Frame ID tag.
 
 * Bits [4..3] (2 bits). Endpoint number.
-0. HW in interface_fpga Unused.
+0. HW in interface_fpga (unused)
 1. HW in application_fpga
 2. FW in application_fpga
-3. SW (program) in application_fpga
+3. SW (device application) in application_fpga
 
 * Bit [2] (1 bit). Unused. MUST be zero.
 
@@ -47,12 +47,12 @@ The bits in the command header byte should be interpreted as:
 0. 1 byte
 1. 4 bytes
 2. 32 bytes
-3. 512 bytes
+3. 128 bytes
 
 Note that the number of bytes indicated by the command data length field
 does **not** include the command header byte. This means that a complete
-command frame, with a header indicating a data length of 512 bytes, is
-512+1 bytes in length.
+command frame, with a header indicating a data length of 128 bytes, is
+128+1 bytes in length.
 
 Note that the host sets the frame ID tag. The ID tag in a given command
 MUST be preserved in the corresponding response to the command.
@@ -66,15 +66,20 @@ byte less available for the "payload" of the command.
 
 Some examples to clarify endpoints and commands:
 
-* 0x13: A command to the FW in the application_fpga with 512 bytes of
+* 0x00: A command to the HW in the interface_fpga with a single byte of
+  data. The single byte could indicate action such as reading from the
+  TRNG or resetting the application_fpga.
+
+* 0x13: A command to the FW in the application_fpga with 128 bytes of
   data. The data could for example be parts of an application binary to
   be loaded into the program memory.
 
-* 0x1a: A command to the TKey program running in the application_fpga
+* 0x1a: A command to the application running in the application_fpga
   with 32 bytes of data. The data could be a 32 byte challenge to be
   signed using a private key derived in the TK1.
 
 ### Response frame format
+
 A response consists of a single header byte followed by one or more bytes.
 
 The bits in the response header byte should be interpreted as:
@@ -83,10 +88,10 @@ The bits in the response header byte should be interpreted as:
 * Bits [6..5] (2 bits). Frame ID tag.
 
 * Bits [4..3] (2 bits). Endpoint number.
-0. HW in interface_fpga
+0. HW in interface_fpga (unused)
 1. HW in application_fpga
 2. FW in application_fpga
-3. SW (application) in application_fpga
+3. SW (device application) in application_fpga
 
 * Bit [2] (1 bit). Response status.
 0. OK
@@ -96,13 +101,13 @@ The bits in the response header byte should be interpreted as:
 0. 1 byte
 1. 4 bytes
 2. 32 bytes
-3. 512 bytes
+3. 128 bytes
 
 
 Note that the number of bytes indicated by the response data length field
 does **not** include the response header byte. This means that a complete
-response frame, with a header indicating a data length of 512 bytes, is
-512+1 bytes in length.
+response frame, with a header indicating a data length of 128 bytes, is
+128+1 bytes in length.
 
 Note that the ID in a response MUST be the same ID as was present in the
 header of the command being responded to.
@@ -114,11 +119,15 @@ byte in the data (following the response header byte) typically is
 occupied by the particular app or FW response code, so there is 1 byte
 less available for the "payload" of the response.
 
+* 0x01: A successful command to the HW in the interface_fpga, which
+  responds with four bytes of data. For example the interface_fpga
+  VERSION string.
+
 * 0x14: An unsuccessful command to the FW in the application_fpga which
   responds with a single byte of data.
 
 * 0x1b: A successful command to the application running in the
-  application_fpga. The response contains 512 bytes of data, for example
+  application_fpga. The response contains 128 bytes of data, for example
   an EdDSA Ed25519 signature.
 
 ## Firmware protocol
@@ -180,10 +189,10 @@ Response to `FW_CMD_LOAD_APP`
 
 | *name* | *size (bytes)* | *comment*           |
 |--------|----------------|---------------------|
-| data   | 511            | Raw binary app data |
+| data   | 127            | Raw binary app data |
 
-Load 511 bytes of raw app binary into device RAM. Should be sent
-consecutively over the complete raw binary. (512 == largest frame
+Load 127 bytes of raw app binary into device RAM. Should be sent
+consecutively over the complete raw binary. (128 == largest frame
 length minus the command byte).
 
 #### `FW_RSP_LOAD_APP_DATA` (0x06)
@@ -249,9 +258,9 @@ host <-
 
 ```
 host ->
-  u8 CMD[1 + 512];
+  u8 CMD[1 + 128];
 
-  CMD[0].len = 512  // command frame format
+  CMD[0].len = 128  // command frame format
   CMD[1]     = 0x03 // FW_CMD_LOAD_APP
 
   CMD[2..6]  = APP_SIZE
@@ -270,14 +279,14 @@ host <-
 
   RSP[3..]   = 0
 
-repeat ceil(APP_SIZE / 511) times:
+repeat ceil(APP_SIZE / 127) times:
 host ->
-  u8 CMD[1 + 512];
+  u8 CMD[1 + 128];
 
-  CMD[0].len = 512  // command frame format
+  CMD[0].len = 128  // command frame format
   CMD[1]     = 0x05 // FW_CMD_LOAD_APP_DATA
 
-  CMD[2..]   = APP_DATA (511 bytes of app data, pad with zeros)
+  CMD[2..]   = APP_DATA (127 bytes of app data, pad with zeros)
 
 host <-
   u8 RSP[1 + 4]
@@ -294,9 +303,9 @@ Except response from last chunk of app data which is:
 
 ```
 host <-
-  u8 RSP[1 + 512]
+  u8 RSP[1 + 128]
 
-  RSP[0].len = 512  // command frame format
+  RSP[0].len = 128  // command frame format
   RSP[1]     = 0x07 // FW_RSP_LOAD_APP_DATA_READY
 
   RSP[2]     = STATUS

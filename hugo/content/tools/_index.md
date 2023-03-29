@@ -21,15 +21,15 @@ sudo apt install build-essential clang lld llvm bison flex libreadline-dev \
                  python3-dev libeigen3-dev \
                  libboost-dev libboost-filesystem-dev \
                  libboost-thread-dev libboost-program-options-dev \
-                 libboost-iostreams-dev cmake libhidapi-dev \
+                 libboost-iostreams-dev cmake libusb-1.0-0-dev \
                  ninja-build libglib2.0-dev libpixman-1-dev \
                  golang clang-format
 ```
 
 ## Toolchain container
 
-As a convenience we provide a Docker/Podman image which has all these
-tools already installed
+As a convenience we provide a container image which has all these
+tools already installed, for use wit Podman or Docker.
 
 ```
 $ podman pull ghcr.io/tillitis/tkey-builder:latest
@@ -39,7 +39,7 @@ TODO Add example of running.
 
 ## QEMU
 
-We have a TKey emulator based on QEMU. 
+We have a TKey emulator based on QEMU.
 
 Build our [qemu](https://github.com/tillitis/qemu). Use the `tk1`
 branch.
@@ -235,4 +235,3 @@ TODO write about the Go modules
 - [Go doc for github.com/tillitis/tillitis-key1-apps/tk1](https://pkg.go.dev/github.com/tillitis/tillitis-key1-apps/tk1)
 - [Go doc for
 github.com/tillitis/tillitis-key1-apps/tk1sign](https://pkg.go.dev/github.com/tillitis/tillitis-key1-apps/tk1sign)
-

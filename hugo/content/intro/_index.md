@@ -15,8 +15,8 @@ Some examples of such security functions are:
 - Secure random numbers.
 - Encryption.
 
-There is no way of storing programs. They have to be uploaded
-every time you insert the TKey.
+There is no way of storing programs. They have to be uploaded every
+time you insert the TKey.
 
 Specifications:
 

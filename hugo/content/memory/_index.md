@@ -42,8 +42,6 @@ v                                     v
 | MMIO FW_RAM | 0xd0     |
 | MMIO TK1    | 0xff     |
 
-TODO fill in rest
-
 ## MMIO
 
 MMIO begins at `0xc000_0000` but please use the constants in [tk1_mem.h](https://github.com/tillitis/tillitis-key1-apps/blob/main/apps/include/tk1_mem.h)
@@ -62,15 +60,15 @@ MMIO begins at `0xc000_0000` but please use the constants in [tk1_mem.h](https:/
 | `TIMER_STATUS`    | r     | r         |        |          |           | TIMER_STATUS_RUNNING_BIT is 1 when the timer is running.                |
 | `TIMER_PRESCALER` | r/w   | r/w       | 4B     |          |           | Prescaler init value. Write blocked when running.                       |
 | `TIMER_TIMER`     | r/w   | r/w       | 4B     |          |           | Timer init or current value while running. Write blocked when running.  |
-| `UDS_FIRST`       | r[^3] | invisible | 4B     | u8[32]   |           | First word of Unique Device Secret key.                                 |
-| `UDS_LAST`        |       | invisible |        |          |           | The last word of the UDS                                                |
+| `UDS_FIRST`       | r[^3] | invisible | 4B     | u8[32]   |           | First word of Unique Device Secret key. Note: Read once per power up.   |
+| `UDS_LAST`        |       | invisible |        |          |           | The last word of the UDS. Note: Read once per power up.                 |
 | `UART_BITRATE`    | r/w   |           |        |          |           | TBD                                                                     |
 | `UART_DATABITS`   | r/w   |           |        |          |           | TBD                                                                     |
 | `UART_STOPBITS`   | r/w   |           |        |          |           | TBD                                                                     |
 | `UART_RX_STATUS`  | r     | r         | 1B     | u8       |           | Non-zero when there is data to read                                     |
 | `UART_RX_DATA`    | r     | r         | 1B     | u8       |           | Data to read. Only LSB contains data                                    |
 | `UART_RX_BYTES`   | r     | r         | 4B     | u32      |           | Number of bytes received from the host and not yet read by SW, FW.      |
-| `UART_TX_STATUS`  | r     | r         | 1B     | u8       |           | Non-zero when it's OK to write data                                     |
+| `UART_TX_STATUS`  | r     | r         | 1B     | u8       |           | Non-zero when it's OK to write data to send.                            |
 | `UART_TX_DATA`    | w     | w         | 1B     | u8       |           | Data to send. Only LSB contains data                                    |
 | `TOUCH_STATUS`    | r/w   | r/w       |        |          |           | TOUCH_STATUS_EVENT_BIT is 1 when touched. After detecting a touch       |
 |                   |       |           |        |          |           | event (reading a 1), write anything here to acknowledge it.             |
@@ -93,5 +91,8 @@ MMIO begins at `0xc000_0000` but please use the constants in [tk1_mem.h](https:/
 | `CDI_LAST`        |       | r         |        |          |           | Last word of CDI                                                        |
 | `RAM_ASLR`        | w     | invisible | 4B     | u32      |           | Address Space Randomization seed value for the RAM                      |
 | `RAM_SCRAMBLE`    | w     | invisible | 4B     | u32      |           | Data scrambling seed value for the RAM                                  |
+| `CPU_MON_CTRL`    | w     | w         | 4B     | u32      |           | Bit 0 enables CPU execution monitor. Can't be unset. Lock adresses      |
+| `CPU_MON_FIRST`   | w     | w         | 4B     | u32      |           | First address of the area monitored for execution attempts |
+| `CPU_MON_LAST`    | w     | w         | 4B     | u32      |           | Last address of the area monitored for execution attempts |
 
 [^3]: The UDS can only be read *once* per power-cycle.
