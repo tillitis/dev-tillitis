@@ -11,4 +11,4 @@ the TKey is plugged in (sometimes called the "host"). In this
 developer handbook, you can also learn how to develop your own
 applications.
 
-![TKey](images/mta1-usb-v1.jpg)
+<img src="images/mta1-usb-v1.jpg" alt="a TKey" title="a TKey" width="85%">

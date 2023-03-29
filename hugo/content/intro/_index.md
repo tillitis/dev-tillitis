@@ -5,6 +5,8 @@ weight: 1
 
 # Introduction
 
+<img src="../images/tkey-interaction-points.png" alt="TKey with interaction points marked" title="TKey with interaction points marked" width="85%">
+
 The Tillitis TKey is a small computer in a USB stick form factor that
 can run small applications which are loaded onto it (called device
 applications). The purpose of TKey is to be a secure environment for
