@@ -1,3 +1,5 @@
+[![deploy hugo site](https://github.com/tillitis/dev-tillitis/actions/workflows/deploy.yaml/badge.svg)](https://github.com/tillitis/dev-tillitis/actions/workflows/deploy.yaml)
+
 # Developer Handbook
 
 Source of [Tillitis TKey Developer Handbook](https://dev.tillitis.se/).
