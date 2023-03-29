@@ -7,28 +7,35 @@ weight: 4
 
 ## Framing Protocol
 
-We provide a framing protocol to communicate with the TKey firmware
-and TKey programs. Developers can choose to use this protocol as a
-base for their own TKey programs but client programs *must* use it to
-speak the firmware protocol defined below.
+Tillitis provide a framing protocol for client applications to
+communicate with the TKey firmware and device applications. Developers
+can optionally use this framing protocol as a basis for their own TKey
+device applications. But client applications *must* use it when
+communicating with the firmware using the firmware protocol defined
+below.
 
-The communication is driven by the host and the protocol is
-command-response based. The host sends a command, and the TK1 must
-always send a response to a given command. Commands are processed by
-the TK1 in order. If the host sends a new command before receiving a
-response to the previous command, it is the responsibility of the host
-to determine to which command a received response belongs to.
+The communication is driven by the client application running on the
+host computer and the protocol is command-response based. The client
+app sends a command, and the TK1 sends a response to the given
+command.
 
-Commands and responses are sent as frames with a constrained set of
-possible lengths. It is the endpoints that are communicating that
-decides what the data in the command and response frames mean, and if
-the commands and responses are valid and make sense.
+Commands are processed by the TK1 in order. If the client app sends a
+new command before receiving a response to the previous command, it is
+the responsibility of the client app to determine which command a
+received response belongs to.
 
-### Command frame format
+Commands and responses are sent as frames with a limited length. The
+communicating endpoints decide the meaning of the command and response
+frames, and whether the commands and responses are valid, make sense,
+or not.
 
-A command frame consists of a single header byte followed by one or more
-data bytes. The number of data bytes in the frame is given by the header
-byte. The header byte also specifies the endpoint for the command.
+### Command Frame Format
+
+A command frame consists of a single header byte followed by one or
+more data bytes. The number of data bytes in the frame is given by the
+header byte. The header byte also specifies the endpoint for the
+command/response -- essentially indicating if it is sent to/by the
+firmware, or a device application.
 
 The bits in the command header byte should be interpreted as:
 * Bit [7] (1 bit). Reserved - possible protocol version.
@@ -37,7 +44,7 @@ The bits in the command header byte should be interpreted as:
 
 * Bits [4..3] (2 bits). Endpoint number.
 0. HW in interface_fpga (unused)
-1. HW in application_fpga
+1. HW in application_fpga (unused)
 2. FW in application_fpga
 3. SW (device application) in application_fpga
 
@@ -54,17 +61,19 @@ does **not** include the command header byte. This means that a complete
 command frame, with a header indicating a data length of 128 bytes, is
 128+1 bytes in length.
 
-Note that the host sets the frame ID tag. The ID tag in a given command
-MUST be preserved in the corresponding response to the command.
+Note that the client application sets the frame ID tag. The ID tag in
+a given command **must** be preserved in the corresponding response to
+the command.
 
-### Command frame examples
+### Command Frame Examples
 
-Note that these examples mostly don't take into account that the first
-byte in the data (following the command header byte) typically is
-occupied by the particular app or FW command requested, so there is 1
-byte less available for the "payload" of the command.
+Note that most of the examples below do not take into account that the
+particular app or FW command request typically occupies the first byte
+in the data (following the frame header byte), which makes 1 byte less
+available for actual command content.
 
-Some examples to clarify endpoints and commands:
+These examples clarify endpoints and commands using the framing
+protocol:
 
 * 0x00: A command to the HW in the interface_fpga with a single byte of
   data. The single byte could indicate action such as reading from the
@@ -72,24 +81,24 @@ Some examples to clarify endpoints and commands:
 
 * 0x13: A command to the FW in the application_fpga with 128 bytes of
   data. The data could for example be parts of an application binary to
-  be loaded into the program memory.
+  be loaded into memory.
 
 * 0x1a: A command to the application running in the application_fpga
   with 32 bytes of data. The data could be a 32 byte challenge to be
-  signed using a private key derived in the TK1.
+  signed using the private key derived in the TKey.
 
-### Response frame format
+### Response Frame Format
 
 A response consists of a single header byte followed by one or more bytes.
 
-The bits in the response header byte should be interpreted as:
+The bits in the response header byte should be interpreted as follows:
 * Bit [7] (1 bit). Reserved - possible protocol version.
 
 * Bits [6..5] (2 bits). Frame ID tag.
 
 * Bits [4..3] (2 bits). Endpoint number.
 0. HW in interface_fpga (unused)
-1. HW in application_fpga
+1. HW in application_fpga (unused)
 2. FW in application_fpga
 3. SW (device application) in application_fpga
 
@@ -109,15 +118,15 @@ does **not** include the response header byte. This means that a complete
 response frame, with a header indicating a data length of 128 bytes, is
 128+1 bytes in length.
 
-Note that the ID in a response MUST be the same ID as was present in the
-header of the command being responded to.
+Note that the ID in a response **must** be the same ID as was present
+in the header of the command being responded to.
 
-### Response frame examples
+### Response Frame Examples
 
-Note that these examples mostly don't take into account that the first
-byte in the data (following the response header byte) typically is
-occupied by the particular app or FW response code, so there is 1 byte
-less available for the "payload" of the response.
+Note that most of the examples below do not take into account that the
+particular app or FW response request typically occupies the first byte
+in the data (following the frame header byte), which makes 1 byte less
+available for actual response content.
 
 * 0x01: A successful command to the HW in the interface_fpga, which
   responds with four bytes of data. For example the interface_fpga
@@ -126,25 +135,25 @@ less available for the "payload" of the response.
 * 0x14: An unsuccessful command to the FW in the application_fpga which
   responds with a single byte of data.
 
-* 0x1b: A successful command to the application running in the
+* 0x1b: A successful command to the device application running in the
   application_fpga. The response contains 128 bytes of data, for example
   an EdDSA Ed25519 signature.
 
-## Firmware protocol
+## Firmware Protocol
 
-### Firmware protocol definition
+### Firmware Protocol Definition
 
-The firmware commands and responses are built on top of the Framing
-Protocol above.
+The firmware commands and responses are built on top of the framing
+protocol above.
 
 The commands look like this:
 
-| *name*           | *size (bytes)* | *comment*                                |
+| *Name*           | *Size (bytes)* | *Comment*                                |
 |------------------|----------------|------------------------------------------|
 | Header           | 1              | Framing protocol header including length |
-|                  |                | of the rest of the frame                 |
-| Command/Response | 1              | Any of the below commands or responses   |
-| Data             | n              | Any additional data                      |
+|                  |                | of the rest of the frame.                |
+| Command/Response | 1              | Any of the below commands or responses.  |
+| Data             | n              | Any additional data.                     |
 
 The responses might include a one byte status field where 0 is
 `STATUS_OK` and 1 is `STATUS_BAD`.
@@ -157,31 +166,31 @@ Get the name and version of the stick.
 
 #### `FW_RSP_NAME_VERSION` (0x02)
 
-| *name*  | *size (bytes)* | *comment*            |
+| *Name*  | *Size (bytes)* | *Comment*            |
 |---------|----------------|----------------------|
-| name0   | 4              | ASCII                |
+| Name0   | 4              | ASCII                |
 | name1   | 4              | ASCII                |
 | version | 4              | Integer version (LE) |
 
-In a bad response the fields will be zeroed.
+In a bad response the fields will be all zeros (0x00 bytes).
 
 #### `FW_CMD_LOAD_APP` (0x03)
 
-| *name*       | *size (bytes)* | *comment*           |
+| *Name*       | *Size (bytes)* | *Comment*           |
 |--------------|----------------|---------------------|
 | size         | 4              | Integer (LE)        |
 | uss-provided | 1              | 0 = false, 1 = true |
 | uss          | 32             | Ignored if above 0  |
 
 Start an application loading session by setting the size of the
-expected device application and a user-supplied secret, if
-`uss-provided` is 1. Otherwise `USS` is ignored.
+expected device application and a User-Supplied Secret, if
+`uss-provided` is 1. Otherwise the `uss` is ignored.
 
 #### `FW_RSP_LOAD_APP` (0x04)
 
 Response to `FW_CMD_LOAD_APP`
 
-| *name* | *size (bytes)* | *comment*                   |
+| *Name* | *Size (bytes)* | *Comment*                   |
 |--------|----------------|-----------------------------|
 | status | 1              | `STATUS_OK` or `STATUS_BAD` |
 
@@ -191,7 +200,7 @@ Response to `FW_CMD_LOAD_APP`
 |--------|----------------|---------------------|
 | data   | 127            | Raw binary app data |
 
-Load 127 bytes of raw app binary into device RAM. Should be sent
+Load 127 bytes of raw app binary into the TKey RAM. Should be sent
 consecutively over the complete raw binary. (128 == largest frame
 length minus the command byte).
 
@@ -199,26 +208,27 @@ length minus the command byte).
 
 Response to all but the ultimate `FW_CMD_LOAD_APP_DATA` commands.
 
-| *name* | *size (bytes)* | *comment*                |
+| *Name* | *Size (bytes)* | *Comment*                |
 |--------|----------------|--------------------------|
 | status | 1              | `STATUS_OK`/`STATUS_BAD` |
 
 #### `FW_RSP_LOAD_APP_DATA_READY` (0x07)
 
 The response to the last `FW_CMD_LOAD_APP_DATA` is an
-`FW_RSP_LOAD_APP_DATA_READY` with the un-keyed hash digest for the
-application that was loaded. It allows the host to verify that the
-application was correctly loaded. This means that the CDI calculated
-will be correct given that the UDS has not been modified.
+`FW_RSP_LOAD_APP_DATA_READY` with the BLAKE2s-256 hash digest (no
+secret key) for the application that was loaded. It allows the client
+application on the host to verify that the application was correctly
+loaded. This means that the calculated CDI will be correct given that
+the UDS has not been modified.
 
-| *name* | *size (bytes)* | *comment*                |
+| *Name* | *Size (bytes)* | *Comment*                |
 |--------|----------------|--------------------------|
 | status | 1              | `STATUS_OK`/`STATUS_BAD` |
 | digest | 32             | BLAKE2s(app)             |
 
 #### `FW_CMD_GET_UDI` (0x08)
 
-Ask for the Unique Device Identifier (UDI) of the device.
+Ask for the Unique Device Identifier (UDI) of the TKey.
 
 #### `FW_RSP_GET_UDI` (0x09)
 
