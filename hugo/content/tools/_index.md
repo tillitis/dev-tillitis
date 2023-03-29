@@ -208,7 +208,7 @@ your C programs with.
 RAM starts at 0x4000\_0000 and ends at 0x4002\_0000 (128 kiB). The
 device app will be loaded by firmware at RAM start. The stack for the
 app is setup to start just below the end of RAM (see
-[apps/libcrt0/crt0.S](apps/libcrt0/crt0.S)).
+[apps/libcrt0/crt0.S](https://github.com/tillitis/tillitis-key1-apps/blob/main/apps/libcrt0/crt0.S)).
 
 There are no heap allocation functions, no `malloc()` and friends. You
 can access memory directly yourself. `APP_ADDR` and `APP_SIZE` are
