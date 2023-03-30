@@ -90,7 +90,7 @@ write access.
 | `NAME1`           | r     | r         | 4B     | char[4]  | "mkdf"    | ID of core/stick, second part.                                          |
 | `VERSION`         | r     | r         | 4B     | u32      | 1         | Version of core/stick.                                                  |
 | `SWITCH_APP`      | r/w   | r         | 1B     | u8       |           | Write anything here to trigger the switch to application mode. Reading  |
-|                   |       |           |        |          |           | returns 0 if device is in firmware mode, 0xffffffff if in app mode.     |
+|                   |       |           |        |          |           | returns 0 if TKey is in firmware mode, 0xffffffff if in app mode.       |
 | `LED`             | r/w   | r/w       | 1B     | u8       |           | Controls the RGB color of the status indicator LED on TKey.             |
 |                   |       |           |        |          |           | Bit 0 is Blue, bit 1 is Green, and bit 2 is Red LED.                    |
 | `GPIO`            | r/w   | r/w       | 1B     | u8       |           | Bits 0 and 1 contain the input level of GPIO 1 and 2.                   |
