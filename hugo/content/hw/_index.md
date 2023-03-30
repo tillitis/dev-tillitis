@@ -81,8 +81,8 @@ developers does not have to do anything to use it.
 
 For more information about the ASLR, please see the Tillitis Key
 [system
-description](https://github.com/tillitis/tillitis-key1/blob/main/doc/system_description/system_description.md).
-
+description](https://github.com/tillitis/tillitis-key1/blob/main/doc/system_description/system_description.md)
+(in the tillitis-key1 repository).
 
 ## RAM Scrambler
 

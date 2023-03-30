@@ -49,9 +49,9 @@ $ podman run --rm --mount type=bind,source="$(pwd)",target=/src -w /src -it ghcr
 
 Tillitis provides a TKey emulator based on QEMU.
 
-Go to the `tk1` branch at [qemu](https://github.com/tillitis/qemu) to
-fetch the emulator and then build it, or execute the following
-commands:
+Go to the `tk1` branch in our [qemu
+repository](https://github.com/tillitis/qemu) to fetch the emulator
+and then build it, or execute the following commands:
 
 ```
 $ git clone -b tk1 https://github.com/tillitis/qemu
@@ -179,9 +179,9 @@ running the client applications.
 
 ### Running a TKey Device Application
 
-You can use `tkey-runapp` from
+You can use `tkey-runapp` from the
 [tillitis-key1-apps](https://github.com/tillitis/tillitis-key1-apps)
-to load a device application onto the TKey.
+repository to load a device application onto the TKey.
 
 ```
 $ tkey-runapp apps/blink/app.bin
@@ -208,7 +208,8 @@ your C programs with.
 RAM starts at 0x4000\_0000 and ends at 0x4002\_0000 (128 kiB). The
 device app will be loaded by firmware at RAM start. The stack for the
 app is setup to start just below the end of RAM (see
-[apps/libcrt0/crt0.S](https://github.com/tillitis/tillitis-key1-apps/blob/main/apps/libcrt0/crt0.S)).
+[apps/libcrt0/crt0.S](https://github.com/tillitis/tillitis-key1-apps/blob/main/apps/libcrt0/crt0.S)
+in the tillitis-key1-apps repository).
 
 There are no heap allocation functions, no `malloc()` and friends. You
 can access memory directly yourself. `APP_ADDR` and `APP_SIZE` are

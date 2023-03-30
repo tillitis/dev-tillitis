@@ -52,6 +52,7 @@ The first 8 bits in a 32-bit address.
 
 MMIO begins at `0xc000_0000` but please use the constants in
 [tk1_mem.h](https://github.com/tillitis/tillitis-key1-apps/blob/main/apps/include/tk1_mem.h)
+(in the tillitis-key1-apps repository).
 
 *Note*: MMIO accesses should be 32 bits wide. Use for example `lw` and
 `sw` to load and store 32-bit words. Exceptions are `FW_RAM` and
@@ -106,4 +107,4 @@ write access.
 | `CPU_MON_FIRST`   | w     | w         | 4B     | u32      |           | First address of the area monitored for execution attempts |
 | `CPU_MON_LAST`    | w     | w         | 4B     | u32      |           | Last address of the area monitored for execution attempts |
 
-[^3]: The UDS can only be read *once* after TKey has started.
+[^3]: Each word of the UDS can only be read *once* after TKey has started.
