@@ -5,7 +5,7 @@ weight: 1
 
 # Introduction
 
-<img src="../images/tkey-interaction-points.png" alt="TKey with interaction points marked" title="TKey with interaction points marked" width="85%">
+<img src="../images/tkey-interaction-points_smaller.png" alt="TKey with interaction points marked" title="TKey with interaction points marked" width="85%">
 
 The Tillitis TKey is a small computer in a USB stick form factor that
 can run small device applications which are loaded onto it. The
