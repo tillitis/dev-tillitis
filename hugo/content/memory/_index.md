@@ -80,7 +80,7 @@ write access.
 | `UART_TX_STATUS`  | r     | r         | 1B     | u8       |           | Non-zero when it's OK to write data to send.                            |
 | `UART_TX_DATA`    | w     | w         | 1B     | u8       |           | Data to send. Only the LSB contains data.                               |
 | `TOUCH_STATUS`    | r/w   | r/w       |        |          |           | `TOUCH_STATUS_EVENT_BIT` is 1 when touched. After detecting a touch event (reading a 1), write anything here to acknowledge the event. |
-| `FW_RAM`          | r/w   | invisible | 2 kiB  | u8[2048] |           | Firmware-only RAM.                                                      |
+| `FW_RAM`          | r/w   | invisible | 2 kiB  | u8[2048] |           | Firmware-only RAM.                                                      |
 | `UDI`             | r     | invisible | 8B     | u64      |           | Unique Device ID (UDI).                                                 |
 | `QEMU_DEBUG`      | w     | w         |        | u8       |           | Debug console (only in QEMU)                                            |
 | `NAME0`           | r     | r         | 4B     | char[4]  | "tk1 "    | ID of core/stick, first part.                                           |
