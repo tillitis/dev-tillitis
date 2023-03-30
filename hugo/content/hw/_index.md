@@ -7,12 +7,12 @@ weight: 3
 
 The TKey hardware design consists of a FPGA device and some support
 components mounted on the PCB. The FPGA design contain the TKey System
-on Chip (SoC) that TKey host apps are loaded and executed.
-Communication between the TKey SoC and the client is handled by a
-small microcontroller (MCU) that handles conversion between USB and
-UART.
+on Chip (SoC) where device applications are loaded and executed.
+Communication between the TKey SoC and a client app (running on the
+host computer) is handled by a small microcontroller (MCU) that
+handles conversion between USB and UART.
 
-The SoC, called application_gpga consists of a CPU and a number of
+The SoC, called application_fpga consists of a CPU and a number of
 cores attached through the memory subsystem. The following is a
 description of the CPU, the cores, and the functionality they
 implement from a developer point of view.

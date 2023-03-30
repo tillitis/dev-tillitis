@@ -31,13 +31,13 @@ enableGitInfo = true
 # [[menu.before]]
 
 [[menu.after]]
-  name = "Tillitis Github"
+  name = "Tillitis on GitHub"
   url = "https://github.com/tillitis"
   weight = 10
 
 [[menu.after]]
   name = "Tillitis AB"
-  url = "https://tillitis.se/"
+  url = "https://www.tillitis.se/"
   weight = 20
 
 [params]
