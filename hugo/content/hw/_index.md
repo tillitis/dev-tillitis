@@ -141,9 +141,14 @@ non-zero, then reading the word from `TRNG_ENTROPY`.
 
 ## Touch Sensor
 
-The hardware core provides an interface to the touch sensor on the
-TKey device. The touch sensor can share touch events with the core,
-firmware, and applications.
+The touch_sense core provides an interface to the touch sensor on the
+TKey device. Using the core, the firmware as well as applications can
+get information about touch events and manage detection of events.
+
+It is recommended to start handling touch events by acknowledging any
+stray event before signalling to the user that a touch event is
+expected, and then start waiting for the event.
+
 
 ## TK1
 
