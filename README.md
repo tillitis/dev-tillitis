@@ -25,9 +25,6 @@ Web Server is available at http://localhost:1313/
 
 Point your browser at http://localhost:1313/ to see our documentation.
 
-Please observe that this is just an example with cut and pasted
-documentation and a Hugo theme chosen by random.
-
 ## Editing pages
 
 All real content is under `hugo/content` and are Markdown files
