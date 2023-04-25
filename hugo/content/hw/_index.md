@@ -65,7 +65,7 @@ the FPGA bitstream.
 The RAM is 128 kiB. The firmware clears the RAM before loading a the
 TKey device app into RAM.
 
-## Address Randomization
+## Address Randomisation
 
 The TKey hardware includes a simple form of RAM memory protection from
 external threats. This might mitigate some of the problems of a warm
@@ -87,8 +87,8 @@ description](https://github.com/tillitis/tillitis-key1/blob/main/doc/system_desc
 (in the tillitis-key1 repository).
 
 Note that this, despite the name of the register, is not layout
-randomization. The running app doesn't have offsets to, say, library
-functions randomized.
+randomisation. The running app doesn't have offsets to, say, library
+functions randomised.
 
 ## RAM Scrambler
 
