@@ -62,8 +62,8 @@ the FPGA bitstream.
 
 ## RAM
 
-The RAM is 128 kiB. The firmware clears the RAM before loading a the
-TKey device app into RAM.
+The RAM is 128 kiB. The firmware clears and fills the RAM with a
+random word on power up.
 
 ## Address Randomisation
 
