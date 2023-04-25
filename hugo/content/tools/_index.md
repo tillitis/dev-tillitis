@@ -49,9 +49,31 @@ $ podman run --rm --mount type=bind,source="$(pwd)",target=/src -w /src -it ghcr
 
 Tillitis provides a TKey emulator based on QEMU.
 
-Go to the `tk1` branch in our [qemu
-repository](https://github.com/tillitis/qemu) to fetch the emulator
-and then build it, or execute the following commands:
+The easiest way to run the TKey emulator is to use our OCI image (~120
+MiB):
+
+```
+ghcr.io/tillitis/tkey-qemu-tk1-23.03.1:latest
+```
+
+We provide a script in
+[tillitis-key1-apps](https://github.com/tillitis/tillitis-key1-apps)
+that assumes a working rootless Podman setup and `socat` installed. On
+Ubuntu 22.10, running `apt install podman rootlesskit slirp4netns
+socat` should be enough. Then you can just run the script like:
+
+```
+./contrib/run-tkey-qemu
+```
+
+This will let you run client apps with `--port ./tkey-qemu-pty` and it
+will find the running emulator.
+
+### Building QEMU
+
+If you want to build QEMU yourself, go to the `tk1` branch in our
+[qemu repository](https://github.com/tillitis/qemu) to fetch the
+emulator and then build it, or execute the following commands:
 
 ```
 $ git clone -b tk1 https://github.com/tillitis/qemu
