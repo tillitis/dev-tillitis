@@ -226,7 +226,7 @@ map](../memory/). and the include file `tk1_mem.h`.
 
 ### Debugging
 
-If you a TKey device app in the QEMU emulator, there is a debug debug
+If you run a TKey device app in the QEMU emulator, there is a debug
 port on 0xfe00\_1000 (`TK1_MMIO_QEMU_DEBUG`). Anything written there
 is printed as a character by QEMU on the console.
 
@@ -245,7 +245,32 @@ You can also use the QEMU monitor for debugging, for example, `info
 registers`, or run QEMU with `-d in_asm` or `-d trace:riscv_trap` for
 tracing.
 
-TODO Give examples on how to use gdb with qemu.
+#### GDB
+
+If you run QEMU with `-s` it provides the GDB protocol on
+`localhost:1234` (default).
+
+If you run with `-S` QEMU doesn't start the firmware automatically. If
+you also specified `-s` and attach a GDB you can control the start
+entirely from GDB.
+
+Your OS package system might include a GDB with RV32IMC support,
+perhaps under a name like `riscv32-elf-gdb`. Ubuntu, however, does
+not. Instead you can use GDB from
+
+https://github.com/riscv-collab/riscv-gnu-toolchain/releases/
+
+To attach GDB to the process running in QEMU do something like:
+
+```
+riscv32-elf-gdb firmware.elf \
+-ex "set architecture riscv:rv32" \
+-ex "target remote :1234" \
+-ex "load"
+```
+
+This works with both firmware and apps. Remember to compile your
+programs with `-g` in `CFLAGS` to include debug symbols.
 
 ## Developing TKey client applications
 
