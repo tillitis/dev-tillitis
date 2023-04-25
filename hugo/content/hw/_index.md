@@ -5,14 +5,14 @@ weight: 3
 
 # TKey Hardware Design
 
-The TKey hardware design consists of a FPGA device and some support
+The TKey hardware design consists of an FPGA device and some support
 components mounted on the PCB. The FPGA design contain the TKey System
 on Chip (SoC) where device applications are loaded and executed.
 Communication between the TKey SoC and a client app (running on the
 host computer) is handled by a small microcontroller (MCU) that
 handles conversion between USB and UART.
 
-The SoC, called application_fpga consists of a CPU and a number of
+The SoC, called application\_fpga consists of a CPU and a number of
 cores attached through the memory subsystem. The following is a
 description of the CPU, the cores, and the functionality they
 implement from a developer point of view.
@@ -20,7 +20,7 @@ implement from a developer point of view.
 ## CPU
 
 The CPU of the TKey is a 32-bit RISC-V running at 18 MHz. It supports
-the RV32 instruction set with RV32IC_Zmmul (`-march=rv32iczmmul`)
+the RV32 instruction set with RV32IC\_Zmmul (`-march=rv32iczmmul`)
 extensions.
 
 This means that the base RV23I as well as compressed instructions are
@@ -109,7 +109,7 @@ developers don't have to do anything to use it.
 A general purpose 32-bit timer. The timer will count down every cycle,
 from the initial value down to one. In order to handle long time
 sequences (minutes, hours, days) there is also a 32-bit prescaler. If
-the prescaler is set to 18_000_000, the timer ticks every second
+the prescaler is set to 18\_000\_000, the timer ticks every second
 because the CPU is running at 18 MHz.
 
 ## UART
@@ -147,7 +147,7 @@ non-zero, then reading the word from `TRNG_ENTROPY`.
 
 ## Touch Sensor
 
-The touch_sense core provides an interface to the touch sensor on the
+The touch\_sense core provides an interface to the touch sensor on the
 TKey device. Using the core, the firmware as well as applications can
 get information about touch events and manage detection of events.
 
