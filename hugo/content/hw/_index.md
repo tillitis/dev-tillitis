@@ -65,24 +65,30 @@ the FPGA bitstream.
 The RAM is 128 kiB. The firmware clears the RAM before loading a the
 TKey device app into RAM.
 
-# Address Space Layout Randomization (ASLR)
+## Address Randomization
 
-The TKey hardware includes a simple form of RAM memory protection. The
-memory protection is based on two separate mechanisms:
+The TKey hardware includes a simple form of RAM memory protection from
+external threats. This might mitigate some of the problems of a warm
+boot attack potentially reading out all the RAM contents.
 
-1. Address Space Layout Randomisation (ASLR)
+The memory protection is based on two separate mechanisms:
+
+1. Address randomisation
 2. Address dependent data scrambling
 
-The ASLR is implemented by XORing the CPU address with the contents of
-the `ADDR_RAM_ASLR` register in the TK1 core. The result is used as
-the RAM address. The ASLR is set up by the firmware as part of loading
-the TKey device app. The ASLR will be transparent to the app, and
-developers does not have to do anything to use it.
+The address randomisation is implemented by XORing the CPU address
+with the contents of the `ADDR_RAM_ASLR` register in the TK1 core. The
+result is used as the RAM address. This is set up by the firmware as
+part of loading the TKey device app. The addresses will be transparent
+to the device app and developers don't have to do anything to use it.
 
-For more information about the ASLR, please see the Tillitis Key
-[system
+For more information about this, please see the Tillitis Key [system
 description](https://github.com/tillitis/tillitis-key1/blob/main/doc/system_description/system_description.md)
 (in the tillitis-key1 repository).
+
+Note that this, despite the name of the register, is not layout
+randomization. The running app doesn't have offsets to, say, library
+functions randomized.
 
 ## RAM Scrambler
 
@@ -94,8 +100,8 @@ The same pair or XOR operations is also performed on the data read out
 from the RAM.
 
 The data scrambling is set up by the firmware as part of loading the
-TKey device app. The scrambling will be transparent to the app, and
-developers does not have to do anything to use it.
+TKey device app. The scrambling will be transparent to the app and
+developers don't have to do anything to use it.
 
 
 ## Timer

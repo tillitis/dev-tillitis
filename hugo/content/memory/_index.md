@@ -94,7 +94,7 @@ write access.
 | `BLAKE2S`         | r/w   | r         | 4B     | u32      |           | Function pointer to a BLAKE2S function in the firmware.                 |
 | `CDI_FIRST`       | r/w   | r         | 32B    | u8[32]   |           | The computed Compound Device Identifier (CDI).                          |
 | `CDI_LAST`        |       | r         |        |          |           | Last word of CDI.                                                       |
-| `RAM_ASLR`        | w     | invisible | 4B     | u32      |           | Address Space Randomization seed value for the RAM.                     |
+| `RAM_ASLR`        | w     | invisible | 4B     | u32      |           | Seed value for the RAM randomization.                                   |
 | `RAM_SCRAMBLE`    | w     | invisible | 4B     | u32      |           | Data scrambling seed value for the RAM.                                 |
 | `CPU_MON_CTRL`    | w     | w         | 4B     | u32      |           | Bit 0 enables CPU execution monitor. Can't be unset. Lock addresses.    |
 | `CPU_MON_FIRST`   | w     | w         | 4B     | u32      |           | First address of the area monitored for execution attempts.             |

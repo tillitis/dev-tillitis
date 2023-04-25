@@ -26,7 +26,7 @@ TKey specifications:
 
 - 32-bit RISC-V CPU running at 18 MHz
 - Execution monitor
-- Hardware-assisted ASLR and RAM scrambling
+- Hardware-assisted address randomization and RAM scrambling
 - 128 kiB RAM for TKey device applications
 - 2 kiB firmware RAM
 - 6 kiB ROM
