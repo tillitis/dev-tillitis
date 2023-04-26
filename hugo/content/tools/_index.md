@@ -69,6 +69,11 @@ socat` should be enough. Then you can just run the script like:
 This will let you run client apps with `--port ./tkey-qemu-pty` and it
 will find the running emulator.
 
+### QEMU on macOS
+
+Note that on macOS you need to add `--speed 9600` on the client apps
+when you use the QEMU pty.
+
 ### Building QEMU
 
 If you want to build QEMU yourself, go to the `tk1` branch in our
