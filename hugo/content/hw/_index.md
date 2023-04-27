@@ -86,9 +86,9 @@ For more information about this, please see the Tillitis Key [system
 description](https://github.com/tillitis/tillitis-key1/blob/main/doc/system_description/system_description.md)
 (in the tillitis-key1 repository).
 
-Note that this, despite the name of the register, is not layout
-randomisation. The running app doesn't have offsets to, say, library
-functions randomised.
+Note that this is not ASLR in the sense of randomising offsets to the
+stack or well-known functions. This is address randomisation as seen
+from outside of the running process.
 
 ## RAM Scrambler
 
