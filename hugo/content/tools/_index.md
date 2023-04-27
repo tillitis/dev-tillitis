@@ -42,7 +42,7 @@ To build everything in the apps repo:
 ```
 $ git clone https://github.com/tillitis/tillitis-key1-apps
 $ cd tillitis-key1-apps
-$ podman run --rm --mount type=bind,source="$(pwd)",target=/src -w /src -it ghcr.io/tillitis/tkey-builder:1 make -j
+$ podman run --rm --mount type=bind,source="$(pwd)",target=/src -w /src -it ghcr.io/tillitis/tkey-builder:latest make -j
 ```
 
 ## QEMU
