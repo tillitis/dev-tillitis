@@ -10,8 +10,8 @@ weight: 1
 The Tillitis TKey is a small computer in a USB stick form factor that
 can run small device applications which are loaded onto it. The
 purpose of TKey is to be a secure environment for applications that
-provide security function. Some examples of such security functions
-are:
+provide some kind of security function. Some examples of such security
+functions are:
 
 - Time-based one-time password (TOTP) token generators
 - Signing oracles
@@ -22,7 +22,7 @@ There is no way of storing a device application (or any other data) on
 the TKey. A device app has to be loaded onto the TKey every time you
 plug it in.
 
-TKey specifications:
+## TKey specifications
 
 - 32-bit RISC-V CPU running at 18 MHz
 - Execution monitor
@@ -36,6 +36,15 @@ TKey specifications:
 - Two levels of hardware privilege modes: firmware mode and application mode
 - CPU-controlled LED
 - No persistent storage
+
+*Note well*: In end user version, currently the only one for sale on
+[Tillitis' web shop](https://shop.tillitis.se/), the FPGA
+configuration is locked-down. This means you can't change the FPGA
+bitstream or even read out the bitstream (or the Unique Device Secret,
+UDS) from the configuration memory even if you break the case and
+insert it into a programmer board.
+
+## Measured boot & secrets
 
 A unique feature of the TKey is that it measures the loaded device
 application before starting it. A hash digest measurement (using
