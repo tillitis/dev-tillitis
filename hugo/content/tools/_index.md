@@ -58,9 +58,13 @@ ghcr.io/tillitis/tkey-qemu-tk1-23.03.1:latest
 
 We provide a script in
 [tillitis-key1-apps](https://github.com/tillitis/tillitis-key1-apps)
-that assumes a working rootless Podman setup and `socat` installed. On
-Ubuntu 22.10, running `apt install podman rootlesskit slirp4netns
-socat` should be enough. Then you can just run the script like:
+that assumes a working rootless Podman setup and `socat` installed. It
+currently only works on a Linux system (specifically, it does not work
+when containers are run in Podman's virtual machine, which is required
+on MacOS and Windows). On Ubuntu 22.10, running `apt install podman
+rootlesskit Ubuntu 22.10, running `apt install podman rootlesskit
+slirp4netns socat` should be enough. Then you can just run the script
+like:
 
 ```
 ./contrib/run-tkey-qemu
