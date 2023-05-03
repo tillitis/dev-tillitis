@@ -34,7 +34,7 @@ these packages and tools already installed, for use with Podman or
 Docker. You can use the following command to fetch the image:
 
 ```
-$ podman pull ghcr.io/tillitis/tkey-builder:latest
+$ podman pull ghcr.io/tillitis/tkey-builder:2
 ```
 
 To build everything in the apps repo:
