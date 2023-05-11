@@ -162,11 +162,12 @@ We provide two Go packages to help in developing client applications.
 What we call "client" is the computer or mobile device you insert your
 TKey into.
 
-- `github.com/tillitis/tillitis-key1-apps/tk1`: Contains functions to connect to, load and start a device
-  application on the TKey. - [Go doc](https://pkg.go.dev/github.com/tillitis/tillitis-key1-apps/tk1).
-- `github.com/tillitis/tillitis-key1-apps/tk1sign`: Contains functions
-  to communicate with the `signer` device app, an ed25519 signing
-  oracle. [Go doc](https://pkg.go.dev/github.com/tillitis/tillitis-key1-apps/tk1sign).
+- `github.com/tillitis/tkeyclient`: Contains functions to connect to,
+  load and start a device application on the TKey. - [Go
+  doc](https://pkg.go.dev/github.com/tillitis/tkeyclient).
+- `github.com/tillitis/tkeysign`: Contains functions to communicate
+  with the `signer` device app, an ed25519 signing oracle. [Go
+  doc](https://pkg.go.dev/github.com/tillitis/tkeysign).
 
 ## Our TKey Client and Device Apps
 

@@ -237,11 +237,11 @@ package main
 import (
     "fmt"
 
-	"github.com/tillitis/tillitis-key1-apps/tk1"
+	"github.com/tillitis/tkeyclient"
 )
 
 func main() {
-	tk := tk1.New()
+	tk := tkeyclient.New()
 	err := tk.Connect("/dev/ttyACM0")
 	if err != nil {
 		panic("Couldn't connect to TKey!")
@@ -277,5 +277,5 @@ the firmware and still reply negatively for a frame meant for the
 firmware.
 
 See the [Go
-doc](https://pkg.go.dev/github.com/tillitis/tillitis-key1-apps/tk1)
-for `tk1` for details on how to call the functions.
+doc](https://pkg.go.dev/github.com/tillitis/tkeyclient)
+for `tkeyclient` for details on how to call the functions.
