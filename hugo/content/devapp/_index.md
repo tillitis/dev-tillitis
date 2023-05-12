@@ -98,8 +98,8 @@ map](/memory/) and the header file `tk1_mem.h`.
 
 ## Running TKey apps
 
-To run TKey, plug it into a USB port on a computer. If the TKey status
-indicator LED is white it has been programmed with the standard FPGA
+To run the TKey, plug it into a USB port on a computer. If the TKey status
+indicator LED is white, it has been programmed with the standard FPGA
 bitstream (including the firmware). If the status indicator LED is not
 white it is unprovisioned. For instructions on how to do the initial
 programming of an unprovisioned TKey, see:
@@ -143,16 +143,16 @@ terminal that you are working in.
 
 ### Users on MacOS
 
-The client apps tries to auto-detect serial ports of TKey USB sticks,
-but if more than one is found you'll need to choose one using the
-`--port` flag.
+The client apps tries to auto-detect the serial port of the TKey.
+If more than one serial port is found, use the `--port` flag to
+select the appropriate one.
 
 To find the serial ports device path manually you can do `ls -l
-/dev/cu.*`. There should be a device named like `/dev/cu.usbmodemN`
+/dev/cu.*`. There should be a device named `/dev/cu.usbmodemN`
 (where N is a number, for example 101). This is the device path that
 might need to be passed as `--port` when running the client app.
 
-You can verify that the OS has found and enumerated the USB stick by
+You can verify that the OS has found and enumerated the TKey by
 running:
 
 ```
@@ -262,7 +262,7 @@ sure it's in firmware mode:
 
 ```
 
-Then you can load and start an app on the stick:
+Then you can load and start an app on the Tkey:
 
 ```go
 	err = tk.LoadAppFromFile("blink.bin", []byte{})
@@ -271,11 +271,11 @@ Then you can load and start an app on the stick:
 	}
 ```
 
-After this the client program and the device program talk their own
-protocol. You are encouraged to use the framing protocol we use for
-the firmware and still reply negatively for a frame meant for the
-firmware.
+After this, the client program and the device program talk their own
+protocol. You are encouraged to use the same framing protocol used
+for the firmware while still replying negatively to a frame meant for
+the firmware.
 
-See the [Go
+See the `tkeyclient` [Go
 doc](https://pkg.go.dev/github.com/tillitis/tkeyclient)
-for `tkeyclient` for details on how to call the functions.
+for details on how to call the functions.
