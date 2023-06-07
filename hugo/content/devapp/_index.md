@@ -38,8 +38,8 @@ int main(void)
 }
 ```
 
-To get this to work you will need to point to our header files and at
-least `libcrt0` C runtime otherwise your program won't even reach
+To get this to work you will need our header files and to link with at
+least the `libcrt0` C runtime, otherwise your program won't even reach
 `main()`. Header files, `libcrt0`, and other libraries are available
 in
 
@@ -75,10 +75,6 @@ Now you have `rgb.bin` which you can load into a TKey with
 
 To make development easier a sample Makefile is provided in
 `tkey-libs/example-app`.
-
-Device apps are kept under the `apps` directory. A C runtime is
-provided as `apps/libcrt0/libcrt0.a` which you can link your C
-programs with.
 
 ### Memory
 
