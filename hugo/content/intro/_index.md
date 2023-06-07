@@ -8,8 +8,8 @@ weight: 1
 <img src="../images/tkey-interaction-points_smaller.png" alt="TKey with interaction points marked" title="TKey with interaction points marked" width="85%">
 
 The Tillitis TKey is a small computer in a USB stick form factor that
-can run small device applications which are loaded onto it. The
-purpose of TKey is to be a secure environment for applications that
+can run small device applications that are loaded onto it. The
+purpose of the TKey is to be a secure environment for applications that
 provide some kind of security function. Some examples of such security
 functions are:
 
@@ -71,7 +71,7 @@ cdi = blake2s(UDS, blake2s(device_app), USS)
 
 All of the TKey software, firmware, FPGA Verilog source code,
 schematics and PCB design files are released under open
-source/hardware licenses like all trustworthy security software and
+source/hardware licenses, like all trustworthy security software and
 hardware should be. This in itself makes it different, as other
 security tokens use at least some closed source hardware for
 security-critical operations.

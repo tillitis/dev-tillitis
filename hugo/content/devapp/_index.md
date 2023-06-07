@@ -262,7 +262,7 @@ sure it's in firmware mode:
 
 ```
 
-Then you can load and start an app on the Tkey:
+Then you can load and start an app on the TKey:
 
 ```go
 	err = tk.LoadAppFromFile("blink.bin", []byte{})

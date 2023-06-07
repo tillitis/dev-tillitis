@@ -7,27 +7,26 @@ weight: 4
 
 ## Framing Protocol
 
-Tillitis provide a framing protocol for client applications to
+Tillitis provides a framing protocol for client applications to
 communicate with the TKey firmware and device applications. Developers
 can optionally use this framing protocol as a basis for their own TKey
-device applications. But client applications *must* use it when
+device applications - but client applications *must* use it when
 communicating with the firmware using the firmware protocol defined
 below.
 
 The communication is driven by the client application running on the
 host computer and the protocol is command-response based. The client
-app sends a command, and the TK1 sends a response to the given
+app sends a command, and the TKey sends a response to the given
 command.
 
-Commands are processed by the TK1 in order. If the client app sends a
+Commands are processed by the TKey in order. If the client app sends a
 new command before receiving a response to the previous command, it is
 the responsibility of the client app to determine which command a
 received response belongs to.
 
 Commands and responses are sent as frames with a limited length. The
 communicating endpoints decide the meaning of the command and response
-frames, and whether the commands and responses are valid, make sense,
-or not.
+frames, and whether the commands and responses are valid or not.
 
 ### Command Frame Format
 
@@ -76,11 +75,11 @@ These examples clarify endpoints and commands using the framing
 protocol:
 
 * 0x00: A command to the HW in the interface_fpga with a single byte of
-  data. The single byte could indicate action such as reading from the
+  data. The single byte could indicate action, such as reading from the
   TRNG or resetting the application_fpga.
 
 * 0x13: A command to the FW in the application_fpga with 128 bytes of
-  data. The data could for example be parts of an application binary to
+  data. The data could, for example, be parts of an application binary to
   be loaded into memory.
 
 * 0x1a: A command to the application running in the application_fpga
@@ -218,7 +217,7 @@ The response to the last `FW_CMD_LOAD_APP_DATA` is an
 `FW_RSP_LOAD_APP_DATA_READY` with the BLAKE2s-256 hash digest (no
 secret key) for the application that was loaded. It allows the client
 application on the host to verify that the application was correctly
-loaded. This means that the calculated CDI will be correct given that
+loaded. This means that the calculated CDI will be correct, given that
 the UDS has not been modified.
 
 | *Name* | *Size (bytes)* | *Comment*                |
