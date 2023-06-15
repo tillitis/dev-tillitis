@@ -114,11 +114,20 @@ have other devices plugged in already). The client applications try to
 auto-detect TKeys, but if more than one TKey is found you need to
 choose one using the `--port` flag.
 
-Your current Linux user must have read and write access to the serial
-port. One way to get access is by installing the provided
-`system/60-tkey.rules` in `/etc/udev/rules.d/` and running `udevadm
-control --reload`. When a TKey is plugged in, its device path (like
-`/dev/ttyACM0`) should be accessible by anyone logged in on the
+You must have read and write access to the serial port. One way to get
+access as your ordinary user is by installing a udev rule like this:
+
+```
+# Mark Tillitis TKey as a security token. /usr/lib/udev/rules.d/70-uaccess.rules
+# will add TAG "uaccess", which will result in file ACLs so that local user
+# (see loginctl) can read/write to the serial port in /dev.
+ATTRS{idVendor}=="1207", ATTRS{idProduct}=="8887",\
+ENV{ID_SECURITY_TOKEN}="1"
+```
+
+Put this in `/etc/udev/rules.d/60-tkey.rules` and run `udevadm control
+--reload`. When a TKey is plugged in, its device path (like
+`/dev/ttyACM0`) should now be accessible by anyone logged in on the
 console (see `loginctl`).
 
 Another way to get access is by becoming a member of the group that
@@ -133,9 +142,9 @@ crw-rw---- 1 root dialout 166, 0 Sep 16 08:20 /dev/ttyACM0
 $ sudo usermod -a -G dialout exampleuser
 ```
 
-For the change to take effect, you need to log out from your system
-and then log back in again, or run the command `newgrp dialout` in the
-terminal that you are working in.
+For the change to take effect, you need to either log out and login
+again, or run the command `newgrp dialout` in the terminal that you
+are working in.
 
 ### Users on MacOS
 
