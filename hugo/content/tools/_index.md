@@ -7,11 +7,11 @@ weight: 2
 
 ## Introduction
 
-To build you can either use our OCI images or use native tools on your
-dev box.
+To build applications you can either use our OCI images or use native
+tools on your dev box.
 
-If want your device applications not to change, which as you know also
-means changing that application's CDI as explained in [the
+If you want your device applications not to change, which as you know
+also means changing that application's CDI as explained in [the
 introduction](intro/), it might be better to use the OCI images. At
 the very least you want to be sure that the versions of the compiler
 and other tools you use stays the same. Perhaps pin those packages if
@@ -63,7 +63,7 @@ $ podman pull ghcr.io/tillitis/tkey-builder:2
 contains all the tools necessary to build the FPGA bitstream and the
 firmware.
 
-## QEMU
+## QEMU Emulator
 
 Tillitis provides a TKey emulator based on QEMU.
 
@@ -160,55 +160,45 @@ if you have Podman installed.
 
 ## Client libraries
 
-We provide two Go packages to help in developing client applications.
+We provide some Go packages to help in developing client applications.
 What we call "client" is the computer or mobile device you insert your
 TKey into.
 
-- `github.com/tillitis/tkeyclient`: Contains functions to connect to,
-  load and start a device application on the TKey. - [Go
+- [github.com/tillitis/tkeyclient](https://github.com/tillitis/tkeyclient):
+  Contains functions to connect to, load and start a device
+  application on the TKey. [Go
   doc](https://pkg.go.dev/github.com/tillitis/tkeyclient).
-- `github.com/tillitis/tkeysign`: Contains functions to communicate
-  with the `signer` device app, an ed25519 signing oracle. [Go
+- [github.com/tillitis/tkeyutil](https://github.com/tillitis/tkeyutil):
+  Utility functions input the USS or send notifications. [Go
+  doc](https://pkg.go.dev/github.com/tillitis/tkeyutil).
+- [github.com/tillitis/tkeysign](https://github.com/tillitis/tkeysign):
+  Contains functions to communicate with the `signer` device app, an
+  ed25519 signing oracle. [Go
   doc](https://pkg.go.dev/github.com/tillitis/tkeysign).
-
-## Our TKey Client and Device Apps
-
-We provide some client and device apps in the
-[tillitis-key1-apps](https://github.com/tillitis/tillitis-key1-apps)
-GitHub repository.
-
-First clone and build the device libraries [as explained above](#device-libraries).
-
-Execute the following command to clone the repository:
-
-```
-$ git clone https://github.com/tillitis/tillitis-key1-apps.git
-$ cd tillitis-key1-apps
-```
-
-Again you have the choice of building with host tools or an OCI image.
 
 ### Building with host tools
 
-Execute the following command to build all TKey client and device
-applications:
+Most of the apps listed under [projects](/projects/) comes with a
+Makefile and can be built with a simple:
 
 ```
 $ make
 ```
 
+If they have complex dependencies they might come with a `build.sh`
+script to clone and build the dependencies first.
+
 If you cloned and built the tkey-libs somewhere else than in a
-directory called `tkey-libs` next to `tillitis-key1-apps` you need to
-provide the path relative to `tillitis-key1-apps/apps`, for instance:
+directory called `tkey-libs` next to the app directory you might need
+to specify a path to it, for example:
 
 ```
-$ make LIBDIR=../../tkey-libs-main
+$ make LIBDIR=../tkey-libs-main
 ```
 
 If your available `objcopy` is anything other than the default
 `llvm-objcopy`, then define `OBJCOPY` to whatever they're called on
 your system.
-
 
 TKey device applications can run both on the real hardware TKey and in
 the QEMU emulator. In both cases, the client application (for example
@@ -218,15 +208,14 @@ device apps in QEMU.
 
 ### Building with `tkey-builder`
 
-To build everything in the apps repo:
+Most of the [projects](/projects/) come with a `podman` target:
 
 ```
-$ git clone https://github.com/tillitis/tillitis-key1-apps
-$ cd tillitis-key1-apps
 $ make podman
 ```
 
-Or use podman directly if you haven't got `make` installed:
+Or use podman directly if you haven't got `make` installed, typically
+specifying where your `tkey-libs` are:
 
 ```
 $ podman run --rm --mount type=bind,source=.,target=/src --mount type=bind,source=../tkey-libs,target=/tkey-libs -w /src -it ghcr.io/tillitis/tkey-builder:1 make -j

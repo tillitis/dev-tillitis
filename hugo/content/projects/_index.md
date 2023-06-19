@@ -24,6 +24,7 @@ This page can be used both as inspiration and to find useful use cases for your 
 - [Verification tool for your TKey](https://tillitis.se/app/tkey-device-verification/)
 - [Go package to communicate with a TKey](https://github.com/tillitis/tkeyclient)
 - [Go package to communicate with the Ed25519 signer oracle](https://github.com/tillitis/tkey-verification)
+- [TKey Development tools](https://github.com/tillitis/tkey-devtools).
 - [Signed random data generator](https://github.com/tillitis/tkey-random-generator)
 - [age plugin using TKey](https://github.com/quite/age-plugin-tkey)
 - [Cryptum: Encrypted file storage](https://github.com/0xMihir/Cryptum)

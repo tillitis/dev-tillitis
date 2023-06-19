@@ -102,9 +102,6 @@ programming of an unprovisioned TKey, see:
 [quickstart.md](https://github.com/tillitis/tillitis-key1/blob/main/doc/quickstart.md)
 (in the tillitis-key1 repository).
 
-The examples below refer to files in the
-[tillitis-key1-apps repository](https://github.com/tillitis/tillitis-key1-apps).
-
 ### Users on Linux
 
 Running `lsusb` should list the USB stick as `1207:8887 Tillitis
