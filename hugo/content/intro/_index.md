@@ -78,7 +78,6 @@ security-critical operations.
 
 ## Getting Started
 
-* [tillitis-key1-apps repository](https://github.com/tillitis/tillitis-key1-apps),
-  with TKey client and device applications.
+* [Get started using your TKey](https://tillitis.se/getstarted).
 * [Tools & Libraries](../tools/), setup and introduction for
   application developers.
