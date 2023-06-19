@@ -169,8 +169,8 @@ There should be an entry with `"USB Vendor Name" = "Tillitis"`.
 ### Running a TKey Device Application
 
 You can use `tkey-runapp` from the
-[tillitis-key1-apps](https://github.com/tillitis/tillitis-key1-apps)
-repository to load a device application onto the TKey.
+[tkey-devtools](https://github.com/tillitis/tkey-devtools) repository
+to load a device application onto the TKey.
 
 ```
 $ tkey-runapp apps/blink/app.bin

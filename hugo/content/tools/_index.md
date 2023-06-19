@@ -74,17 +74,20 @@ MiB):
 ghcr.io/tillitis/tkey-qemu-tk1-23.03.1:latest
 ```
 
-We provide a script in
-[tillitis-key1-apps](https://github.com/tillitis/tillitis-key1-apps)
-that assumes a working rootless Podman setup and `socat` installed. It
+We provide a script `run-tkey-qemu` that runs this image and binds the
+serial port to a pty called `tkey-qemu-pty` in the current directory.
+
+You can find `run-tkey-qemu` in the
+[tkey-devtools](https://github.com/tillitis/tkey-devtools) repo. It
+assumes a working rootless Podman setup and `socat` installed. It
 currently only works on a Linux system (specifically, it does not work
 when containers are run in Podman's virtual machine, which is required
 on MacOS and Windows). On Ubuntu 22.10, running `apt install podman
-rootlesskit slirp4netns socat` should be enough. Then you can just run 
+rootlesskit slirp4netns socat` should be enough. Then you can just run
 the script like:
 
 ```
-./contrib/run-tkey-qemu
+./run-tkey-qemu
 ```
 
 This will let you run client apps with `--port ./tkey-qemu-pty` and it
