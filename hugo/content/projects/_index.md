@@ -17,11 +17,13 @@ This page can be used both as inspiration and to find useful use cases for your 
 - [Ed25519 signing oracle with Sigsum](https://git.glasklar.is/nisse/tkey-sign-if-logged)
 - [X25519 key exchange, ECDH key agreement protocol for Curve25519](https://github.com/quite/tkey-device-x25519)
 - [Blinking LED using Zig](https://github.com/Foxboron/tillitis-blink-zig)
-
+- [Test apps](https://github.com/tillitis/tkey-testapps): Test apps
+  for LED, execution monitor, TRNG, timer, and touch.
 
 ## Client applications
 - [TKey ssh agent](https://tillitis.se/app/tkey-ssh-agent/)
 - [Verification tool for your TKey](https://tillitis.se/app/tkey-device-verification/)
+- [Signing tool](https://github.com/tillitis/tkey-sign-cli)
 - [Go package to communicate with a TKey](https://github.com/tillitis/tkeyclient)
 - [Go package to communicate with the Ed25519 signer oracle](https://github.com/tillitis/tkey-verification)
 - [TKey Development tools](https://github.com/tillitis/tkey-devtools).
