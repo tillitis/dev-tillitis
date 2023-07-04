@@ -12,13 +12,10 @@ Consider this C program:
 ```c
 #include <types.h>
 #include <tk1_mem.h>
+#include <led.h>
 
 #define SLEEPTIME 100000
-#define LED_RED   (1 << TK1_MMIO_TK1_LED_R_BIT)
-#define LED_GREEN (1 << TK1_MMIO_TK1_LED_G_BIT)
-#define LED_BLUE  (1 << TK1_MMIO_TK1_LED_B_BIT)
 
-static volatile uint32_t *led = (volatile uint32_t *)TK1_MMIO_TK1_LED;
 
 void sleep(uint32_t n)
 {
@@ -28,11 +25,11 @@ void sleep(uint32_t n)
 int main(void)
 {
 	for (;;) {
-		*led = LED_RED;
+		set_led(LED_RED);
 		sleep(SLEEPTIME);
-		*led = LED_GREEN;
+		set_led(LED_GREEN);
 		sleep(SLEEPTIME);
-		*led = LED_BLUE;
+		set_led(LED_BLUE);
 		sleep(SLEEPTIME);
 	}
 }
@@ -188,8 +185,8 @@ port on 0xfe00\_1000 (`TK1_MMIO_QEMU_DEBUG`). Anything written there
 is printed as a character by QEMU on stdout.
 
 `qemu_putchar()`, `qemu_puts()`, `qemu_putinthex()`, `qemu_hexdump()`
-and friends (see `libcommon/lib.[ch]` in `tkey-libs`) use this debug
-port to print out things.
+and friends (see `libcommon/qemu_debug.c` and `include/qemu_debug.h`
+in `tkey-libs`) use this debug port to print out things.
 
 `libcommon` is compiled with no debug output by default. Rebuild
 `libcommon` without `-DNODEBUG` to get the debug output.
