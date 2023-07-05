@@ -78,7 +78,8 @@ To make development easier a sample Makefile is provided in
 RAM starts at 0x4000\_0000 and ends at 0x4002\_0000 (128 kiB). The
 device app will be loaded by firmware at RAM start. The stack for the
 app is set up by the C runtime `libcrt0` to start just below the end
-of RAM.
+of RAM, and hence grows from the end. A larger app comes at
+the tradeoff of having a smaller stack.
 
 There are no heap allocation functions, no `malloc()` and friends. You
 can access memory directly yourself. `APP_ADDR` and `APP_SIZE` are
@@ -99,7 +100,7 @@ programming of an unprovisioned TKey, see:
 [quickstart.md](https://github.com/tillitis/tillitis-key1/blob/main/doc/quickstart.md)
 (in the tillitis-key1 repository).
 
-### Users on Linux
+### Linux Users
 
 Running `lsusb` should list the USB stick as `1207:8887 Tillitis
 MTA1-USB-V1`. On Linux, the TKey's serial port device path is
@@ -140,7 +141,7 @@ For the change to take effect, you need to either log out and login
 again, or run the command `newgrp dialout` in the terminal that you
 are working in.
 
-### Users on MacOS
+### macOS Users
 
 The client apps tries to auto-detect the serial port of the TKey.
 If more than one serial port is found, use the `--port` flag to

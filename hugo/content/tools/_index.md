@@ -45,7 +45,7 @@ $ sudo apt install build-essential clang lld llvm bison flex libreadline-dev \
 We provide a container image which has all the above packages and
 tools already installed for use with Podman or Docker.
 
-This assumes a working rootless podman. On Ubuntu 22.10, running
+This assumes a working rootless Podman. On Ubuntu 22.10, running
 
 ```
 $ sudo apt install podman rootlesskit slirp4netns
@@ -62,79 +62,6 @@ $ podman pull ghcr.io/tillitis/tkey-builder:2
 **Note well**: This image is really large (~ 2 GiB) because it also
 contains all the tools necessary to build the FPGA bitstream and the
 firmware.
-
-## QEMU Emulator
-
-Tillitis provides a TKey emulator based on QEMU.
-
-The easiest way to run the TKey emulator is to use our OCI image (~120
-MiB):
-
-```
-ghcr.io/tillitis/tkey-qemu-tk1-23.03.1:latest
-```
-
-We provide a script `run-tkey-qemu` that runs this image and binds the
-serial port to a pty called `tkey-qemu-pty` in the current directory.
-
-You can find `run-tkey-qemu` in the
-[tkey-devtools](https://github.com/tillitis/tkey-devtools) repo. It
-assumes a working rootless Podman setup and `socat` installed. It
-currently only works on a Linux system (specifically, it does not work
-when containers are run in Podman's virtual machine, which is required
-on MacOS and Windows). On Ubuntu 22.10, running `apt install podman
-rootlesskit slirp4netns socat` should be enough. Then you can just run
-the script like:
-
-```
-./run-tkey-qemu
-```
-
-This will let you run client apps with `--port ./tkey-qemu-pty` and it
-will find the running emulator.
-
-### QEMU on macOS
-
-Note that on macOS you need to add `--speed 9600` on the client apps
-when you use the QEMU pty.
-
-### Building QEMU
-
-If you want to build QEMU yourself, go to the `tk1` branch in our
-[qemu repository](https://github.com/tillitis/qemu) to fetch the
-emulator and then build it, or execute the following commands:
-
-```
-$ git clone -b tk1 https://github.com/tillitis/qemu
-$ mkdir qemu/build
-$ cd qemu/build
-$ ../configure --target-list=riscv32-softmmu --disable-werror
-$ make -j $(nproc)
-```
-
-(Built with warnings-as-errors disabled, see [this
-issue](https://github.com/tillitis/qemu/issues/3).)
-
-Then execute the following commands to fetch and build the firmware:
-
-```
-$ git clone https://github.com/tillitis/tillitis-key1
-$ cd tillitis-key1/hw/application_fpga
-$ make firmware.elf
-```
-
-Then execute the following commands to run the emulator, setting the
-built firmware with the `-bios` flag:
-
-```
-$ /path/to/qemu/build/qemu-system-riscv32 -nographic -M tk1,fifo=chrid -bios firmware.elf \
-  -chardev pty,id=chrid
-```
-
-In the output from QEMU it tells you which serial port it's using, for
-instance `/dev/pts/1`. This is what you need to use as `--port` when
-This is what you need to set with `--port` when running a client
-application.
 
 ## Device libraries
 
@@ -176,10 +103,12 @@ TKey into.
   ed25519 signing oracle. [Go
   doc](https://pkg.go.dev/github.com/tillitis/tkeysign).
 
+## Building applications
+
 ### Building with host tools
 
 Most of the apps listed under [projects](/projects/) comes with a
-Makefile and can be built with a simple:
+Makefile and can be built with:
 
 ```
 $ make
@@ -188,23 +117,22 @@ $ make
 If they have complex dependencies they might come with a `build.sh`
 script to clone and build the dependencies first.
 
-If you cloned and built the tkey-libs somewhere else than in a
-directory called `tkey-libs` next to the app directory you might need
-to specify a path to it, for example:
+If tkey-libs is cloned and built somewhere other than in the default
+directory called tkey-libs, next to the app directory that needs it,
+you need to specify the path to it, as follows:
 
 ```
 $ make LIBDIR=../tkey-libs-main
 ```
 
-If your available `objcopy` is anything other than the default
-`llvm-objcopy`, then define `OBJCOPY` to whatever they're called on
+If the `objcopy` binary on your system is anything other than the
+default `llvm-objcopy`, define `OBJCOPY` to whatever it is called on
 your system.
 
 TKey device applications can run both on the real hardware TKey and in
 the QEMU emulator. In both cases, the client application (for example
-`tkey-ssh-agent`) talks to the device app over a serial port, virtual
-or real. There is a separate section below that explains how to run
-device apps in QEMU.
+`tkey-ssh-agent`) talks to the device app over a serial port.  There
+is a separate section below that explains how to run it in QEMU.
 
 ### Building with `tkey-builder`
 
@@ -220,4 +148,72 @@ specifying where your `tkey-libs` are:
 ```
 $ podman run --rm --mount type=bind,source=.,target=/src --mount type=bind,source=../tkey-libs,target=/tkey-libs -w /src -it ghcr.io/tillitis/tkey-builder:1 make -j
 ```
+## QEMU Emulator
 
+Tillitis provides a TKey emulator based on QEMU.
+
+The easiest way to run the TKey emulator is to use our OCI image (~120
+MiB). It currently only works on a Linux system (specifically, it does
+not work when containers are run in Podman's virtual machine, which is
+required on macOS and Windows). So for non-Linux users, see [Building
+QEMU](/tools/#building-qemu).  ```
+ghcr.io/tillitis/tkey-qemu-tk1-23.03.1:latest
+```
+
+We provide a script `run-tkey-qemu` that runs this image and binds the
+serial port to a pty called `tkey-qemu-pty` in the current directory.
+
+You can find `run-tkey-qemu` in the
+[tkey-devtools](https://github.com/tillitis/tkey-devtools) repo. It
+assumes a working rootless Podman setup and `socat` installed. On
+Ubuntu 22.10, running `apt install podman rootlesskit slirp4netns
+socat` should be enough. Then you can just run the script like:
+
+```
+./run-tkey-qemu
+```
+
+This will let you run client apps with `--port ./tkey-qemu-pty` and it
+will find the running emulator.
+
+### QEMU on macOS
+
+Note that on macOS you need to add `--speed 9600` on the client apps
+when you use the QEMU pty.
+
+### Building QEMU
+
+To build QEMU, fetch and build the `tk1` branch in our [qemu
+repository](https://github.com/tillitis/qemu):
+
+```
+$ git clone -b tk1 https://github.com/tillitis/qemu
+$ mkdir qemu/build
+$ cd qemu/build
+$ ../configure --target-list=riscv32-softmmu --disable-werror
+$ make -j $(nproc)
+```
+
+(Built with warnings-as-errors disabled, see [this
+issue](https://github.com/tillitis/qemu/issues/3).)
+
+Then execute the following commands to fetch and build the firmware:
+
+```
+$ git clone https://github.com/tillitis/tillitis-key1
+$ cd tillitis-key1/hw/application_fpga
+$ make firmware.elf
+```
+
+Then execute the following commands to run the emulator, setting the
+built firmware with the `-bios` flag:
+
+```
+$ /path/to/qemu/build/qemu-system-riscv32 -nographic -M tk1,fifo=chrid -bios firmware.elf \
+  -chardev pty,id=chrid
+```
+
+In the output from QEMU it tells you which serial port it's using, for
+instance `/dev/pts/1`. This is what you need to use as `--port` when
+This is what you need to set with `--port` when running a client
+application.

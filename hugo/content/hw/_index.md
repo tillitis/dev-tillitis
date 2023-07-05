@@ -23,7 +23,7 @@ The CPU of the TKey is a 32-bit RISC-V running at 18 MHz. It supports
 the RV32 instruction set with RV32IC\_Zmmul (`-march=rv32iczmmul`)
 extensions.
 
-This means that the base RV23I as well as compressed instructions are
+This means that the base RV32I as well as compressed instructions are
 supported. The subset of the M(ath) extension that includes
 multiplication, but not division is supported.
 
@@ -36,21 +36,19 @@ indicate the error state.
 ## Execution Monitor
 
 The execution monitor can be used by TKey apps to prevent the CPU from
-trying to execute instructions from a defined memory area.
+trying to execute instructions from a defined memory area. When the
+execution monitor detects that the CPU is requesting instructions from
+the area, the monitor will force the CPU to read an illegal
+instruction. This will halt the CPU until it is reset.
 
-When the execution monitor detects that the CPU is requesting
-instructions from the area, the monitor will force the CPU to read an
-illegal instruction. This will halt the CPU until reset.
-
-The execution monitor is set up by writing the start and end address
-to the registers in the TK1 core. When the addresses has been reset,
+The execution monitor is set up by writing the start and end addresses
+to the registers in the TK1 core. When the addresses have been set,
 the monitor is enabled by writing to the monitor control register.
-When enabled the monitor can not be disabled and the addresses can't
+When enabled, the monitor cannot be disabled, and the addresses can’t
 be altered.
 
 Note that the monitor also protects the FW (firmware) RAM. This area
 is always protected.
-
 
 ## Firmware ROM
 
