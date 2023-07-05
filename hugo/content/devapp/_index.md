@@ -68,7 +68,7 @@ $ llvm-objcopy --input-target=elf32-littleriscv --output-target=binary rgb.elf r
 ```
 
 Now you have `rgb.bin` which you can load into a TKey with
-`tkey-runapp` (see [Running TKey apps](#running-tkey-apps) below).
+`tkey-runapp` (see [Running TKey apps](/devapp/#running-tkey-apps) below).
 
 To make development easier a sample Makefile is provided in
 `tkey-libs/example-app`.
@@ -161,22 +161,22 @@ ioreg -p IOUSB -w0 -l
 There should be an entry with `"USB Vendor Name" = "Tillitis"`.
 
 ### Running a TKey Device Application
+Most client applications embed the device app in their own binary to
+be able to automatically load the device app. This is the recommended
+approach for a smooth expereince when using the TKey. See, for
+instance, `tkey-ssh-agent` which embeds the device app `signer`.
 
-You can use `tkey-runapp` from the
+For development or simply loading a device app onto a TKey the
+`tkey-runapp` from the
 [tkey-devtools](https://github.com/tillitis/tkey-devtools) repository
-to load a device application onto the TKey.
+can be used.
 
 ```
-$ tkey-runapp apps/blink/app.bin
+$ tkey-runapp app.bin
 ```
 
 This should auto-detect any attached TKeys, upload, and start
-a tiny device app that blinks the LED in many different colors.
-
-Many TKey client applications embed the device app they want to use in
-their own binary. They auto-detect the TKey and automatically loads
-the device app onto it. See, for instance, `tkey-ssh-agent` which
-embeds the device app `signer`.
+a device app.
 
 ### Debugging
 

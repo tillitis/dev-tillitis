@@ -37,12 +37,12 @@ plug it in.
 - CPU-controlled LED
 - No persistent storage
 
-*Note well*: In end user version, currently the only one for sale on
-[Tillitis' web shop](https://shop.tillitis.se/), the FPGA
-configuration is locked-down. This means you can't change the FPGA
-bitstream or even read out the bitstream (or the Unique Device Secret,
-UDS) from the configuration memory even if you break the case and
-insert it into a programmer board.
+*Note well*: In the end-user version, currently the only one for sale
+on [Tillitis' web shop](https://shop.tillitis.se/), the FPGA
+configuration is locked down. This means you cannot change the FPGA
+bitstream or read out the bitstream (or the Unique Device Secret, UDS)
+from the configuration memory, even if you break the case and insert
+it into a programmer board.
 
 ## Measured boot & secrets
 
@@ -70,7 +70,7 @@ cdi = blake2s(UDS, blake2s(device_app), USS)
 ```
 
 All of the TKey software, firmware, FPGA Verilog source code,
-schematics and PCB design files are released under open
+schematics, and PCB design files are released under open
 source/hardware licenses, like all trustworthy security software and
 hardware should be. This in itself makes it different, as other
 security tokens use at least some closed source hardware for
