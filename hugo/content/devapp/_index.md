@@ -170,11 +170,12 @@ For development or simply loading a device app onto a TKey the
 can be used.
 
 ```
-$ tkey-runapp app.bin
+$ tkey-runapp rgb.bin
 ```
 
-This should auto-detect any attached TKeys, upload, and start
-a device app.
+This should auto-detect any attached TKeys, upload, and start a tiny
+device app that blinks the LED as described under [Device
+Applications](#device-applications).
 
 ### Debugging
 
