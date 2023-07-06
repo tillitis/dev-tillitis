@@ -11,11 +11,9 @@ Consider this C program:
 
 ```c
 #include <types.h>
-#include <tk1_mem.h>
 #include <led.h>
 
 #define SLEEPTIME 100000
-
 
 void sleep(uint32_t n)
 {
@@ -35,11 +33,13 @@ int main(void)
 }
 ```
 
-To get this to work you will need our header files and to link with at
-least the `libcrt0` C runtime, otherwise your program won't even reach
-`main()`. Header files, `libcrt0`, and other libraries are available
-in our repository [tkey-libs](https://github.com/tillitis/tkey-libs)
-as mentioned in [Tools & libraries](/tools/#device-libraries).
+To get this to work you will need our header files and to link with
+`libcrt0` C runtime, otherwise your program won't even reach `main()`,
+and `libcommon` to get the `set_lead()` function.
+
+Header files and libraries are available in our repository
+[tkey-libs](https://github.com/tillitis/tkey-libs) as mentioned in
+[Tools & libraries](/tools/#device-libraries).
 
 We also provide a linker script there in `apps.lds` which shows the
 linker the memory layout.
@@ -58,7 +58,7 @@ $ clang -g -target riscv32-unknown-none-elf -march=rv32iczmmul -mabi=ilp32 \
 $ clang -g -target riscv32-unknown-none-elf -march=rv32iczmmul -mabi=ilp32 \
   -mcmodel=medany -static -ffast-math -fno-common -nostdlib \
   -T ../tkey-libs/app.lds \
-  -L ../tkey-libs/libcrt0/ -lcrt0 \
+  -L ../tkey-libs/libcrt0/ -lcrt0 -L ../../tkey-libs/libcommon -lcommon \
   -I ../tkey-libs -o rgb.elf rgb.o
 
 $ llvm-objcopy --input-target=elf32-littleriscv --output-target=binary rgb.elf rgb.bin
@@ -75,8 +75,8 @@ To make development easier a sample Makefile is provided in
 RAM starts at 0x4000\_0000 and ends at 0x4002\_0000 (128 kiB). The
 device app will be loaded by firmware at RAM start. The stack for the
 app is set up by the C runtime `libcrt0` to start just below the end
-of RAM, and hence grows from the end. A larger app comes at
-the tradeoff of having a smaller stack.
+of RAM and grows downwards. A larger app comes at the tradeoff of
+having a smaller stack.
 
 There are no heap allocation functions, no `malloc()` and friends. You
 can access memory directly yourself. `APP_ADDR` and `APP_SIZE` are
