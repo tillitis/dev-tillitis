@@ -38,10 +38,7 @@ int main(void)
 To get this to work you will need our header files and to link with at
 least the `libcrt0` C runtime, otherwise your program won't even reach
 `main()`. Header files, `libcrt0`, and other libraries are available
-in
-
-https://github.com/tillitis/tkey-libs
-
+in our repository [tkey-libs](https://github.com/tillitis/tkey-libs)
 as mentioned in [Tools & libraries](/tools/#device-libraries).
 
 We also provide a linker script there in `apps.lds` which shows the
@@ -71,7 +68,7 @@ Now you have `rgb.bin` which you can load into a TKey with
 `tkey-runapp` (see [Running TKey apps](/devapp/#running-tkey-apps) below).
 
 To make development easier a sample Makefile is provided in
-`tkey-libs/example-app`.
+[tkey-libs/example-app](https://github.com/tillitis/tkey-libs/tree/main/example-app).
 
 ### Memory
 
