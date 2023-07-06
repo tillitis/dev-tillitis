@@ -31,7 +31,6 @@ This page can be used both as inspiration and to find useful use cases for your 
 - [age plugin using TKey](https://github.com/quite/age-plugin-tkey)
 - [Cryptum: Encrypted file storage](https://github.com/0xMihir/Cryptum)
 - [Use TKey for PAM authentication](https://github.com/Eliot-Roxbergh/tillitis_hello/blob/main/tkey_authentication.md)
-
-
+- [U2F/FIDO/Webauthn](https://github.com/tillitis/tkey-fido)
 
 Applications officially supported by Tillitis can be found [here](https://tillitis.se/getstarted/#supported-applications-table).
