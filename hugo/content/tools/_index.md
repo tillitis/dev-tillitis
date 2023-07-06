@@ -156,7 +156,9 @@ The easiest way to run the TKey emulator is to use our OCI image (~120
 MiB). It currently only works on a Linux system (specifically, it does
 not work when containers are run in Podman's virtual machine, which is
 required on macOS and Windows). So for non-Linux users, see [Building
-QEMU](/tools/#building-qemu).  ```
+QEMU](/tools/#building-qemu).
+
+```
 ghcr.io/tillitis/tkey-qemu-tk1-23.03.1:latest
 ```
 
