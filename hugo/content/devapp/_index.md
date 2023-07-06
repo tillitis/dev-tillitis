@@ -58,7 +58,7 @@ $ clang -g -target riscv32-unknown-none-elf -march=rv32iczmmul -mabi=ilp32 \
 $ clang -g -target riscv32-unknown-none-elf -march=rv32iczmmul -mabi=ilp32 \
   -mcmodel=medany -static -ffast-math -fno-common -nostdlib \
   -T ../tkey-libs/app.lds \
-  -L ../tkey-libs/libcrt0/ -lcrt0 -L ../../tkey-libs/libcommon -lcommon \
+  -L ../tkey-libs -lcrt0 -lcommon \
   -I ../tkey-libs -o rgb.elf rgb.o
 
 $ llvm-objcopy --input-target=elf32-littleriscv --output-target=binary rgb.elf rgb.bin
