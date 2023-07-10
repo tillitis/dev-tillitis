@@ -203,10 +203,20 @@ is printed as a character by QEMU on stdout.
 
 `qemu_putchar()`, `qemu_puts()`, `qemu_putinthex()`, `qemu_hexdump()`
 and friends (see `libcommon/qemu_debug.c` and `include/qemu_debug.h`
-in `tkey-libs`) use this debug port to print out things.
+in `tkey-libs`) use this debug port to print out things. If you want
+to use this you should define `QEMU_DEBUG` when including
+`qemu_debug.h`. If you don't define `QEMU_DEBUG` the functions are
+void macros so you can still use them but they won't generate any
+code. Typically you would have something like this among your
+`CFLAGS` in your Makefile:
 
-`libcommon` is compiled with no debug output by default. Rebuild
-`libcommon` without `-DNODEBUG` to get the debug output.
+```
+CFLAGS = ... \
+#   -D QEMU_DEBUG
+```
+
+and uncomment it and recompile when you want to run an app with debug
+output using the QEMU debug port.
 
 The emulator can output some memory access (and other) logs. You can
 add `-d guest_errors` to the qemu command line to make QEMU send these
