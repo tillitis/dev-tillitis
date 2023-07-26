@@ -40,6 +40,11 @@ $ sudo apt install build-essential clang lld llvm bison flex libreadline-dev \
                  golang clang-format
 ```
 
+On Windows, the easiest way to install the required packages is through the package manager [Chocolatey](https://community.chocolatey.org/). After installing Chocolatey, run Powershell (version 3 or higher) as an administrator, and install the necessary packages using the following command:
+```
+$ choco install make llvm clang go
+```
+
 ## Toolchain container `tkey-builder`
 
 We provide a container image which has all the above packages and
