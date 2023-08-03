@@ -158,6 +158,21 @@ ioreg -p IOUSB -w0 -l
 
 There should be an entry with `"USB Vendor Name" = "Tillitis"`.
 
+### Windows Users
+
+Like with MacOS, client apps will automatically detect the TKey serial port, unless
+the `--port` flag is used.
+
+If required, however, finding the TKey serial port can be done using Powershell, with the command:
+
+```
+Get-PnpDevice -PresentOnly | Where-Object { $_.InstanceId -match '^USB' }
+```
+The TKey will be listed under the class: 'Ports', with the name 'USB Serial Device'. 
+
+Alternatively, one can also find the device in Device Manager, under 'Ports (COM & LPT)'. This will
+also show the status of the TKey.
+
 ### Running a TKey Device Application
 Most client applications embed the device app in their own binary to
 be able to automatically load the device app. This is the recommended
