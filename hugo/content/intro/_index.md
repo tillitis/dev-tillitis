@@ -38,8 +38,8 @@ plug it in.
 - No persistent storage
 
 {{< hint info >}}
-**Note well**: In the end-user version, currently the only one for sale
-on [Tillitis' web shop](https://shop.tillitis.se/), the FPGA
+**Note well**: In the end-user version, currently the only one for
+sale on [Tillitis' web shop](https://shop.tillitis.se/), the FPGA
 configuration is locked down. This means you cannot change the FPGA
 bitstream or read out the bitstream (or the Unique Device Secret, UDS)
 from the configuration memory, even if you break the case and insert
@@ -50,9 +50,9 @@ it into a programmer board.
 
 A unique feature of the TKey is that it measures the loaded device
 application before starting it. A hash digest measurement (using
-BLAKE2s) combined with a Unique Device Secret (UDS) make up a base
-secret we call Compound Device Identifier (CDI) for use by the TKey
-device app.
+BLAKE2s) combined with a Unique Device Secret (UDS) makes up a base
+secret we call a Compound Device Identifier (CDI), which is used by 
+the TKey device app.
 
 If the TKey device app is altered, the CDI is also changed. If the
 keys derived from the CDI are the same as the last time the given
@@ -74,8 +74,8 @@ cdi = blake2s(UDS, blake2s(device_app), USS)
 All of the TKey software, firmware, FPGA Verilog source code,
 schematics, and PCB design files are released under open
 source/hardware licenses, like all trustworthy security software and
-hardware should be. This in itself makes it different, as other
-security tokens use at least some closed source hardware for
+hardware should be. This, in itself, makes the TKey different, as
+other security tokens use at least some closed source hardware for
 security-critical operations.
 
 ## Getting Started

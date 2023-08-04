@@ -7,14 +7,14 @@ weight: 2
 
 ## Introduction
 
-To build applications you can either use our OCI images or use native
+To build applications, you can either use our OCI images or use native
 tools on your dev box.
 
 If you want your device applications not to change, which as you know
-also means changing that application's CDI as explained in [the
+also means changing the application's CDI as explained in [the
 introduction](intro/), it might be better to use the OCI images. At
 the very least you want to be sure that the versions of the compiler
-and other tools you use stays the same. Perhaps pin those packages if
+and other tools you use stay the same. Perhaps pin those packages if
 you don't want to use containers?
 
 ## Host toolchain
@@ -40,7 +40,11 @@ $ sudo apt install build-essential clang lld llvm bison flex libreadline-dev \
                  golang clang-format
 ```
 
-On Windows, the easiest way to install the required packages is through the package manager [Chocolatey](https://community.chocolatey.org/). After installing Chocolatey, run Powershell (version 3 or higher) as an administrator, and install the necessary packages using the following command:
+On Windows, the easiest way to install the required packages is
+through the package manager
+[Chocolatey](https://community.chocolatey.org/). After installing
+Chocolatey, run Powershell (version 3 or higher) as an administrator,
+and install the necessary packages using the following command:
 ```
 $ choco install make llvm clang go
 ```

@@ -89,11 +89,11 @@ map](/memory/) and the header file `tk1_mem.h`.
 
 ## Running TKey apps
 
-To run the TKey, plug it into a USB port on a computer. If the TKey status
-indicator LED is white, it has been programmed with the standard FPGA
-bitstream (including the firmware). If the status indicator LED is not
-white it is unprovisioned. For instructions on how to do the initial
-programming of an unprovisioned TKey, see:
+To run the TKey, plug it into a USB port on a computer. If the TKey
+status indicator LED is white, it has been programmed with the
+standard FPGA bitstream (including the firmware). If the status
+indicator LED is not white it is unprovisioned. For instructions on
+how to do the initial programming of an unprovisioned TKey, see:
 [quickstart.md](https://github.com/tillitis/tillitis-key1/blob/main/doc/quickstart.md)
 (in the tillitis-key1 repository).
 
@@ -160,18 +160,20 @@ There should be an entry with `"USB Vendor Name" = "Tillitis"`.
 
 ### Windows Users
 
-Like with MacOS, client apps will automatically detect the TKey serial port, unless
-the `--port` flag is used.
+Client apps will automatically detect the TKey serial port, unless the
+`--port` flag is used.
 
-If required, however, finding the TKey serial port can be done using Powershell, with the command:
+If required, however, finding the TKey serial port can be done using
+Powershell, with the command:
 
 ```
 Get-PnpDevice -PresentOnly | Where-Object { $_.InstanceId -match '^USB' }
 ```
-The TKey will be listed under the class: 'Ports', with the name 'USB Serial Device'. 
+The TKey will be listed under the class: 'Ports', with the name 'USB
+Serial Device'.
 
-Alternatively, one can also find the device in Device Manager, under 'Ports (COM & LPT)'. This will
-also show the status of the TKey.
+Alternatively, one can also find the device in Device Manager, under
+'Ports (COM & LPT)'. This will also show the status of the TKey.
 
 ### Running a TKey Device Application
 Most client applications embed the device app in their own binary to

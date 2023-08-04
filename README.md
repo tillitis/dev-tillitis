@@ -17,7 +17,7 @@ To see the Developer Handbook:
 
 ```
 % cd hugo
-% hugo serve
+% hugo server
 ...
 Web Server is available at http://localhost:1313/ 
 ...
