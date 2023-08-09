@@ -175,7 +175,7 @@ $ tkey-runapp rgb.bin
 
 This should auto-detect any attached TKeys, upload, and start a tiny
 device app that blinks the LED as described under [Device
-Applications](#device-applications).
+Applications](/devapp/#device-applications).
 
 ### Debugging
 
