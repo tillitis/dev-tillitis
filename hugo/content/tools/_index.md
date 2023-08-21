@@ -29,7 +29,7 @@ On Ubuntu, you can install the required packages with the following
 command:
 
 ```
-$ sudo apt install build-essential clang lld llvm bison flex libreadline-dev \
+sudo apt install build-essential clang lld llvm bison flex libreadline-dev \
                  gawk tcl-dev libffi-dev git mercurial graphviz \
                  xdot pkg-config python3 libftdi-dev \
                  python3-dev libeigen3-dev \
@@ -45,8 +45,9 @@ through the package manager
 [Chocolatey](https://community.chocolatey.org/). After installing
 Chocolatey, run Powershell (version 3 or higher) as an administrator,
 and install the necessary packages using the following command:
+
 ```
-$ choco install make llvm clang go
+choco install make llvm clang go
 ```
 
 ## Toolchain container `tkey-builder`
@@ -57,7 +58,7 @@ tools already installed for use with Podman or Docker.
 This assumes a working rootless Podman. On Ubuntu 22.10, running
 
 ```
-$ sudo apt install podman rootlesskit slirp4netns
+sudo apt install podman rootlesskit slirp4netns
 ```
 
 should be enough to get you a working Podman setup.
@@ -65,7 +66,7 @@ should be enough to get you a working Podman setup.
 You can use the following command to fetch the image:
 
 ```
-$ podman pull ghcr.io/tillitis/tkey-builder:2
+podman pull ghcr.io/tillitis/tkey-builder:2
 ```
 
 **Note well**: This image is really large (~ 2 GiB) because it also
@@ -81,15 +82,15 @@ https://github.com/tillitis/tkey-libs
 Build the tkey-libs first, typically just:
 
 ```
-$ git clone https://github.com/tillitis/tkey-libs.git
-$ cd tkey-libs
-$ make
+git clone https://github.com/tillitis/tkey-libs.git
+cd tkey-libs
+make
 ```
 
 or
 
 ```
-$ make podman
+make podman
 ```
 
 if you have Podman installed.
@@ -131,7 +132,7 @@ directory called tkey-libs, next to the app directory that needs it,
 you need to specify the path to it, as follows:
 
 ```
-$ make LIBDIR=../tkey-libs-main
+make LIBDIR=../tkey-libs-main
 ```
 
 If the `objcopy` binary on your system is anything other than the
@@ -148,14 +149,14 @@ is a separate section below that explains how to run it in QEMU.
 Most of the [projects](/projects/) come with a `podman` target:
 
 ```
-$ make podman
+make podman
 ```
 
 Or use podman directly if you haven't got `make` installed, typically
 specifying where your `tkey-libs` are:
 
 ```
-$ podman run --rm --mount type=bind,source=.,target=/src --mount type=bind,source=../tkey-libs,target=/tkey-libs -w /src -it ghcr.io/tillitis/tkey-builder:1 make -j
+podman run --rm --mount type=bind,source=.,target=/src --mount type=bind,source=../tkey-libs,target=/tkey-libs -w /src -it ghcr.io/tillitis/tkey-builder:1 make -j
 ```
 ## QEMU Emulator
 
@@ -198,11 +199,11 @@ To build QEMU, fetch and build the `tk1` branch in our [qemu
 repository](https://github.com/tillitis/qemu):
 
 ```
-$ git clone -b tk1 https://github.com/tillitis/qemu
-$ mkdir qemu/build
-$ cd qemu/build
-$ ../configure --target-list=riscv32-softmmu --disable-werror
-$ make -j $(nproc)
+git clone -b tk1 https://github.com/tillitis/qemu
+mkdir qemu/build
+cd qemu/build
+../configure --target-list=riscv32-softmmu --disable-werror
+make -j $(nproc)
 ```
 
 (Built with warnings-as-errors disabled, see [this
@@ -211,9 +212,9 @@ issue](https://github.com/tillitis/qemu/issues/3).)
 Then execute the following commands to fetch and build the firmware:
 
 ```
-$ git clone https://github.com/tillitis/tillitis-key1
-$ cd tillitis-key1/hw/application_fpga
-$ make firmware.elf
+git clone https://github.com/tillitis/tillitis-key1
+cd tillitis-key1/hw/application_fpga
+make firmware.elf
 ```
 
 Then execute the following commands to run the emulator, setting the

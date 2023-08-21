@@ -48,20 +48,20 @@ Minimal compilation of the above program would look something like
 this if `tkey-libs` is cloned in the directory next to this one:
 
 ```
-$ clang -g -target riscv32-unknown-none-elf -march=rv32iczmmul -mabi=ilp32 \
+clang -g -target riscv32-unknown-none-elf -march=rv32iczmmul -mabi=ilp32 \
   -mcmodel=medany -static -std=gnu99 -O2 -ffast-math -fno-common \
   -fno-builtin-printf -fno-builtin-putchar -nostdlib -mno-relax -flto \
   -Wall -Werror=implicit-function-declaration \
   -I ../tkey-libs/include \
   -I ../tkey-libs -c -o rgb.o rgb.c
 
-$ clang -g -target riscv32-unknown-none-elf -march=rv32iczmmul -mabi=ilp32 \
+clang -g -target riscv32-unknown-none-elf -march=rv32iczmmul -mabi=ilp32 \
   -mcmodel=medany -static -ffast-math -fno-common -nostdlib \
   -T ../tkey-libs/app.lds \
   -L ../tkey-libs -lcrt0 -lcommon \
   -I ../tkey-libs -o rgb.elf rgb.o
 
-$ llvm-objcopy --input-target=elf32-littleriscv --output-target=binary rgb.elf rgb.bin
+llvm-objcopy --input-target=elf32-littleriscv --output-target=binary rgb.elf rgb.bin
 ```
 
 Now you have `rgb.bin` which you can load into a TKey with
@@ -123,8 +123,9 @@ Put this in `/etc/udev/rules.d/60-tkey.rules` and run `udevadm control
 console (see `loginctl`).
 
 Another way to get access is by becoming a member of the group that
-owns the serial port. On Ubuntu that group is `dialout`, and you can
-do it like this:
+owns serial ports, on some systems with default udev rules for USB CDC
+ACM devices that come and go. On Ubuntu that group is `dialout`, and
+you can do it like this:
 
 ```
 $ id -un
@@ -187,7 +188,7 @@ For development or simply loading a device app onto a TKey the
 can be used.
 
 ```
-$ tkey-runapp rgb.bin
+tkey-runapp rgb.bin
 ```
 
 This should auto-detect any attached TKeys, upload, and start a tiny

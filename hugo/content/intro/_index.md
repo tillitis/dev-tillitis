@@ -38,8 +38,7 @@ plug it in.
 - No persistent storage
 
 {{< hint info >}}
-**Note well**: In the end-user version, currently the only one for
-sale on [Tillitis' web shop](https://shop.tillitis.se/), the FPGA
+**Note well**: In the end-user version (not TKey Unlocked) the FPGA
 configuration is locked down. This means you cannot change the FPGA
 bitstream or read out the bitstream (or the Unique Device Secret, UDS)
 from the configuration memory, even if you break the case and insert
@@ -51,13 +50,13 @@ it into a programmer board.
 A unique feature of the TKey is that it measures the loaded device
 application before starting it. A hash digest measurement (using
 BLAKE2s) combined with a Unique Device Secret (UDS) makes up a base
-secret we call a Compound Device Identifier (CDI), which is used by 
-the TKey device app.
+secret we call a Compound Device Identifier (CDI) which can then used
+by the TKey device app.
 
-If the TKey device app is altered, the CDI is also changed. If the
-keys derived from the CDI are the same as the last time the given
-device app was loaded onto the same TKey, the device app can be
-trusted not to have been altered.
+If the TKey device app is altered in any way the CDI is also changed.
+If the keys derived from the CDI are the same as the last time the
+given device app was loaded onto the same TKey the device app's
+integrity is guaranteed.
 
 The UDS is unique per TKey. The same device app loaded onto another
 TKey results in a different CDI.
@@ -83,3 +82,5 @@ security-critical operations.
 * [Get started using your TKey](https://tillitis.se/getstarted).
 * [Tools & Libraries](../tools/), setup and introduction for
   application developers.
+* [Tkey Unlocked](../unlocked), instructions for the provisioning
+process
