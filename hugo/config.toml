@@ -40,6 +40,11 @@ enableGitInfo = true
   url = "https://www.tillitis.se/"
   weight = 20
 
+[[menu.after]]
+  name = "Tillitis Store"
+  url = "https://shop.tillitis.se/"
+  weight = 30
+
 [params]
   # (Optional, default light) Sets color theme: light, dark or auto.
   # Theme 'auto' switches between dark and light modes based on browser/os preferences
