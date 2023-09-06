@@ -9,8 +9,10 @@ Depending on your inquiry, there are several channels to get in
 contact with Tillitis.
 
 General questions, support, and discussions:
-- #tillitis:matrix.org
-- #tillitis @ OFTC 
+- #tillitis:matrix.org on [Matrix](https://matrix.org/).
+- #tillitis on the [OFTC IRC network](https://oftc.net/).
+
+These channels are bridged.
 
 Issues, bugs, questions, or discussions of any
 hardware/firmware/software specifics:
