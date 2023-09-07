@@ -34,6 +34,7 @@ enableGitInfo = true
   name = "Tillitis on GitHub"
   url = "https://github.com/tillitis"
   weight = 10
+  pre = '<br>'
 
 [[menu.after]]
   name = "Tillitis AB"
