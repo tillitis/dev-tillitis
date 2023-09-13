@@ -149,8 +149,7 @@ The commands look like this:
 
 | *Name*           | *Size (bytes)* | *Comment*                                |
 |------------------|----------------|------------------------------------------|
-| Header           | 1              | Framing protocol header including length |
-|                  |                | of the rest of the frame.                |
+| Header           | 1              | Framing protocol header including length of the rest of the frame. |
 | Command/Response | 1              | Any of the below commands or responses.  |
 | Data             | n              | Any additional data.                     |
 

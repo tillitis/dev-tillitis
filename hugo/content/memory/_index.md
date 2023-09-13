@@ -69,11 +69,11 @@ write access.
 | `TIMER_STATUS`    | r     | r         |        |          |           | `TIMER_STATUS_RUNNING_BIT` is 1 when the timer is running.              |
 | `TIMER_PRESCALER` | r/w   | r/w       | 4B     |          |           | Prescaler init value. Write blocked when running.                       |
 | `TIMER_TIMER`     | r/w   | r/w       | 4B     |          |           | Timer init or current value while running. Write blocked when running.  |
-| `UDS_FIRST`       | r[^3] | invisible | 4B     | u8[32]   |           | First word of Unique Device Secret key. Note: Read once per power up.   |
-| `UDS_LAST`        |       | invisible |        |          |           | The last word of the UDS. Note: Read once per power up.                 |
-| `UART_BITRATE`    | r/w   |           |        |          |           | TBD                                                                     |
-| `UART_DATABITS`   | r/w   |           |        |          |           | TBD                                                                     |
-| `UART_STOPBITS`   | r/w   |           |        |          |           | TBD                                                                     |
+| `UDS_FIRST`       | r[^3] | invisible | 32B     | u32[8]  |           | First word of Unique Device Secret key. Word access only. **Note:** Only readable once per power up. |
+| `UDS_LAST`        |       | invisible |        |          |           | The last word of the UDS. Note: Only readable once per power up.        |
+| `UART_BITRATE`    | r/w   | r/w       | 2B     | u16      |           | Default 288 (62 500 bps). The bitrate is set by writing the divisor, calculated by: divisor = 18E6 / bps. |
+| `UART_DATABITS`   | r/w   | r/w       | 4 bits | u8       |           | Default 8.                                                              |
+| `UART_STOPBITS`   | r/w   | r/w       | 2 bits | u8       |           | Default 1.                                                              |
 | `UART_RX_STATUS`  | r     | r         | 1B     | u8       |           | Non-zero when there is data to read.                                    |
 | `UART_RX_DATA`    | r     | r         | 1B     | u8       |           | Data to read. Only the LSB contains data.                               |
 | `UART_RX_BYTES`   | r     | r         | 4B     | u32      |           | Number of bytes received from the host and not yet read by the SW or FW.|
