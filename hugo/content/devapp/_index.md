@@ -10,7 +10,7 @@ weight: 3
 Consider this C program:
 
 ```c
-#include <types.h>
+#include <stdint.h>
 #include <led.h>
 
 #define SLEEPTIME 100000
