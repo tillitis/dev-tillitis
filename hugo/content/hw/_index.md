@@ -113,10 +113,20 @@ because the CPU is running at 18 MHz.
 ## UART
 
 A standard UART (Universal Asynchronous Receiver/Transmitter)
-interface for receiving bytes from and send bytes to a TKey device app
-via the interface microcontroller on the TKey. The UART default speed
-is 62500 bps, but can be adjusted by the device app. (Note that the
-client app must set the same bitrate too.)
+interface is used for sending and receiving bytes to a TKey device app
+via the interface microcontroller on the TKey. The UART default
+configuration is:
+
+| *Config*      | *Default* | *Comment* |
+|-------------|-----------|-------------|
+| Data rate   | 62500 bps |             |
+| Data bits   | 8         |             |
+| Stop bits   | 1         | 0, 1, 2     |
+| Parity      | none      | non configurable |
+
+
+All configuration, except for parity, can be configured by the device
+app. Note that the client app must set the same configuration.
 
 The UART contains a 512-bit Rx-FIFO with status (data available).
 
