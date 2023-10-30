@@ -25,8 +25,9 @@ required (with riscv32 support and the Zmmul extension,
 `-march=rv32iczmmul`). Packages on Ubuntu 22.10 (Kinetic) are known to
 work.
 
-On Ubuntu, you can install the required packages with the following
-command:
+### Linux
+Packages on Ubuntu 22.10 (Kinetic) are known to work. You can install
+the required packages with the following command:
 
 ```
 sudo apt install build-essential clang lld llvm bison flex libreadline-dev \
@@ -40,11 +41,43 @@ sudo apt install build-essential clang lld llvm bison flex libreadline-dev \
                  golang clang-format
 ```
 
-On Windows, the easiest way to install the required packages is
-through the package manager
-[Chocolatey](https://community.chocolatey.org/). After installing
-Chocolatey, run Powershell (version 3 or higher) as an administrator,
-and install the necessary packages using the following command:
+### macOS
+First you need the Xcode Command Line Tools installed.
+
+```
+xcode-select --install
+```
+
+This will give you `make` and other useful tools for development. Even
+if macOS provides `llvm` it does not seem to support our target,
+`riscv32-unknown-none-elf`. Hence we recommend to also installing
+`llvm`, among other packages, via brew.
+
+```
+brew install llvm go
+```
+
+One caveat for llvm is that it is "keg-only", which means it was not
+symlinked into `/opt/homebrew`, and we then need to do it ourselves.
+
+The esiest way is to add
+
+```
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+```
+
+to your your `.zshrc` or equvivalent. The key is that we add `llvm`
+from brew in `PATH` before `llvm` provided by macOS. Just remember
+that if you use `llvm` provided by macOS for other projetcs this can
+create issues. Another way would be to explicitly specify which to use
+in the makefiles.
+
+### Windows
+The easiest way to install the required packages is through the
+package manager [Chocolatey](https://community.chocolatey.org/). After
+installing Chocolatey, run Powershell (version 3 or higher) as an
+administrator, and install the necessary packages using the following
+command:
 
 ```
 choco install make llvm clang go
