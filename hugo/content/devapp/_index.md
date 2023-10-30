@@ -11,7 +11,7 @@ Consider this C program:
 
 ```c
 #include <stdint.h>
-#include <led.h>
+#include <tkey/led.h>
 
 #define SLEEPTIME 100000
 
