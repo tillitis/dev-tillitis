@@ -88,6 +88,9 @@ choco install make llvm clang go
 We provide a container image which has all the above packages and
 tools already installed for use with Podman or Docker.
 
+{{< tabs >}}
+{{< tab "Linux" >}}
+
 This assumes a working rootless Podman. On Ubuntu 22.10, running
 
 ```
@@ -95,6 +98,40 @@ sudo apt install podman rootlesskit slirp4netns
 ```
 
 should be enough to get you a working Podman setup.
+
+{{< /tab >}}
+{{< tab "macOS" >}}
+Podman for macOS is distributed using brew.
+```
+brew install podman
+```
+
+Next, create and start your first Podman machine:
+
+```
+podman machine init
+podman machine start
+```
+
+You can then verify the installation information using:
+
+```
+podman info
+```
+
+It is also possible to use binaries or a pkginstaller on Podman's
+[Github release page](https://github.com/containers/podman/releases).
+
+{{< /tab >}}
+{{< tab "Windows" >}}
+To install on Windows is a bit more compliacted, follow this link for
+comprehensive instructions:
+
+https://github.com/containers/podman/blob/main/docs/tutorials/podman-for-windows.md
+
+{{< /tab >}}
+{{< /tabs >}}
+
 
 You can use the following command to fetch the image:
 
