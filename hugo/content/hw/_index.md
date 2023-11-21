@@ -19,19 +19,37 @@ implement from a developer point of view.
 
 ## CPU
 
-The CPU of the TKey is a 32-bit RISC-V running at 18 MHz. It supports
-the RV32 instruction set with RV32IC\_Zmmul (`-march=rv32iczmmul`)
-extensions.
+The CPU of the TKey is a modified version of
+[PicoRV32](https://github.com/YosysHQ/picorv32), 32-bit RISC-V running
+at 18 MHz. Modifications includes a fast 32x32 multiplier implemented
+using the multiplier blocks in the iCE40 DSPs as well as a HW trap
+function.
 
-This means that the base RV32I as well as compressed instructions are
-supported. The subset of the M(ath) extension that includes
-multiplication, but not division is supported.
+The supported instruction set supported by the CPU is a subset of
+RV32I. Specifically it includes compressed instructions, but excludes
+instructions for:
 
-There is no support for interrupts.
+- Counters
+- System
+- Synch
+- CSR access
+- Change level
+- Trap redirect
+- Interrupt
+- MMU
+
+The instruction set implemented by the CPU also includes
+multiplication instructions from the RV32IC\_Zmmul
+(`-march=rv32iczmmul`) extension. Division is not supported.
 
 Any illegal, unsupported instruction will halt the CPU. The halted CPU
 is detected by the hardware, which will blink the RGB LED with red to
-indicate the error state.
+indicate the error state. There is no way for the CPU to exit the
+trap state besides a power cycle of the device.
+
+Note that the CPU has no support for interrupts. No instructions,
+ports or logic.
+
 
 ## Execution Monitor
 
