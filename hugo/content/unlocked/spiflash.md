@@ -129,3 +129,6 @@ If you plan to later lock down your Tkey by flashing the NVCM, it
 is highly recommended to generate a new bitstream with a new unique
 UDS and UDI.
 {{< /hint >}}
+
+Once you are done, continue to [casing](unlocked/casing) to assemble
+the plastic case.

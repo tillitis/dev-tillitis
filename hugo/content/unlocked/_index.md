@@ -46,6 +46,7 @@ In order to provision a TKey Unlocked, you need:
   i.e., a TKey where the NVCM has not been written
 - preferably an encrypted filesystem where you generate
   and temporarily store the bitstream and UDS files
+- Glue for the casing, see [casing](unlocked/casing)
 
 The bitstream consists of:
 - FPGA configuration
@@ -107,5 +108,7 @@ Start by looking over and setting up permissions for [the TKey
 Programmer](tp1), then continue to [Build an FPGA
 bitstream](unlocked/build).
 
-After programming either the NVCM or the SPI flash, you should have a
-functioning TKey!
+After programming either the NVCM or the SPI flash, you should
+protect your TKey Unlocked by [assembling the plastic
+case](unlocked/casing). When
+all the steps are done, you should have a functioning TKey!

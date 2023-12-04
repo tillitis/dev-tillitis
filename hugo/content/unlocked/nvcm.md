@@ -197,3 +197,6 @@ or natively, or in your container window:
 cd hw/application_fpga
 make clean
 ```
+
+Once you are done, continue to [casing](unlocked/casing) to assemble
+the plastic case.
