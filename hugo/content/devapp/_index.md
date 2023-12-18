@@ -35,7 +35,7 @@ int main(void)
 
 To get this to work you will need our header files and to link with
 `libcrt0` C runtime, otherwise your program won't even reach `main()`,
-and `libcommon` to get the `set_lead()` function.
+and `libcommon` to get the `set_led()` function.
 
 Header files and libraries are available in our repository
 [tkey-libs](https://github.com/tillitis/tkey-libs) as mentioned in
