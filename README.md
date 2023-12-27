@@ -60,3 +60,10 @@ your favourite editor.
 In the front matter (the stuff inside `---` in the beginning of the
 file) you can specify the internal order with `weight: 2` to get it in
 second place in the table of contents.
+
+## License
+
+Unless otherwise noted, the content of the Developer Handbook is
+licensed under CC-BY-SA-4.0 with Copyright to Tillitis AB.
+
+See [LICENSE](LICENSE.txt) for the full license texts.
