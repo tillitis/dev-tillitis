@@ -197,9 +197,9 @@ Applications](/devapp/#device-applications).
 
 ### Debugging
 
-If you run a TKey device app in the QEMU emulator there is a debug
-port on 0xfe00\_1000 (`TK1_MMIO_QEMU_DEBUG`). Anything written there
-is printed as a character by QEMU on stdout.
+If you run a TKey device app in the [QEMU emulator](/tools/#qemu-emulator)
+there is a debug port on 0xfe00\_1000 (`TK1_MMIO_QEMU_DEBUG`).
+Anything written there is printed as a character by QEMU on stdout.
 
 `qemu_putchar()`, `qemu_puts()`, `qemu_putinthex()`, `qemu_hexdump()`
 and friends (see `libcommon/qemu_debug.c` and `include/qemu_debug.h`
@@ -241,17 +241,43 @@ not. Instead you can use GDB from
 
 https://github.com/riscv-collab/riscv-gnu-toolchain/releases/
 
-To attach GDB to the process running in QEMU do something like:
+Before doing anything else, start qemu. Take note of what pty the
+serial port ends up on. Look for:
 
 ```
-riscv32-elf-gdb firmware.elf \
+char device redirected to /dev/pts/12 (label chrid)"
+```
+
+You can use this port later for communicating with your device app.
+
+
+If you're debugging an ordinary device app, you have to first load the
+device app, typically by using `tkey-runapp` from
+[tkey-devtools](https://github.com/tillitis/tkey-devtools) using the
+pty QEMU mentioned when starting:
+
+```
+tkey-runapp --port /dev/pts/12  app.bin
+```
+
+Then attach GDB to it:
+
+```
+riscv32-elf-gdb app.elf \
 -ex "set architecture riscv:rv32" \
--ex "target remote :1234" \
--ex "load"
+-ex "target remote :1234"
 ```
 
-This works with both firmware and apps. Remember to compile your
-programs with `-g` in `CFLAGS` to include debug symbols.
+Attaching GDB works with both firmware and apps. For firmware
+debugging you obviously don't need to use `tkey-runapp`. 
+
+**Note well**: 
+
+- You load the raw binary `app.bin` with `tkey-runapp` but you feed
+  the ELF format binary `app.elf` to GDB.
+
+- Remember to compile your programs with `-g` in `CFLAGS` to include
+  debug symbols in the ELF file.
 
 ## Client applications
 
