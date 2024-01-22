@@ -89,8 +89,8 @@ write access.
 | `SWITCH_APP`      | r/w   | r         | 1B     | u8       |           | Write anything here to trigger the switch to application mode. Reading returns `0` if TKey is in firmware mode, `0xffffffff` if in app mode. |
 | `LED`             | r/w   | r/w       | 1B     | u8       |           | Controls the RGB color of the status indicator LED on TKey. Bit 0 is Blue, bit 1 is Green, and bit 2 is Red LED. |
 | `GPIO`            | r/w   | r/w       | 1B     | u8       |           | Bits 0 and 1 contain the input level of GPIO 1 and 2. Bits 3 and 4 store the output level of GPIO 3 and 4. |
-| `APP_ADDR`        | r/w   | r         | 4B     | u32      |           | App load address, stored by firmware so app can find itself in memory.  |
-| `APP_SIZE`        | r/w   | r         | 4B     | u32      |           | App size, stored by firmware so app can read its own size.              |
+| `APP_ADDR`        | r/w   | r         | 4B     | u32      |           | App load address, stored by firmware so the app can find itself in memory.  |
+| `APP_SIZE`        | r/w   | r         | 4B     | u32      |           | App size, stored by firmware so the app can read its own size.              |
 | `BLAKE2S`         | r/w   | r         | 4B     | u32      |           | Function pointer to a BLAKE2S function in the firmware.                 |
 | `CDI_FIRST`       | r/w   | r         | 32B    | u8[32]   |           | The computed Compound Device Identifier (CDI).                          |
 | `CDI_LAST`        |       | r         |        |          |           | Last word of CDI.                                                       |
