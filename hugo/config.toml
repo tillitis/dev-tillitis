@@ -46,6 +46,11 @@ enableGitInfo = true
   url = "https://shop.tillitis.se/"
   weight = 30
 
+[[menu.after]]
+  name = "Bug Bounty Program"
+  url = "https://bugbounty.tillitis.se/"
+  weight = 40
+
 [params]
   # (Optional, default light) Sets color theme: light, dark or auto.
   # Theme 'auto' switches between dark and light modes based on browser/os preferences
