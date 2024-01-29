@@ -180,7 +180,7 @@ TKey into.
   doc](https://pkg.go.dev/github.com/tillitis/tkeyutil).
 - [github.com/tillitis/tkeysign](https://github.com/tillitis/tkeysign):
   Contains functions to communicate with the `signer` device app, an
-  ed25519 signing oracle. [Go
+  ed25519 signing tool. [Go
   doc](https://pkg.go.dev/github.com/tillitis/tkeysign).
 
 ## Building applications

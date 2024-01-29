@@ -14,7 +14,7 @@ provide some kind of security function. Some examples of such security
 functions are:
 
 - Time-based one-time password (TOTP) token generators
-- Signing oracles
+- Digital signatures
 - Secure random numbers
 - Encryption
 

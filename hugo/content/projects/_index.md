@@ -12,9 +12,9 @@ This page can be used both as inspiration and to find useful use cases for your 
 **Disclaimer**: The below list does not guarantee the status of each given project; please check each project for details.
 
 ## Device applications
-- [Ed25519 signing oracle](https://github.com/tillitis/tkey-device-signer)
+- [Ed25519 signing tool](https://github.com/tillitis/tkey-device-signer)
 - [TKey Loader app](https://github.com/tillitis/tkey-device-loader)
-- [Ed25519 signing oracle with Sigsum](https://git.glasklar.is/nisse/tkey-sign-if-logged)
+- [Ed25519 signing tool with Sigsum](https://git.glasklar.is/nisse/tkey-sign-if-logged)
 - [X25519 key exchange, ECDH key agreement protocol for Curve25519](https://github.com/quite/tkey-device-x25519)
 - [Blinking LED using Zig](https://github.com/Foxboron/tillitis-blink-zig)
 - [Test apps](https://github.com/tillitis/tkey-testapps): Test apps
@@ -25,7 +25,7 @@ This page can be used both as inspiration and to find useful use cases for your 
 - [Verification tool for your TKey](https://tillitis.se/app/tkey-device-verification/)
 - [Signing tool](https://github.com/tillitis/tkey-sign-cli)
 - [Go package to communicate with a TKey](https://github.com/tillitis/tkeyclient)
-- [Go package to communicate with the Ed25519 signer oracle](https://github.com/tillitis/tkey-verification)
+- [Go package to communicate with the Ed25519 signer](https://github.com/tillitis/tkey-verification)
 - [TKey Development tools](https://github.com/tillitis/tkey-devtools).
 - [Signed random data generator](https://github.com/tillitis/tkey-random-generator)
 - [age plugin using TKey](https://github.com/quite/age-plugin-tkey)
