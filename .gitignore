@@ -3,3 +3,4 @@ hugo/resources
 hugo/.hugo_build.lock
 hugo/archetypes
 
+.DS_Store
