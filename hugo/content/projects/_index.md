@@ -19,6 +19,7 @@ This page can be used both as inspiration and to find useful use cases for your 
 - [Blinking LED using Zig](https://github.com/Foxboron/tillitis-blink-zig)
 - [Test apps](https://github.com/tillitis/tkey-testapps): Test apps
   for LED, execution monitor, TRNG, timer, and touch.
+- [rusTkey ("rusty key") a library for developing TKey applications in rust](https://codeberg.org/rustkey/rustkey)
 
 ## Client applications
 - [TKey ssh agent](https://tillitis.se/app/tkey-ssh-agent/)
