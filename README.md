@@ -60,3 +60,29 @@ your favourite editor.
 In the front matter (the stuff inside `---` in the beginning of the
 file) you can specify the internal order with `weight: 2` to get it in
 second place in the table of contents.
+
+## License
+
+Unless otherwise noted, the content of the Dev Handbook are licensed
+under CC-BY-SA-4.0.
+
+The code examples of the Dev Handbook are licensed under the terms and
+conditions of the "GNU General Public License v2.0 only":
+
+> Copyright Tillitis AB.
+>
+> These programs are free software: you can redistribute it and/or
+> modify it under the terms of the GNU General Public License as
+> published by the Free Software Foundation, version 2 only.
+>
+> These programs are distributed in the hope that it will be useful,
+> but WITHOUT ANY WARRANTY; without even the implied warranty of
+> MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+> General Public License for more details.
+
+> You should have received a copy of the GNU General Public License
+> along with this program. If not, see:
+>
+> https://www.gnu.org/licenses
+
+See [LICENSES](LICENSES) for the full license texts.
