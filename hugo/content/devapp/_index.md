@@ -84,8 +84,13 @@ provided so the loaded device app knows where it's loaded and how
 large it is.
 
 Special memory areas for memory mapped hardware functions are
-available at base 0xc000\_0000 and an offset. See [the memory
-map](/memory/) and the header file `tk1_mem.h`.
+available at base 0xc000\_0000 and an offset. Please try to use the
+helper functions in [tkey-libs](https://github.com/tillitis/tkey-libs)
+before accessing hardware function addresses directly.
+
+See [the memory map](/memory/) for an overview, the [the hardware
+description](/hw/) for how to use, and the header file `tk1_mem.h` in
+tkey-libs.
 
 ## Running TKey apps
 

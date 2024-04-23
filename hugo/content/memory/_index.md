@@ -5,9 +5,10 @@ weight: 3
 
 # Memory Map
 
-## Addressing
+An overview of the memory of the TKey. See [Hardware](/hw) for how to
+use the hardware functions.
 
-Layout of a 32-bit address:
+## Addressing
 
 ```
 31st bit                              0th bit
@@ -19,85 +20,85 @@ v                                     v
 - Bits [29 .. 24] (6 bits): Core select. There is space for 64 cores.
 - Bits [23 ..  0] (24 bits): Actual memory or in-core address.
 
-
 ## Assigned Top Level Prefixes
 
 The first 2 bits in a 32-bit address.
 
-| *name*   | *prefix* | *address length*                     |
-|----------|----------|--------------------------------------|
-| ROM      | 0b00     | 30 bit address                       |
-| RAM      | 0b01     | 30 bit address                       |
-| reserved | 0b10     |                                      |
-| MMIO     | 0b11     | 6 bits for core select, 24 bits rest |
+| *name*             | *prefix* | *address length*                     |
+|--------------------|----------|--------------------------------------|
+| ROM                | 0b00     | 30 bit address                       |
+| RAM                | 0b01     | 30 bit address                       |
+| reserved           | 0b10     |                                      |
+| Hardware functions | 0b11     | 6 bits for core select, 24 bits rest |
 
 ## Address Prefixes
 
 The first 8 bits in a 32-bit address.
 
-| *name*      | *prefix* |
-|-------------|----------|
-| ROM         | 0x00     |
-| RAM         | 0x40     |
-| MMIO        | 0xc0     |
-| MMIO TRNG   | 0xc0     |
-| MMIO TIMER  | 0xc1     |
-| MMIO UDS    | 0xc2     |
-| MMIO UART   | 0xc3     |
-| MMIO TOUCH  | 0xc4     |
-| MMIO FW_RAM | 0xd0     |
-| MMIO TK1    | 0xff     |
+| *name*  | *prefix*                        |
+|---------|---------------------------------|
+| ROM     | 0x00                            |
+| RAM     | 0x40                            |
+| TRNG    | 0xc0                            |
+| TIMER   | 0xc1                            |
+| UDS     | 0xc2                            |
+| UART    | 0xc3                            |
+| TOUCH   | 0xc4                            |
+| FW\_RAM | 0xd0                            |
+| QEMU    | 0xfe Not used in real hardware! |
+| TK1     | 0xff                            |
 
-## MMIO
+## Hardware functions
 
-MMIO begins at `0xc000_0000` but please use the constants in
-[tk1_mem.h](https://github.com/tillitis/tkey-libs/blob/main/include/tk1_mem.h)
-in the `tkey-libs` repository.
+The hardware functions begins at `0xc000_0000` but please use the
+constants in
+[tk1_mem.h](https://github.com/tillitis/tkey-libs/blob/main/include/tkey/tk1_mem.h)
+in the `tkey-libs` repository if you can.
 
-*Note*: MMIO accesses should be 32 bits wide. Use for example `lw` and
-`sw` to load and store 32-bit words. Exceptions are `FW_RAM` and
-`QEMU_DEBUG`.
+*Note*: The address in the table below is the word address. The data might
+be available only in the first bits or maybe the LSB of the word. Also
+note that some data is readable only by word, not byte addressing.
+Note the description.
 
-In the following table, *r* equals read and *r/w* equals read and
-write access.
+In the following table **r** mean read, **r/w** means read and write
+access, **i** means invisible.
 
-| *Name*            | *FW*  | *App*     | *Size* | *Type*   | *Content* | *Description*                                                           |
-|-------------------|-------|-----------|--------|----------|-----------|-------------------------------------------------------------------------|
-| `TRNG_STATUS`     | r     | r         |        |          |           | `TRNG_STATUS_READY_BIT` is 1 when an entropy word is available.         |
-| `TRNG_ENTROPY`    | r     | r         | 4B     | u32      |           | Entropy word. Reading a word will clear `TRNG_STATUS`.                  |
-| `TIMER_CTRL`      | r/w   | r/w       |        |          |           | If `TIMER_STATUS_RUNNING_BIT` in `TIMER_STATUS` is 0, setting `TIMER_CTRL_START_BIT` here starts the timer. If `TIMER_STATUS_RUNNING_BIT` in `TIMER_STATUS` is 1, setting `TIMER_CTRL_STOP_BIT` here stops the timer. |
-| `TIMER_STATUS`    | r     | r         |        |          |           | `TIMER_STATUS_RUNNING_BIT` is 1 when the timer is running.              |
-| `TIMER_PRESCALER` | r/w   | r/w       | 4B     |          |           | Prescaler init value. Write blocked when running.                       |
-| `TIMER_TIMER`     | r/w   | r/w       | 4B     |          |           | Timer init or current value while running. Write blocked when running.  |
-| `UDS_FIRST`       | r[^3] | invisible | 32B     | u32[8]  |           | First word of Unique Device Secret key. Word access only. **Note:** Only readable once per power up. |
-| `UDS_LAST`        |       | invisible |        |          |           | The last word of the UDS. Note: Only readable once per power up.        |
-| `UART_BITRATE`    | r/w   | r/w       | 2B     | u16      |           | Default 288 (62 500 bps). The bitrate is set by writing the divisor, calculated by: divisor = 18E6 / bps. |
-| `UART_DATABITS`   | r/w   | r/w       | 4 bits | u8       |           | Default 8.                                                              |
-| `UART_STOPBITS`   | r/w   | r/w       | 2 bits | u8       |           | Default 1.                                                              |
-| `UART_RX_STATUS`  | r     | r         | 1B     | u8       |           | Non-zero when there is data to read.                                    |
-| `UART_RX_DATA`    | r     | r         | 1B     | u8       |           | Data to read. Only the LSB contains data.                               |
-| `UART_RX_BYTES`   | r     | r         | 4B     | u32      |           | Number of bytes received from the host and not yet read by the SW or FW.|
-| `UART_TX_STATUS`  | r     | r         | 1B     | u8       |           | Non-zero when it's OK to write data to send.                            |
-| `UART_TX_DATA`    | w     | w         | 1B     | u8       |           | Data to send. Only the LSB contains data.                               |
-| `TOUCH_STATUS`    | r/w   | r/w       |        |          |           | `TOUCH_STATUS_EVENT_BIT` is 1 when touched. After detecting a touch event (reading a 1), write anything here to acknowledge the event. |
-| `FW_RAM`          | r/w   | invisible | 2 kiB  | u8[2048] |           | Firmware-only RAM.                                                      |
-| `UDI`             | r     | invisible | 8B     | u64      |           | Unique Device ID (UDI).                                                 |
-| `QEMU_DEBUG`      | w     | w         |        | u8       |           | Debug console (only in QEMU)                                            |
-| `NAME0`           | r     | r         | 4B     | char[4]  | "tk1 "    | ID of core/stick, first part.                                           |
-| `NAME1`           | r     | r         | 4B     | char[4]  | "mkdf"    | ID of core/stick, second part.                                          |
-| `VERSION`         | r     | r         | 4B     | u32      | 1         | Version of core/stick.                                                  |
-| `SWITCH_APP`      | r/w   | r         | 1B     | u8       |           | Write anything here to trigger the switch to application mode. Reading returns `0` if TKey is in firmware mode, `0xffffffff` if in app mode. |
-| `LED`             | r/w   | r/w       | 1B     | u8       |           | Controls the RGB color of the status indicator LED on TKey. Bit 0 is Blue, bit 1 is Green, and bit 2 is Red LED. |
-| `GPIO`            | r/w   | r/w       | 1B     | u8       |           | Bits 0 and 1 contain the input level of GPIO 1 and 2. Bits 3 and 4 store the output level of GPIO 3 and 4. |
-| `APP_ADDR`        | r/w   | r         | 4B     | u32      |           | App load address, stored by firmware so app can find itself in memory.  |
-| `APP_SIZE`        | r/w   | r         | 4B     | u32      |           | App size, stored by firmware so app can read its own size.              |
-| `BLAKE2S`         | r/w   | r         | 4B     | u32      |           | Function pointer to a BLAKE2S function in the firmware.                 |
-| `CDI_FIRST`       | r/w   | r         | 32B    | u8[32]   |           | The computed Compound Device Identifier (CDI).                          |
-| `CDI_LAST`        |       | r         |        |          |           | Last word of CDI.                                                       |
-| `RAM_ASLR`        | w     | invisible | 4B     | u32      |           | Seed value for the RAM randomization.                                   |
-| `RAM_SCRAMBLE`    | w     | invisible | 4B     | u32      |           | Data scrambling seed value for the RAM.                                 |
-| `CPU_MON_CTRL`    | w     | w         | 4B     | u32      |           | Bit 0 enables CPU execution monitor. Can't be unset. Lock addresses.    |
-| `CPU_MON_FIRST`   | w     | w         | 4B     | u32      |           | First address of the area monitored for execution attempts.             |
-| `CPU_MON_LAST`    | w     | w         | 4B     | u32      |           | Last address of the area monitored for execution attempts.              |
-
-[^3]: Each word of the UDS can only be read *once* after TKey has started.
+| *Name*                       | *Word Address* | *FW* | *App* | *Description *                                                                                                                                     |
+|------------------------------|----------------|------|-------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| `TK1_FW_RAM_BASE`            | 0xd0000000     | r/w  | i     | Start of firmware RAM (2 kiB).                                                                                                                     |
+| `TK1_MMIO_TRNG_STATUS`       | 0xc0000024     | r    | r     | If bit 1 set `TRNG_ENTROPY` is ready to be read.                                                                                                   |
+| `TK1_MMIO_TRNG_ENTROPY`      | 0xc0000080     | r    | r     | A word of entropy.                                                                                                                                 |
+| `TK1_MMIO_TIMER_CTRL`        | 0xc1000020     | r/w  | r/w   | If bit 0 in `TK1_MMIO_TIMER_STATUS` is 0, setting bit 0 starts the timer. If bit 0 in `TK1_MMIO_TIMER_STATUS` is 1, setting bit 0 stops the timer. |
+| `TK1_MMIO_TIMER_STATUS`      | 0xc1000024     | r    | r     | Bit 0 is 1 when the timer is running.                                                                                                              |
+| `TK1_MMIO_TIMER_PRESCALER`   | 0xc1000028     | r/w  | r/w   | Prescaler init value. Write blocked when running.                                                                                                  |
+| `TK1_MMIO_TIMER_TIMER`       | 0xc100002c     | r/w  | r/w   | Timer init or current value while running. Write blocked when running.                                                                             |
+| `TK1_MMIO_UDS_FIRST`         | 0xc2000040     | r    | i     | First word of Unique Device Secret key. 8 words. Word access only. **Note:** Only readable once per power up.                                      |
+| `TK1_MMIO_UDS_LAST`          | 0xc200005c     | r    | i     | Last word of the UDS. **Note:** Only readable once per power up.                                                                                   |
+| `TK1_MMIO_UART_BIT_RATE`     | 0xc3000040     | r/w  | r/w   | Default 288 (62 500 bps). The bitrate is set by writing the divisor, calculated by: divisor = 18E6 / bps.                                          |
+| `TK1_MMIO_UART_DATA_BITS`    | 0xc3000044     | r/w  | r/w   | Default 8.                                                                                                                                         |
+| `TK1_MMIO_UART_STOP_BITS`    | 0xc3000048     | r/w  | r/w   | Default 1.                                                                                                                                         |
+| `TK1_MMIO_UART_RX_STATUS`    | 0xc3000080     | r    | r     | Non-zero when there is data to read.                                                                                                               |
+| `TK1_MMIO_UART_RX_DATA`      | 0xc3000084     | r    | r     | Data to read. Only the LSB of the word contains data.                                                                                              |
+| `TK1_MMIO_UART_RX_BYTES`     | 0xc3000088     | r    | r     | Number of unread bytes received from client.                                                                                                       |
+| `TK1_MMIO_UART_TX_STATUS`    | 0xc3000100     | r    | r     | Non-zero when it's OK to write data to send.                                                                                                       |
+| `TK1_MMIO_UART_TX_DATA`      | 0xc3000104     | w    | w     | Data to send. Only the LSB of the word will be sent.                                                                                               |
+| `TK1_MMIO_TOUCH_STATUS`      | 0xc4000024     | r    | r     | Bit 0 is 1 when touched. After detecting a touch event (reading a 1), write anything here to acknowledge the event.                                |
+| `TK1_MMIO_QEMU_DEBUG`        | 0xfe001000     | w    | w     | Debug console (only in QEMU). Only the LSB of the word will be sent.                                                                               |
+| `TK1_MMIO_TK1_NAME0`         | 0xff000000     | r    | r     | TKey FPGA design name, first part, default "tk1".                                                                                                  |
+| `TK1_MMIO_TK1_NAME1`         | 0xff000004     | r    | r     | TKey FPGA design name, second part, default "mkdf".                                                                                                |
+| `TK1_MMIO_TK1_VERSION`       | 0xff000008     | r    | r     | Version of FPGA design (See UDI for product version or serial)                                                                                     |
+| `TK1_MMIO_TK1_SWITCH_APP`    | 0xff000020     | r/w  | r     | Write anything here to trigger the switch to application mode. Reading returns `0` in firmware mode, `0xffffffff` in app mode.                     |
+| `TK1_MMIO_TK1_LED`           | 0xff000024     | r/w  | r/w   | Controls the RGB color of the status indicator LED on TKey. Bit 0 is Blue, bit 1 is Green, and bit 2 is Red LED.                                   |
+| `TK1_MMIO_TK1_GPIO`          | 0xff000028     | r/w  | r/w   | Bits 0 and 1 contain the input level of GPIO 1 and 2. Bits 3 and 4 store the output level of GPIO 3 and 4.                                         |
+| `TK1_MMIO_TK1_APP_ADDR`      | 0xff000030     | r/w  | r     | App load address, stored by firmware so app can find itself in memory.                                                                             |
+| `TK1_MMIO_TK1_APP_SIZE`      | 0xff000034     | r/w  | r     | App size, stored by firmware so app can read its own size.                                                                                         |
+| `TK1_MMIO_TK1_BLAKE2S`       | 0xff000040     | r/w  | r     | Function pointer to a BLAKE2S function in the firmware.                                                                                            |
+| `TK1_MMIO_TK1_CDI_FIRST`     | 0xff000080     | r/w  | r     | The computed Compound Device Identifier (CDI). 8 words.                                                                                            |
+| `TK1_MMIO_TK1_CDI_LAST`      | 0xff00009c     | r/w  | r     | Last word of CDI.                                                                                                                                  |
+| `TK1_MMIO_TK1_UDI_FIRST`     | 0xff0000c0     | r    | i     | First word of Unique Device ID (UDI). 2 words. Set during provisioning.                                                                            |
+| `TK1_MMIO_TK1_UDI_LAST`      | 0xff0000c4     | r    | i     | Last word of UDI                                                                                                                                   |
+| `TK1_MMIO_TK1_RAM_ADDR_RAND` | 0xff000100     | r/w  | r/w   | Seed word for the RAM address randomization.                                                                                                       |
+| `TK1_MMIO_TK1_RAM_SCRAMBLE`  | 0xff000104     | r/w  | r/w   | Seed word for the RAM data scrambling.                                                                                                             |
+| `TK1_MMIO_TK1_CPU_MON_CTRL`  | 0xff000180     | w    | w     | Bit 0 enables Security Monitor. Can't be unset. Locks the area between the addresses set in `TK1_CPU_MON_FIRST` and `TK1_CPU_MON_LAST`.            |
+| `TK1_MMIO_TK1_CPU_MON_FIRST` | 0xff000184     | w    | w     | Start address (32-bit) of the RAM area monitored for execution attempts.                                                                           |
+| `TK1_MMIO_TK1_CPU_MON_LAST`  | 0xff000188     | w    | w     | Last address (32-bit) of the RAM area monitored for execution attempts.                                                                            |
