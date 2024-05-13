@@ -23,11 +23,11 @@ void sleep(uint32_t n)
 int main(void)
 {
 	for (;;) {
-		set_led(LED_RED);
+		led_set(LED_RED);
 		sleep(SLEEPTIME);
-		set_led(LED_GREEN);
+		led_set(LED_GREEN);
 		sleep(SLEEPTIME);
-		set_led(LED_BLUE);
+		led_set(LED_BLUE);
 		sleep(SLEEPTIME);
 	}
 }
@@ -35,7 +35,7 @@ int main(void)
 
 To get this to work you will need our header files and to link with
 `libcrt0` C runtime, otherwise your program won't even reach `main()`,
-and `libcommon` to get the `set_led()` function.
+and `libcommon` to get the `led_set()` function.
 
 Header files and libraries are available in our repository
 [tkey-libs](https://github.com/tillitis/tkey-libs) as mentioned in
