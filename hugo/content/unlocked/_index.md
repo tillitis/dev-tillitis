@@ -11,7 +11,8 @@ configuration, i.e., it does not have a bitstream programmed. This
 means that you can provision the TKey yourself and then either: 1) use
 it as your everyday security key or 2) use it for hardware or firmware
 development and re-provision as you go. These pages aims to provide
-the tools and instructions needed to provision a TKey.
+the tools and instructions needed to provision the latest release of a
+TKey.
 
 <img src="../images/tp1-tkey-min.png" alt="TKey Unlocked in tp1" title="TKey Unlocked in tp1" width="85%">
 
@@ -84,13 +85,13 @@ Unlocked.
 ## Arrival of Tkey
 When a Tkey Unlocked is sent from Tillitis, it will contain an [LED
 blink design](https://github.com/tillitis/tillitis-key1/tree/main/hw/production_test/application_fpga_test_gateware)
-in the SPI flash. It will blink sequentially in red, green, blue and 
+in the SPI flash. It will blink sequentially in red, green, blue and
 white until you program either the SPI flash or the NVCM. This happens
 to be the last step of our production test suite and is a method for
 you to know that the device in your hand has passed those tests.
 
 It is recommended to power up the TKey once it is recieved to control this
-behavior. If your device does not blink, you should contact Tillitis. 
+behavior. If your device does not blink, you should contact Tillitis.
 
 {{< hint info >}}
 **NOTE:**

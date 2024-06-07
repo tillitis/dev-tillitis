@@ -22,6 +22,9 @@ Programming the SPI flash is done in two steps:
 {{< tabs "flash SPI" >}}
 {{< tab "Linux" >}}
 
+The SPI flash can be programmed either in the container or natively.
+If you are using our container you can go directly to step 2.
+
 ## 1. Download tools
 
 When programming the SPI flash we are using `iceprog` from our fork of
@@ -46,23 +49,40 @@ includes our version of `iceprog` for use with Podman.
 First ensure that the TKey is inserted into the TKey Programmer and
 that the programmer is inserted into your computer.
 
+Note for this to work, you need permission to speak to the raw USB
+device of the TKey Programmer. See [Linux device
+permissions](tp1/#linux-permissions).
+
 ### Podman
 
-Make sure you have the `tkey-builder` container running as outlined in
-[Start the container](unlocked/build/#start-container).
+If you're on an SELinux system you might need to run this first to be
+able to access USB devices from the container:
+
+```
+setsebool container_use_devices=true
+```
+
+The simplest way is to use the make target
+
+```
+make -C contrib flash
+```
+
+which will start the container and program the SPI flash directly. If
+this succeeds you are done and can skip the remaining steps.
+Otherwise start the container using:
+
+```
+podman run --rm --device /dev/bus/usb/$(lsusb | grep -m 1 1209:8886 | awk '{ printf "%s/%s", $2, substr($4,1,3) }') -v .:/build:Z -w /build -it ghcr.io/tillitis/tkey-builder:4 /usr/bin/bash
+```
 
 ### Programming
 
 In a native shell or your container shell:
 
 ```
-cd hw/application_fpga
-tillitis-iceprog application_fpga.bin
+tillitis-iceprog hw/application_fpga/application_fpga.bin
 ```
-
-Note that your own user need permission to speak to the raw USB device
-of the TKey Programmer. See [Linux device
-permissions](tp1/#linux-permissions).
 
 {{< /tab >}}
 {{< tab "macOS" >}}
@@ -94,8 +114,7 @@ that the programmer is inserted into your computer.
 After installing `tillitis-iceprog`, run:
 
 ```
-cd hw/application_fpga
-tillitis-iceprog application_fpga.bin
+tillitis-iceprog hw/application_fpga/application_fpga.bin
 ```
 
 {{< /tab >}}

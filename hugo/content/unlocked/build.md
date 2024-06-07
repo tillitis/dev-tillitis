@@ -35,51 +35,55 @@ podman machine start
 ```
 
 ## 2. Download the repository
-Download and unzip or clone the repository
+It is **highly recommended** to use the latest official release,
+especially if you are programming the NVCM.
 
-https://github.com/tillitis/tillitis-key1/releases/tag/TK1-23.03.2
+Download and unpack, or clone the repository
 
-It is **highly recommended** to use an official release, especially if
-you are programming the NVCM.
+https://github.com/tillitis/tillitis-key1/releases
+
 
 All the paths in the instructions below are relative to where you
-unpacked the distribution or cloned the repo, so add a `TK1-23.03.2`
-or a `tillitis-key1` as necessary to the paths.
+unpacked the distribution or cloned the repo, so add the tag of the
+downloaded release, like `TK1-24.03`, or a `tillitis-key1` as
+necessary to the paths.
+
+Open a terminal and move into the `tillitis-key1` directory.
 
 ## 3. Start the container {#start-container}
 
-If you're not going with the native tools, start the container by
+If you're not going with the native tools, start the container:
 
 {{< tabs >}}
 {{< tab "Linux" >}}
-First inserting the TKey Programmer into your computer
-```
-podman run --rm --device /dev/bus/usb/$(lsusb | grep -m 1 1209:8886 | awk '{ printf "%s/%s", $2, substr($4,1,3) }') -v .:/build:Z -w /build -it ghcr.io/tillitis/tkey-builder:2 /usr/bin/bash
-```
 
-Note that for this to work, you need permission to speak to the raw USB
-device of the TKey Programmer. See [Linux device
-permissions](tp1/#linux-permissions).
-
-If you're on an SELinux system you might need to run this first to be
-able to access USB devices from the container:
+If you have `make` installed, use our make target
 
 ```
-setsebool container_use_devices=true
+make -C contrib run
+```
+or use this podman command
+```
+podman run --rm --mount type=bind,source="$(pwd)",target=/src -w /src -it ghcr.io/tillitis/tkey-builder:4 /usr/bin/bash
 ```
 
 {{< /tab >}}
 {{< tab "macOS" >}}
 
-```
-podman run --rm --mount type=bind,source="$(pwd)",target=/src -w /src -it ghcr.io/tillitis/tkey-builder:2 /usr/bin/bash
-```
+If you have `make` installed, use our make target
 
+```
+make -C contrib run
+```
+or use this podman command
+```
+podman run --rm --mount type=bind,source="$(pwd)",target=/src -w /src -it ghcr.io/tillitis/tkey-builder:4 /usr/bin/bash
+```
 {{< /tab >}}
 {{< tab "Windows" >}}
 
 ```
-podman run --rm --mount type=bind,source="./",target=/src -w /src -it ghcr.io/tillitis/tkey-builder:2 /usr/bin/bash
+podman run --rm --mount type=bind,source="./",target=/src -w /src -it ghcr.io/tillitis/tkey-builder:4 /usr/bin/bash
 ```
 
 {{< /tab >}}
@@ -117,8 +121,7 @@ standardised key derivation function, HKDF[^3], which derives the UDS.
 Extract-and-Expand Key Derivation Function (HKDF)", RFC 5869, DOI 10.17487/RFC5869, May 2010, <https://www.rfc-editor.org/info/rfc5869>.
 
 ```
-cd hw/application_fpga/
-make secret
+make -C hw/application_fpga secret
 ```
 
 Note that if running outside a container, you need Python installed.
@@ -145,8 +148,7 @@ secrets](unlocked/nvcm/#3-remove-traces-of-build).
 ## 5. Build the bitstream
 
 ```
-cd hw/application_fpga/
-make application_fpga.bin
+make -C hw/application_fpga application_fpga.bin
 
 ```
 

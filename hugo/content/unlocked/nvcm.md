@@ -93,7 +93,6 @@ https://github.com/tillitis/pynvcm
 Navigate to `pynvcm/`
 
 Install the Python interpreter and it's depencencies
-Navigate to `/tillitis-key1/hw/production_tests/` and run
 
 ```
 brew install python3.10
@@ -184,18 +183,23 @@ programmer.
 It is important to remove all traces of the UDS.
 
 To remove your previously created UDS, you have a few choices. Either
-remove the files
+remove these files, with for example `rm`:
 
 ```
 hw/application_fpga/application_fpga.bin
+hw/application_fpga/application_fpga.asc
+hw/application_fpga/application_fpga_par.json
+hw/application_fpga/synth.v
+hw/application_fpga/synth.json
 hw/application_fpga/data/uds.hex
 ```
 
-or natively, or in your container window:
+or natively or your container shell:
 
 ```
 cd hw/application_fpga
 make clean
+rm data/uds.hex
 ```
 
 Once you are done, continue to [casing](unlocked/casing) to assemble
