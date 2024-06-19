@@ -42,18 +42,20 @@ The bits in the command header byte should be interpreted as:
 * Bits [6..5] (2 bits). Frame ID tag.
 
 * Bits [4..3] (2 bits). Endpoint number.
-0. HW in interface_fpga (unused)
-1. HW in application_fpga (unused)
-2. FW in application_fpga
-3. SW (device application) in application_fpga
+
+  0. Reserved
+  1. HW in application_fpga (unused)
+  2. FW
+  3. SW (device application)
 
 * Bit [2] (1 bit). Unused. MUST be zero.
 
 * Bits [1..0] (2 bits). Command data length.
-0. 1 byte
-1. 4 bytes
-2. 32 bytes
-3. 128 bytes
+
+  0. 1 byte
+  1. 4 bytes
+  2. 32 bytes
+  3. 128 bytes
 
 Note that the number of bytes indicated by the command data length field
 does **not** include the command header byte. This means that a complete
@@ -74,17 +76,13 @@ available for actual command content.
 These examples clarify endpoints and commands using the framing
 protocol:
 
-* 0x00: A command to the HW in the interface_fpga with a single byte of
-  data. The single byte could indicate action, such as reading from the
-  TRNG or resetting the application_fpga.
+* 0x13: A command to the FW with 128 bytes of data. The data could,
+  for example, be parts of an application binary to be loaded into
+  memory.
 
-* 0x13: A command to the FW in the application_fpga with 128 bytes of
-  data. The data could, for example, be parts of an application binary to
-  be loaded into memory.
-
-* 0x1a: A command to the application running in the application_fpga
-  with 32 bytes of data. The data could be a 32 byte challenge to be
-  signed using the private key derived in the TKey.
+* 0x1a: A command to the application running with 32 bytes of data.
+  The data could be a 32 byte challenge to be signed using the private
+  key derived in the TKey.
 
 ### Response Frame Format
 
@@ -96,20 +94,23 @@ The bits in the response header byte should be interpreted as follows:
 * Bits [6..5] (2 bits). Frame ID tag.
 
 * Bits [4..3] (2 bits). Endpoint number.
-0. HW in interface_fpga (unused)
-1. HW in application_fpga (unused)
-2. FW in application_fpga
-3. SW (device application) in application_fpga
+
+  0. Reserved
+  1. HW in application_fpga (unused)
+  2. FW
+  3. SW (device application)
 
 * Bit [2] (1 bit). Response status.
-0. OK
-1. Not OK (NOK)
+
+  0. OK
+  1. Not OK (NOK)
 
 * Bits [1..0] (2 bits). Response data length.
-0. 1 byte
-1. 4 bytes
-2. 32 bytes
-3. 128 bytes
+
+  0. 1 byte
+  1. 4 bytes
+  2. 32 bytes
+  3. 128 bytes
 
 
 Note that the number of bytes indicated by the response data length field
@@ -127,16 +128,12 @@ particular app or FW response request typically occupies the first byte
 in the data (following the frame header byte), which makes 1 byte less
 available for actual response content.
 
-* 0x01: A successful command to the HW in the interface_fpga, which
-  responds with four bytes of data. For example the interface_fpga
-  VERSION string.
+* 0x14: An unsuccessful command to the FW which responds with a single
+  byte of data.
 
-* 0x14: An unsuccessful command to the FW in the application_fpga which
-  responds with a single byte of data.
-
-* 0x1b: A successful command to the device application running in the
-  application_fpga. The response contains 128 bytes of data, for example
-  an EdDSA Ed25519 signature.
+* 0x1b: A successful command to the device application running. The
+  response contains 128 bytes of data, for example an EdDSA Ed25519
+  signature.
 
 ## Firmware Protocol
 
