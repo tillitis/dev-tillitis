@@ -144,11 +144,11 @@ protocol above.
 
 The commands look like this:
 
-| *Name*           | *Size (bytes)* | *Comment*                                |
-|------------------|----------------|------------------------------------------|
+| *Name*           | *Size (bytes)* | *Comment*                                                          |
+|------------------|----------------|--------------------------------------------------------------------|
 | Header           | 1              | Framing protocol header including length of the rest of the frame. |
-| Command/Response | 1              | Any of the below commands or responses.  |
-| Data             | n              | Any additional data.                     |
+| Command/Response | 1              | Any of the below commands or responses.                            |
+| Data             | n              | Any additional data.                                               |
 
 The responses might include a one byte status field where 0 is
 `STATUS_OK` and 1 is `STATUS_BAD`.
@@ -260,6 +260,36 @@ host <-
 ```
 
 #### Load an application
+
+It's recommended to check if the TKey is in firmware mode before
+attempting to load a device application. Typically this firmware probe
+is implemented by sending `FW_CMD_NAME_VERSION` with a header byte
+indicating endpoint 2, firmware.
+
+We encourage device app developers to support a firmware probe and
+reply `NOK` to anything that comes with a header byte for endpoint 2.
+
+The sequence looks like this:
+
+{{< mermaid class="optional" >}}
+sequenceDiagram
+	autonumber
+
+	participant c as Client
+	participant t as TKey
+
+	c->>t: Running firmware?
+	t->>c: Yes!
+	c->>t: FW_CMD_LOAD_APP(size, USS)
+    t->>c: FW_RSP_LOAD_APP
+
+        loop Until entire device app sent
+        	c->>t: FW_CMD_LOAD_APP_DATA(app block)
+            t->>c: FW_RSP_LOAD_APP_DATA || FW_RSP_LOAD_APP_DATA_READY
+        end
+{{< /mermaid >}}
+
+In detail, after the firmware probe:
 
 ```
 host ->
