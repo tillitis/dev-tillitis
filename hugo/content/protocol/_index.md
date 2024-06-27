@@ -46,7 +46,7 @@ The bits in the command header byte should be interpreted as:
   0. Reserved
   1. HW in application_fpga (unused)
   2. FW
-  3. SW (device application)
+  3. Device application
 
 * Bit [2] (1 bit). Unused. MUST be zero.
 
@@ -98,7 +98,7 @@ The bits in the response header byte should be interpreted as follows:
   0. Reserved
   1. HW in application_fpga (unused)
   2. FW
-  3. SW (device application)
+  3. Device application
 
 * Bit [2] (1 bit). Response status.
 
