@@ -45,7 +45,7 @@ The bits in the command header byte should be interpreted as:
 
   0. Reserved
   1. HW in application_fpga (unused)
-  2. FW
+  2. Firmware
   3. Device application
 
 * Bit [2] (1 bit). Unused. MUST be zero.
@@ -69,16 +69,16 @@ the command.
 ### Command Frame Examples
 
 Note that most of the examples below do not take into account that the
-particular app or FW command request typically occupies the first byte
-in the data (following the frame header byte), which makes 1 byte less
-available for actual command content.
+particular app or firmware command request typically occupies the
+first byte in the data (following the frame header byte), which makes
+1 byte less available for actual command content.
 
 These examples clarify endpoints and commands using the framing
 protocol:
 
-* 0x13: A command to the FW with 128 bytes of data. The data could,
-  for example, be parts of an application binary to be loaded into
-  memory.
+* 0x13: A command to the firmware with 128 bytes of data. The data
+  could, for example, be parts of an application binary to be loaded
+  into memory.
 
 * 0x1a: A command to the application running with 32 bytes of data.
   The data could be a 32 byte challenge to be signed using the private
@@ -97,7 +97,7 @@ The bits in the response header byte should be interpreted as follows:
 
   0. Reserved
   1. HW in application_fpga (unused)
-  2. FW
+  2. Firmware
   3. Device application
 
 * Bit [2] (1 bit). Response status.
@@ -124,12 +124,12 @@ in the header of the command being responded to.
 ### Response Frame Examples
 
 Note that most of the examples below do not take into account that the
-particular app or FW response request typically occupies the first byte
-in the data (following the frame header byte), which makes 1 byte less
-available for actual response content.
+particular app or firmware response request typically occupies the
+first byte in the data (following the frame header byte), which makes
+1 byte less available for actual response content.
 
-* 0x14: An unsuccessful command to the FW which responds with a single
-  byte of data.
+* 0x14: An unsuccessful command to the firmware which responds with a
+  single byte of data.
 
 * 0x1b: A successful command to the device application running. The
   response contains 128 bytes of data, for example an EdDSA Ed25519
