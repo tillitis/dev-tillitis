@@ -273,7 +273,7 @@ git clone -b tk1 https://github.com/tillitis/qemu
 mkdir qemu/build
 cd qemu/build
 ../configure --target-list=riscv32-softmmu --disable-werror
-make -j $(nproc)
+make -j $(nproc) qemu-system-riscv32
 ```
 
 (Built with warnings-as-errors disabled, see [this
