@@ -64,7 +64,7 @@ make -C contrib run
 ```
 or use this podman command
 ```
-podman run --rm --mount type=bind,source="$(pwd)",target=/src -w /src -it ghcr.io/tillitis/tkey-builder:4 /usr/bin/bash
+podman run --rm --mount type=bind,source="$(pwd)",target=/src -w /src -it ghcr.io/tillitis/tkey-builder /usr/bin/bash
 ```
 
 {{< /tab >}}
@@ -77,13 +77,13 @@ make -C contrib run
 ```
 or use this podman command
 ```
-podman run --rm --mount type=bind,source="$(pwd)",target=/src -w /src -it ghcr.io/tillitis/tkey-builder:4 /usr/bin/bash
+podman run --rm --mount type=bind,source="$(pwd)",target=/src -w /src -it ghcr.io/tillitis/tkey-builder /usr/bin/bash
 ```
 {{< /tab >}}
 {{< tab "Windows" >}}
 
 ```
-podman run --rm --mount type=bind,source="./",target=/src -w /src -it ghcr.io/tillitis/tkey-builder:4 /usr/bin/bash
+podman run --rm --mount type=bind,source="./",target=/src -w /src -it ghcr.io/tillitis/tkey-builder /usr/bin/bash
 ```
 
 {{< /tab >}}
