@@ -88,6 +88,10 @@ choco install make llvm clang go
 We provide a container image which has all the above packages and
 tools already installed for use with Podman or Docker.
 
+You should probably always use the image with the tag "latest", but if
+you're trying to do a reproducible build you should of course use the
+tag possibly mentioned in the release.
+
 {{< tabs >}}
 {{< tab "Linux" >}}
 
@@ -136,7 +140,7 @@ https://github.com/containers/podman/blob/main/docs/tutorials/podman-for-windows
 You can use the following command to fetch the image:
 
 ```
-podman pull ghcr.io/tillitis/tkey-builder:2
+podman pull ghcr.io/tillitis/tkey-builder
 ```
 
 **Note well**: This image is really large (~ 2 GiB) because it also
@@ -226,7 +230,7 @@ Or use podman directly if you haven't got `make` installed, typically
 specifying where your `tkey-libs` are:
 
 ```
-podman run --rm --mount type=bind,source=.,target=/src --mount type=bind,source=../tkey-libs,target=/tkey-libs -w /src -it ghcr.io/tillitis/tkey-builder:1 make -j
+podman run --rm --mount type=bind,source=.,target=/src --mount type=bind,source=../tkey-libs,target=/tkey-libs -w /src -it ghcr.io/tillitis/tkey-builder make -j
 ```
 ## QEMU Emulator
 
