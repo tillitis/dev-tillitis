@@ -52,7 +52,15 @@ Open a terminal and move into the `tillitis-key1` directory.
 
 ## 3. Start the container {#start-container}
 
-If you're not going with the native tools, start the container:
+If you're not going with the native tools, its time to start the
+container.
+
+The `make` targets below will use the container associated with the
+given release, the raw podman commands below are written genericly to
+give you the latest container. That will most likely always work, but
+if you want to use the associated one, check the release notes to find
+it. Then add it to the commands below, for example such as
+`ghcr.io/tillitis/tkey-builder:4`.
 
 {{< tabs >}}
 {{< tab "Linux" >}}
@@ -64,7 +72,7 @@ make -C contrib run
 ```
 or use this podman command
 ```
-podman run --rm --mount type=bind,source="$(pwd)",target=/src -w /src -it ghcr.io/tillitis/tkey-builder:4 /usr/bin/bash
+podman run --rm --mount type=bind,source="$(pwd)",target=/src -w /src -it ghcr.io/tillitis/tkey-builder /usr/bin/bash
 ```
 
 {{< /tab >}}
@@ -77,13 +85,13 @@ make -C contrib run
 ```
 or use this podman command
 ```
-podman run --rm --mount type=bind,source="$(pwd)",target=/src -w /src -it ghcr.io/tillitis/tkey-builder:4 /usr/bin/bash
+podman run --rm --mount type=bind,source="$(pwd)",target=/src -w /src -it ghcr.io/tillitis/tkey-builder /usr/bin/bash
 ```
 {{< /tab >}}
 {{< tab "Windows" >}}
 
 ```
-podman run --rm --mount type=bind,source="./",target=/src -w /src -it ghcr.io/tillitis/tkey-builder:4 /usr/bin/bash
+podman run --rm --mount type=bind,source="./",target=/src -w /src -it ghcr.io/tillitis/tkey-builder /usr/bin/bash
 ```
 
 {{< /tab >}}
