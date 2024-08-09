@@ -153,7 +153,25 @@ Libraries for development of TKey device apps are available in:
 
 https://github.com/tillitis/tkey-libs
 
-Build the tkey-libs first, typically just:
+Pre-compiled versions are available under:
+
+https://github.com/tillitis/tkey-libs/releases
+
+Unpack the tar file somewhere and point clang to where they are,
+typically with `-L tkey-libs` and `-I tkey-libs/include.`
+
+In many device app projects it will be sufficient to set `LIBDIR`:
+
+```
+make LIBDIR=/path/to/tkey-libs
+```
+
+Note that your `lld` might complain if it's not the same version that
+was used to produce the libraries. You might want to build the
+libraries yourself if that happens, or use the tkey-builder container
+image.
+
+To build tkey-libs, typically you just:
 
 ```
 git clone https://github.com/tillitis/tkey-libs.git

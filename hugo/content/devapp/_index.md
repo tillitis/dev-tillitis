@@ -45,7 +45,7 @@ We also provide a linker script there in `apps.lds` which shows the
 linker the memory layout.
 
 Minimal compilation of the above program would look something like
-this if `tkey-libs` is cloned in the directory next to this one:
+this if `tkey-libs` is in the directory next to this one:
 
 ```
 clang -g -target riscv32-unknown-none-elf -march=rv32iczmmul -mabi=ilp32 \
