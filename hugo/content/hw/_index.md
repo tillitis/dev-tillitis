@@ -158,7 +158,7 @@ configuration is:
 All configuration, except for parity, can be configured by the device
 app. Note that the client app must set the same configuration.
 
-The UART contains a 512-bit Rx-FIFO with status (data available).
+The UART contains a 512-byte Rx-FIFO with status (data available).
 
 The device app can read from the UART by polling
 `TK1_MMIO_UART_RX_STATUS` until it is non-zero. The received byte is
