@@ -294,12 +294,9 @@ repository](https://github.com/tillitis/qemu):
 git clone -b tk1 https://github.com/tillitis/qemu
 mkdir qemu/build
 cd qemu/build
-../configure --target-list=riscv32-softmmu --disable-werror
+../configure --target-list=riscv32-softmmu
 make -j $(nproc) qemu-system-riscv32
 ```
-
-(Built with warnings-as-errors disabled, see [this
-issue](https://github.com/tillitis/qemu/issues/3).)
 
 Then execute the following commands to fetch and build the firmware:
 
