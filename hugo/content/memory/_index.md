@@ -89,7 +89,7 @@ access, **i** means invisible.
 | `TK1_MMIO_TK1_VERSION`       | 0xff000008     | r    | r     | Version of FPGA design (See UDI for product version or serial)                                                                                     |
 | `TK1_MMIO_TK1_SWITCH_APP`    | 0xff000020     | r/w  | r     | Write anything here to trigger the switch to application mode. Reading returns `0` in firmware mode, `0xffffffff` in app mode.                     |
 | `TK1_MMIO_TK1_LED`           | 0xff000024     | r/w  | r/w   | Controls the RGB color of the status indicator LED on TKey. Bit 0 is Blue, bit 1 is Green, and bit 2 is Red LED.                                   |
-| `TK1_MMIO_TK1_GPIO`          | 0xff000028     | r/w  | r/w   | Bits 0 and 1 contain the input level of GPIO 1 and 2. Bits 3 and 4 store the output level of GPIO 3 and 4.                                         |
+| `TK1_MMIO_TK1_GPIO`          | 0xff000028     | r/w  | r/w   | Bits 0 and 1 contain the input level of GPIO 1 and 2. Bits 2 and 3 store the output level of GPIO 3 and 4.                                         |
 | `TK1_MMIO_TK1_APP_ADDR`      | 0xff000030     | r/w  | r     | App load address, stored by firmware so app can find itself in memory.                                                                             |
 | `TK1_MMIO_TK1_APP_SIZE`      | 0xff000034     | r/w  | r     | App size, stored by firmware so app can read its own size.                                                                                         |
 | `TK1_MMIO_TK1_BLAKE2S`       | 0xff000040     | r/w  | r     | Function pointer to a BLAKE2S function in the firmware.                                                                                            |
