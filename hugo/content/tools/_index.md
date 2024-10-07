@@ -88,6 +88,10 @@ choco install make llvm clang go
 We provide a container image which has all the above packages and
 tools already installed for use with Podman or Docker.
 
+You should probably always use the image with the tag "latest", but if
+you're trying to do a reproducible build you should of course use the
+tag possibly mentioned in the release.
+
 {{< tabs >}}
 {{< tab "Linux" >}}
 
@@ -136,7 +140,7 @@ https://github.com/containers/podman/blob/main/docs/tutorials/podman-for-windows
 You can use the following command to fetch the image:
 
 ```
-podman pull ghcr.io/tillitis/tkey-builder:2
+podman pull ghcr.io/tillitis/tkey-builder
 ```
 
 **Note well**: This image is really large (~ 2 GiB) because it also
@@ -149,7 +153,25 @@ Libraries for development of TKey device apps are available in:
 
 https://github.com/tillitis/tkey-libs
 
-Build the tkey-libs first, typically just:
+Pre-compiled versions are available under:
+
+https://github.com/tillitis/tkey-libs/releases
+
+Unpack the tar file somewhere and point clang to where they are,
+typically with `-L tkey-libs` and `-I tkey-libs/include.`
+
+In many device app projects it will be sufficient to set `LIBDIR`:
+
+```
+make LIBDIR=/path/to/tkey-libs
+```
+
+Note that your `lld` might complain if it's not the same version that
+was used to produce the libraries. You might want to build the
+libraries yourself if that happens, or use the tkey-builder container
+image.
+
+To build tkey-libs, typically you just:
 
 ```
 git clone https://github.com/tillitis/tkey-libs.git
@@ -226,7 +248,7 @@ Or use podman directly if you haven't got `make` installed, typically
 specifying where your `tkey-libs` are:
 
 ```
-podman run --rm --mount type=bind,source=.,target=/src --mount type=bind,source=../tkey-libs,target=/tkey-libs -w /src -it ghcr.io/tillitis/tkey-builder:1 make -j
+podman run --rm --mount type=bind,source=.,target=/src --mount type=bind,source=../tkey-libs,target=/tkey-libs -w /src -it ghcr.io/tillitis/tkey-builder make -j
 ```
 ## QEMU Emulator
 
@@ -272,12 +294,9 @@ repository](https://github.com/tillitis/qemu):
 git clone -b tk1 https://github.com/tillitis/qemu
 mkdir qemu/build
 cd qemu/build
-../configure --target-list=riscv32-softmmu --disable-werror
-make -j $(nproc)
+../configure --target-list=riscv32-softmmu
+make -j $(nproc) qemu-system-riscv32
 ```
-
-(Built with warnings-as-errors disabled, see [this
-issue](https://github.com/tillitis/qemu/issues/3).)
 
 Then execute the following commands to fetch and build the firmware:
 

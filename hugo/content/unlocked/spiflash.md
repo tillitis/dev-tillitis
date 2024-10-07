@@ -73,7 +73,7 @@ this succeeds you are done and can skip the remaining steps.
 Otherwise start the container using:
 
 ```
-podman run --rm --device /dev/bus/usb/$(lsusb | grep -m 1 1209:8886 | awk '{ printf "%s/%s", $2, substr($4,1,3) }') -v .:/build:Z -w /build -it ghcr.io/tillitis/tkey-builder:4 /usr/bin/bash
+podman run --rm --device /dev/bus/usb/$(lsusb | grep -m 1 1209:8886 | awk '{ printf "%s/%s", $2, substr($4,1,3) }') -v .:/build:Z -w /build -it ghcr.io/tillitis/tkey-builder /usr/bin/bash
 ```
 
 ### Programming
