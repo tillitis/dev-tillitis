@@ -97,8 +97,8 @@ access, **i** means invisible.
 | `TK1_MMIO_TK1_CDI_LAST`      | 0xff00009c     | r/w  | r     | Last word of CDI.                                                                                                                                  |
 | `TK1_MMIO_TK1_UDI_FIRST`     | 0xff0000c0     | r    | i     | First word of Unique Device ID (UDI). 2 words. Set during provisioning.                                                                            |
 | `TK1_MMIO_TK1_UDI_LAST`      | 0xff0000c4     | r    | i     | Last word of UDI                                                                                                                                   |
-| `TK1_MMIO_TK1_RAM_ADDR_RAND` | 0xff000100     | r/w  | r/w   | Seed word for the RAM address randomization.                                                                                                       |
-| `TK1_MMIO_TK1_RAM_SCRAMBLE`  | 0xff000104     | r/w  | r/w   | Seed word for the RAM data scrambling.                                                                                                             |
+| `TK1_MMIO_TK1_RAM_ADDR_RAND` | 0xff000100     | w    | i     | Seed word for the RAM address randomization.                                                                                                       |
+| `TK1_MMIO_TK1_RAM_DATA_RAND` | 0xff000104     | w    | i     | Seed word for the RAM data randomization.                                                                                                          |
 | `TK1_MMIO_TK1_CPU_MON_CTRL`  | 0xff000180     | w    | w     | Bit 0 enables Security Monitor. Can't be unset. Locks the area between the addresses set in `TK1_CPU_MON_FIRST` and `TK1_CPU_MON_LAST`.            |
 | `TK1_MMIO_TK1_CPU_MON_FIRST` | 0xff000184     | w    | w     | Start address (32-bit) of the RAM area monitored for execution attempts.                                                                           |
 | `TK1_MMIO_TK1_CPU_MON_LAST`  | 0xff000188     | w    | w     | Last address (32-bit) of the RAM area monitored for execution attempts.                                                                            |
