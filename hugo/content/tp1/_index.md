@@ -97,7 +97,7 @@ The firmware requires the Raspberry Pi Pico SDK:
 
 ```
 cd ~
-git clone --branch 1.5.0 https://github.com/raspberrypi/pico-sdk.git
+git clone --branch 1.5.1 https://github.com/raspberrypi/pico-sdk.git
 cd pico-sdk
 git submodule update --init
 ```
