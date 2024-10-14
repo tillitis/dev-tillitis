@@ -58,7 +58,7 @@ Bus 001 Device 023: ID 1209:8886 Generic TP-1
 ```
 
 Then, you can check the permissions by using the bus and device
-numbers reported above. Note that this pair is ephimeral and may
+numbers reported above. Note that this pair is ephemeral and may
 change after every device insertion:
 
 ```
@@ -69,9 +69,9 @@ crw-rw---- 1 root dialout 189, 22 Feb 16 14:58 /dev/bus/usb/001/023
 ## Onboard firmware
 The TP board runs a custom firmware developed by Blinkinlabs. The
 source code for this firmware can be found at
-[hw/boards/tp1/firmware/](https://github.com/tillitis/tillitis-key1/blob/main/hw/boards/tp1/firmware).
+[github.com/tillitis/tp1/fw](https://github.com/tillitis/tp1/blob/main/fw).
 There is also a pre-built firmware binary at
-[hw/boards/tp1/firmware/bin/main.uf2](https://github.com/tillitis/tillitis-key1/blob/main/hw/boards/tp1/firmware/bin/main.uf2).
+[github.com/tillitis/tp1/fw/bin](https://github.com/tillitis/tp1/blob/main/fw/bin/main.uf2).
 
 To update the firmware on the programmer board, either build the file
 `main.uf2` (more instructions below) or get the pre-built file to your
@@ -107,10 +107,10 @@ Note that our container image places the pico-sdk directory in
 home directory.
 
 See
-[hw/boards/tp1/firmware/README.md](https://github.com/tillitis/tillitis-key1/blob/main/hw/boards/tp1/firmware/README.md)
+[tp1/fw/README.md](https://github.com/tillitis/tp1/blob/main/fw/README.md)
 for further instructions.
 
 ## Hardware
 The hardware is, as everything around the TKey is, open source and can
 be found here
-https://github.com/tillitis/tillitis-key1/tree/main/hw/boards/tp1.
+https://github.com/tillitis/tp1.
