@@ -68,7 +68,7 @@ access, **i** means invisible.
 | `TK1_FW_RAM_BASE`            | 0xd0000000     | r/w  | i     | Start of firmware RAM (2 kiB).                                                                                                                     |
 | `TK1_MMIO_TRNG_STATUS`       | 0xc0000024     | r    | r     | If bit 1 set `TRNG_ENTROPY` is ready to be read.                                                                                                   |
 | `TK1_MMIO_TRNG_ENTROPY`      | 0xc0000080     | r    | r     | A word of entropy.                                                                                                                                 |
-| `TK1_MMIO_TIMER_CTRL`        | 0xc1000020     | r/w  | r/w   | If bit 0 in `TK1_MMIO_TIMER_STATUS` is 0, setting bit 0 starts the timer. If bit 0 in `TK1_MMIO_TIMER_STATUS` is 1, setting bit 0 stops the timer. |
+| `TK1_MMIO_TIMER_CTRL`        | 0xc1000020     | r/w  | r/w   | If bit 0 in `TK1_MMIO_TIMER_STATUS` is 0, setting bit 0 starts the timer. If bit 0 in `TK1_MMIO_TIMER_STATUS` is 1, setting bit 1 stops the timer. |
 | `TK1_MMIO_TIMER_STATUS`      | 0xc1000024     | r    | r     | Bit 0 is 1 when the timer is running.                                                                                                              |
 | `TK1_MMIO_TIMER_PRESCALER`   | 0xc1000028     | r/w  | r/w   | Prescaler init value. Write blocked when running.                                                                                                  |
 | `TK1_MMIO_TIMER_TIMER`       | 0xc100002c     | r/w  | r/w   | Timer init or current value while running. Write blocked when running.                                                                             |
