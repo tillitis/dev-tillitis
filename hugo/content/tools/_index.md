@@ -60,13 +60,13 @@ brew install llvm go
 One caveat for llvm is that it is "keg-only", which means it was not
 symlinked into `/opt/homebrew`, and we then need to do it ourselves.
 
-The esiest way is to add
+The easiest way is to add
 
 ```
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 ```
 
-to your your `.zshrc` or equvivalent. The key is that we add `llvm`
+to your your `.zshrc` or equivalent. The key is that we add `llvm`
 from brew in `PATH` before `llvm` provided by macOS. Just remember
 that if you use `llvm` provided by macOS for other projetcs this can
 create issues. Another way would be to explicitly specify which to use
@@ -128,7 +128,7 @@ It is also possible to use binaries or a pkginstaller on Podman's
 
 {{< /tab >}}
 {{< tab "Windows" >}}
-To install on Windows is a bit more compliacted, follow this link for
+To install on Windows is a bit more complicate, follow this link for
 comprehensive instructions:
 
 https://github.com/containers/podman/blob/main/docs/tutorials/podman-for-windows.md
