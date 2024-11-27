@@ -144,19 +144,17 @@ If you want to stop the timer, set bit 1 in `TK1_MMIO_TIMER_CTRL`.
 
 A standard UART (Universal Asynchronous Receiver/Transmitter)
 interface is used for sending and receiving bytes to a TKey device app
-via the interface microcontroller on the TKey. The UART default
-configuration is:
+via the interface microcontroller on the TKey. The UART configuration is:
+- baudrate: 62500 bps
+- data bits: 8
+- stop bit: 1
+- parity: none
 
-| *Config*  | *Default* | *Comment*        |
-|-----------|-----------|------------------|
-| Data rate | 62500 bps | Divisor = 288    |
-| Data bits | 8         |                  |
-| Stop bits | 1         | 0, 1, 2          |
-| Parity    | none      | not configurable |
-
-
-All configuration, except for parity, can be configured by the device
-app. Note that the client app must set the same configuration.
+Note that the client app must set the same configuration. Configuring
+the UART core's baudrate, bit rate and stop bits, in runtime, is
+deprecated and should not be altered by an app. This is to ensure
+compatibility and prevent mismatch between different TKeys. The
+baudrate is set when building the bitstream.
 
 The UART contains a 512-byte Rx-FIFO with status (data available).
 
@@ -169,11 +167,7 @@ Writing is done by polling `TK1_MMIO_UART_TX_STATUS` until it is
 non-zero. The byte to transmit can then be written to the LSB of the
 `TK1_MMIO_UART_TX_DATA` word.
 
-The data bits and stop bits can be set by writing to
-`TK1_MMIO_UART_DATA_BITS` and `TK1_MMIO_UART_STOP_BITS`.
-
-The speed is set by setting a divisor of the bps wanted. Calculate
-divisor = 18E6 / bps. Write the divisor to `TK1_MMIO_UART_BIT_RATE`.
+See `proto.c` in tkey-libs.
 
 ## True Random Number Generator (TRNG)
 
