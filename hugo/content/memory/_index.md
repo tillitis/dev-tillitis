@@ -74,9 +74,6 @@ access, **i** means invisible.
 | `TK1_MMIO_TIMER_TIMER`       | 0xc100002c     | r/w  | r/w   | Timer init or current value while running. Write blocked when running.                                                                             |
 | `TK1_MMIO_UDS_FIRST`         | 0xc2000040     | r    | i     | First word of Unique Device Secret key. 8 words. Word access only. **Note:** Only readable once per power up.                                      |
 | `TK1_MMIO_UDS_LAST`          | 0xc200005c     | r    | i     | Last word of the UDS. **Note:** Only readable once per power up.                                                                                   |
-| `TK1_MMIO_UART_BIT_RATE`     | 0xc3000040     | r/w  | r/w   | Default 288 (62 500 bps). The bitrate is set by writing the divisor, calculated by: divisor = 18E6 / bps.                                          |
-| `TK1_MMIO_UART_DATA_BITS`    | 0xc3000044     | r/w  | r/w   | Default 8.                                                                                                                                         |
-| `TK1_MMIO_UART_STOP_BITS`    | 0xc3000048     | r/w  | r/w   | Default 1.                                                                                                                                         |
 | `TK1_MMIO_UART_RX_STATUS`    | 0xc3000080     | r    | r     | Non-zero when there is data to read.                                                                                                               |
 | `TK1_MMIO_UART_RX_DATA`      | 0xc3000084     | r    | r     | Data to read. Only the LSB of the word contains data.                                                                                              |
 | `TK1_MMIO_UART_RX_BYTES`     | 0xc3000088     | r    | r     | Number of unread bytes received from client.                                                                                                       |
