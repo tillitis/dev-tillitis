@@ -135,6 +135,25 @@ first byte in the data (following the frame header byte), which makes
   response contains 128 bytes of data, for example an EdDSA Ed25519
   signature.
 
+
+## USB Controller Protocol
+
+To communicate between the USB controller and the UART on the FPGA we
+use a small protocol to indicate the mode of the data transmission,
+either CDC or HID.
+
+| *Name* | *Size* | *Comment*                                    |
+|--------|--------|----------------------------------------------|
+| Mode   | 1B     | Origin or destination USB endpoint (CDC/HID) |
+| Length | 1B     | Number of bytes following                    |
+
+Origin and destination is either:
+
+- CDC (0x40)
+- HID (0x80)
+
+*Note well*: This protocol is not visible on the client.
+
 ## Firmware Protocol
 
 ### Firmware Protocol Definition

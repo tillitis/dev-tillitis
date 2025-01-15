@@ -144,7 +144,9 @@ If you want to stop the timer, set bit 1 in `TK1_MMIO_TIMER_CTRL`.
 
 A standard UART (Universal Asynchronous Receiver/Transmitter)
 interface is used for sending and receiving bytes to a TKey device app
-via the interface microcontroller on the TKey. The UART configuration is:
+via the interface microcontroller on the TKey. The UART configuration
+is:
+
 - baudrate: 62500 bps
 - data bits: 8
 - stop bit: 1
@@ -168,6 +170,11 @@ non-zero. The byte to transmit can then be written to the LSB of the
 `TK1_MMIO_UART_TX_DATA` word.
 
 See `proto.c` in tkey-libs.
+
+*Note well*: From [Insert Castor product ID] the TKey requires that
+device apps use the USB Controller Protocol for origin/destination of
+all data from/to the client. For details, see [USB Controller
+Protocol](/protocol/#usb-controller-protocol).
 
 ## True Random Number Generator (TRNG)
 
