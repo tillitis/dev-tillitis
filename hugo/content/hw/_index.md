@@ -142,21 +142,23 @@ If you want to stop the timer, set bit 1 in `TK1_MMIO_TIMER_CTRL`.
 
 ## UART
 
-A standard UART (Universal Asynchronous Receiver/Transmitter)
-interface is used for sending and receiving bytes to a TKey device app
-via the interface microcontroller on the TKey. The UART configuration
-is:
+A UART (Universal Asynchronous Receiver/Transmitter) interface is used
+for sending and receiving bytes to a TKey device app via the USB
+controller on the TKey.
+
+The UART configuration is:
 
 - baudrate: 62500 bps
 - data bits: 8
 - stop bit: 1
 - parity: none
 
-Note that the client app must set the same configuration. Configuring
-the UART core's baudrate, bit rate and stop bits, in runtime, is
-deprecated and should not be altered by an app. This is to ensure
-compatibility and prevent mismatch between different TKeys. The
-baudrate is set when building the bitstream.
+The configuration is set when building the bitstream. Doing it during
+runtime from the device app is no longer possible.
+
+Note that the client app must set the same configuration in versions
+before codename Castor, product ID [Insert Castor product ID]. From
+the Castor release the baud rate setting on the client is ignored.
 
 The UART contains a 512-byte Rx-FIFO with status (data available).
 
@@ -172,8 +174,8 @@ non-zero. The byte to transmit can then be written to the LSB of the
 See `proto.c` in tkey-libs.
 
 *Note well*: From [Insert Castor product ID] the TKey requires that
-device apps use the USB Controller Protocol for origin/destination of
-all data from/to the client. For details, see [USB Controller
+device apps use the USB Controller Protocol for setting mode of all
+data from/to the client. For details, see [USB Controller
 Protocol](/protocol/#usb-controller-protocol).
 
 ## True Random Number Generator (TRNG)
