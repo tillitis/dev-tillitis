@@ -142,6 +142,8 @@ If you want to stop the timer, set bit 1 in `TK1_MMIO_TIMER_CTRL`.
 
 ## UART
 
+TODO: Fix insert Castor Product ID.
+
 A UART (Universal Asynchronous Receiver/Transmitter) interface is used
 for sending and receiving bytes to a TKey device app via the USB
 controller on the TKey.
