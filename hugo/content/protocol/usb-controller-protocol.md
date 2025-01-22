@@ -6,18 +6,20 @@ weight: 3
 ## USB Controller Protocol
 
 To communicate between the USB controller and the UART on the FPGA we
-use a small protocol to indicate the mode of the data transmission,
-either CDC or HID.
+use a small protocol to indicate the USB endpoint on the client side.
+There are three different endpoints:
 
-| *Name*  | *Size*    | *Comment*                                    |
-|---------|-----------|----------------------------------------------|
-| Mode    | 1B        | Origin or destination USB endpoint (CDC/HID) |
-| Length  | 1B        | Number of bytes following                    |
-| Payload | See above | Actual data from or to app                   |
+- CTRL (0x20): A USB HID special debug pipe. Useful for debug prints.
+- CDC (0x40): USB CDC-ACM, a serial port on the client.
+- HID (0x80): A USB HID security token device, useful for FIDO-type
+  applications.
 
-Origin and destination is either:
+A small protocol header should always come first in every frame:
 
-- CDC (0x40)
-- HID (0x80)
+| *Name*   | *Size*    | *Comment*                          |
+|----------|-----------|------------------------------------|
+| Endpoint | 1B        | Origin or destination USB endpoint |
+| Length   | 1B        | Number of bytes following          |
+| Payload  | See above | Actual data from or to app         |
 
 *Note well*: This protocol is not visible on the client.
