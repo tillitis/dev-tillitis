@@ -99,6 +99,7 @@ access, **i** means invisible.
 | `TK1_MMIO_TK1_CPU_MON_CTRL`  | 0xff000180     | w    | w     | Bit 0 enables Security Monitor. Can't be unset. Locks the area between the addresses set in `TK1_CPU_MON_FIRST` and `TK1_CPU_MON_LAST`.            |
 | `TK1_MMIO_TK1_CPU_MON_FIRST` | 0xff000184     | w    | w     | Start address (32-bit) of the RAM area monitored for execution attempts.                                                                           |
 | `TK1_MMIO_TK1_CPU_MON_LAST`  | 0xff000188     | w    | w     | Last address (32-bit) of the RAM area monitored for execution attempts.                                                                            |
+| `TK1_MMIO_TK1_SYSTEM_RESET`  | 0xff0001C0     | w    | i     | Write `1` to reset the FPGA.                                                                                                                       |
 | `TK1_MMIO_TK1_SPI_EN`        | 0xff000200     | w    | i     | Write `1` to enable the SPI-master, `0` to disable. The chip select pin will go low when the SPI-master is enabled and high when disabled.         |
 | `TK1_MMIO_TK1_SPI_XFER`      | 0xff000204     | r/w  | i     | Write to start an SPI byte transfer. Read to get the SPI transfer status. If the value read is not `0` a new transfer can be started.              |
 | `TK1_MMIO_TK1_SPI_DATA`      | 0xff000208     | r/w  | i     | Write to load byte to send. Read to get received byte.                                                                                             |
