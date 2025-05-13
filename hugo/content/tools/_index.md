@@ -254,6 +254,8 @@ podman run --rm --mount type=bind,source=.,target=/src --mount type=bind,source=
 
 Tillitis provides a TKey emulator based on QEMU.
 
+### Running with OCI image
+
 The easiest way to run the TKey emulator is to use our OCI image (~120
 MiB). It currently only works on a Linux system (specifically, it does
 not work when containers are run in Podman's virtual machine, which is
@@ -263,6 +265,8 @@ QEMU](/tools/#building-qemu).
 ```
 ghcr.io/tillitis/tkey-qemu-tk1-23.03.1:latest
 ```
+
+The OCI image also contains the TKey firmware and starts QEMU with it.
 
 We provide a script `run-tkey-qemu` that runs this image and binds the
 serial port to a pty called `tkey-qemu-pty` in the current directory.
@@ -279,6 +283,42 @@ socat` should be enough. Then you can just run the script like:
 
 This will let you run client apps with `--port ./tkey-qemu-pty` and it
 will find the running emulator.
+
+### Running manually
+
+If you want to run QEMU without using the OCI image, for instance
+because you are developing firmware, you have to first build or QEMU
+fork (see below)
+
+Build the TKey firmware:
+
+```
+git clone https://github.com/tillitis/tillitis-key1
+cd tillitis-key1/hw/application_fpga
+make qemu_firmware.elf
+```
+
+Or just `firmware.elf` if you're using a Bellatrix release.
+
+Generate a flash image file `flash.bin` using the
+`application_fpga/tools/partition_table` and copy it to where you are
+going to run QEMU.
+
+Run QEMU using the `qemu_firmware.elf` file you built and the
+`flash.bin` file you generated:
+
+```
+$ /path/to/qemu/build/qemu-system-riscv32  -nographic -M
+tk1-castor,fifo=chrid -bios qemu_firmware.elf -chardev pty,id=chrid -s
+-d guest_errors -drive file=flash.bin,if=mtd,format=raw,index=0
+```
+
+If you're trying to emulate the earlier releases of the TKey, use `-M
+tk1` and drop the `-drive` flag.
+
+QEMU tells you which serial port it's using, for instance
+`/dev/pts/1`. This is what you need to set with `--port` when running
+a client application.
 
 ### QEMU on macOS
 
@@ -300,24 +340,3 @@ make -j $(nproc) qemu-system-riscv32
 
 (Built with warnings-as-errors disabled, see [this
 issue](https://github.com/tillitis/qemu/issues/3).)
-
-Then execute the following commands to fetch and build the firmware:
-
-```
-git clone https://github.com/tillitis/tillitis-key1
-cd tillitis-key1/hw/application_fpga
-make firmware.elf
-```
-
-Then execute the following commands to run the emulator, setting the
-built firmware with the `-bios` flag:
-
-```
-$ /path/to/qemu/build/qemu-system-riscv32 -nographic -M tk1,fifo=chrid -bios firmware.elf \
-  -chardev pty,id=chrid
-```
-
-In the output from QEMU it tells you which serial port it's using, for
-instance `/dev/pts/1`. This is what you need to use as `--port` when
-This is what you need to set with `--port` when running a client
-application.
