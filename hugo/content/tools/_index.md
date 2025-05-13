@@ -294,7 +294,7 @@ repository](https://github.com/tillitis/qemu):
 git clone -b tk1 https://github.com/tillitis/qemu
 mkdir qemu/build
 cd qemu/build
-../configure --target-list=riscv32-softmmu --disable-werror
+../configure --target-list=riscv32-softmmu --disable-werror --without-default-features
 make -j $(nproc) qemu-system-riscv32
 ```
 
