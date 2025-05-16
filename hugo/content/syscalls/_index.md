@@ -42,8 +42,8 @@ Returns 0 on success.
 Write data in `buf` to the app's flash area at byte `offset` within
 the area.
 
-At most 4096 bytes can be written at once and `offset` must be a
-multiple of 4096 bytes.
+Up to storage area size bytes can be written at once and `offset` must
+be a multiple of 256 bytes.
 
 Returns 0 on success.
 
@@ -92,8 +92,8 @@ If you can't fit your entire app in the buffer, call
 `sys_preload_store` many times as you receive the binary from the
 client.
 
-At most 4096 bytes can be written at once and `offset` must be a
-multiple of 4096 bytes.
+Up to preloaded app area size bytes can be written at once and
+`offset` must be a multiple of 256 bytes.
 
 Only available for the verified management app.
 
