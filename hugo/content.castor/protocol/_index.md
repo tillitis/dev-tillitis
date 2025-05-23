@@ -1,5 +1,6 @@
 ---
 title: Protocols
+bookCollapseSection: true
 weight: 4
 ---
 
