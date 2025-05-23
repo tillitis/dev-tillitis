@@ -24,11 +24,12 @@ enableGitInfo = true
 # !!TEST!!
 # Can multi-lingual mode be used for versioning of developer handbook?
 # e.g. Bellatrix, Castor, etc.
+# For compatibility issues, keep first "langusges.en"
 
 [languages]
 [languages.en]
   languageName = 'Bellatrix'
-  contentDir = 'content'
+  contentDir = 'content.bellatrix'
   weight = 1
 [languages.castor]
   languageName = 'Upcoming Release: Castor'
