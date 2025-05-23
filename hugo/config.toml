@@ -21,11 +21,19 @@ enableGitInfo = true
 # There are different options to translate files
 # See https://gohugo.io/content-management/multilingual/#translation-by-filename
 # And https://gohugo.io/content-management/multilingual/#translation-by-content-directory
+# !!TEST!!
+# Can multi-lingual mode be used for versioning of developer handbook?
+# e.g. Bellatrix, Castor, etc.
+
 [languages]
 [languages.en]
-  languageName = 'English'
+  languageName = 'Bellatrix'
   contentDir = 'content'
   weight = 1
+[languages.castor]
+  languageName = 'Upcoming Release: Castor'
+  contentDir = 'content.castor'
+  weight = 2
 
 [menu]
 # [[menu.before]]
