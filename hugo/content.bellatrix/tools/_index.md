@@ -26,6 +26,7 @@ required (with riscv32 support and the Zmmul extension,
 work.
 
 ### Linux
+
 Packages on Ubuntu 22.10 (Kinetic) are known to work. You can install
 the required packages with the following command:
 
@@ -42,6 +43,7 @@ sudo apt install build-essential clang lld llvm bison flex libreadline-dev \
 ```
 
 ### macOS
+
 First you need the Xcode Command Line Tools installed.
 
 ```
@@ -73,6 +75,7 @@ create issues. Another way would be to explicitly specify which to use
 in the makefiles.
 
 ### Windows
+
 The easiest way to install the required packages is through the
 package manager [Chocolatey](https://community.chocolatey.org/). After
 installing Chocolatey, run Powershell (version 3 or higher) as an
@@ -93,7 +96,7 @@ you're trying to do a reproducible build you should of course use the
 tag possibly mentioned in the release.
 
 {{< tabs >}}
-{{< tab "Linux" >}}
+{{% tab "Linux" %}}
 
 This assumes a working rootless Podman. On Ubuntu 22.10, running
 
@@ -103,9 +106,10 @@ sudo apt install podman rootlesskit slirp4netns
 
 should be enough to get you a working Podman setup.
 
-{{< /tab >}}
-{{< tab "macOS" >}}
+{{% /tab %}}
+{{% tab "macOS" %}}
 Podman for macOS is distributed using brew.
+
 ```
 brew install podman
 ```
@@ -126,16 +130,15 @@ podman info
 It is also possible to use binaries or a pkginstaller on Podman's
 [Github release page](https://github.com/containers/podman/releases).
 
-{{< /tab >}}
-{{< tab "Windows" >}}
+{{% /tab %}}
+{{% tab "Windows" %}}
 To install on Windows is a bit more complicate, follow this link for
 comprehensive instructions:
 
-https://github.com/containers/podman/blob/main/docs/tutorials/podman-for-windows.md
+<https://github.com/containers/podman/blob/main/docs/tutorials/podman-for-windows.md>
 
-{{< /tab >}}
+{{% /tab %}}
 {{< /tabs >}}
-
 
 You can use the following command to fetch the image:
 
@@ -151,11 +154,11 @@ firmware.
 
 Libraries for development of TKey device apps are available in:
 
-https://github.com/tillitis/tkey-libs
+<https://github.com/tillitis/tkey-libs>
 
 Pre-compiled versions are available under:
 
-https://github.com/tillitis/tkey-libs/releases
+<https://github.com/tillitis/tkey-libs/releases>
 
 Unpack the tar file somewhere and point clang to where they are,
 typically with `-L tkey-libs` and `-I tkey-libs/include.`
@@ -213,7 +216,7 @@ Most of the apps listed under [projects](/projects/) comes with a
 Makefile and can be built with:
 
 ```
-$ make
+make
 ```
 
 If they have complex dependencies they might come with a `build.sh`
@@ -250,6 +253,7 @@ specifying where your `tkey-libs` are:
 ```
 podman run --rm --mount type=bind,source=.,target=/src --mount type=bind,source=../tkey-libs,target=/tkey-libs -w /src -it ghcr.io/tillitis/tkey-builder make -j
 ```
+
 ## QEMU Emulator
 
 Tillitis provides a TKey emulator based on QEMU.

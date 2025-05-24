@@ -20,7 +20,7 @@ Programming the SPI flash is done in two steps:
 2. Program the SPI flash.
 
 {{< tabs "flash SPI" >}}
-{{< tab "Linux" >}}
+{{% tab "Linux" %}}
 
 The SPI flash can be programmed either in the container or natively.
 If you are using our container you can go directly to step 2.

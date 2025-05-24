@@ -63,7 +63,7 @@ it. Then add it to the commands below, for example such as
 `ghcr.io/tillitis/tkey-builder:4`.
 
 {{< tabs >}}
-{{< tab "Linux" >}}
+{{% tab "Linux" %}}
 
 If you have `make` installed, use our make target
 

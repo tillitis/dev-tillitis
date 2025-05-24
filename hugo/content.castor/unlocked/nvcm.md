@@ -10,6 +10,7 @@ possible to securely write the bitstream with its secrets and make it
 non-readable.
 
 Programming the NVCM consists of these steps:
+
 1. Download tool.
 2. Program the NVCM.
 3. Remove traces of build.
@@ -44,18 +45,19 @@ correctly in the programming jig. Close the lid by pushing on the
 middle of the lid.
 
 {{< tabs "flash nvcm" >}}
-{{< tab "Linux" >}}
+{{% tab "Linux" %}}
 
 ## 1. Download tools
 
 Download and unzpip or clone the repository next to the
 `tillitis-key1` repository
 
-https://github.com/tillitis/pynvcm
+<https://github.com/tillitis/pynvcm>
 
 Navigate to `pynvcm/`
 
 Install the Python interpreter and it's depencencies
+
 ```
 sudo apt install python3.10-venv
 python3 -m venv venv
@@ -74,21 +76,25 @@ To program NVCM use
 ```
 python3 pynvcm.py --my-design-is-good-enough --write ../tillitis-key1/hw/application_fpga/application_fpga.bin --verify ../tillitis-key1/hw/application_fpga/application_fpga.bin --ignore-blank --secure
 ```
+
 or another appropriate path to `application_fpga.bin` if you chose
 another relative location between the repositories.
 
 When completed, deactivate the venv using
+
 ```
 deactivate
 ```
-{{< /tab >}}
-{{< tab "macOS" >}}
+
+{{% /tab %}}
+{{% tab "macOS" %}}
+
 ## 1. Download tools
 
 Download and unzpip or clone the repository next to the
 `tillitis-key1` repository
 
-https://github.com/tillitis/pynvcm
+<https://github.com/tillitis/pynvcm>
 
 Navigate to `pynvcm/`
 
@@ -102,6 +108,7 @@ pip install -r requirements.txt
 ```
 
 ## 2. Program NVCM
+
 To program NVCM use
 
 ```
@@ -112,18 +119,20 @@ or another appropriate path to `application_fpga.bin` if you chose
 another relative location between the repositories.
 
 When completed, deactivate the venv using
+
 ```
 deactivate
 ```
 
-{{< /tab >}}
-{{< tab "Windows" >}}
+{{% /tab %}}
+{{% tab "Windows" %}}
+
 ## 1. Download tools
 
 Download and unzpip or clone the repository next to the
 `tillitis-key1` repository
 
-https://github.com/tillitis/pynvcm
+<https://github.com/tillitis/pynvcm>
 
 Navigate to `pynvcm/`
 
@@ -138,6 +147,7 @@ pip install -r requirements.txt
 ```
 
 ## 2. Program NVCM
+
 To program NVCM use
 
 ```
@@ -148,28 +158,31 @@ or another appropriate path to `application_fpga.bin` if you chose
 another relative location between the repositories.
 
 when completed, deactivate the venv using
+
 ```
 deactivate
 ```
-{{< /tab >}}
-{{< tab "binaries" >}}
+
+{{% /tab %}}
+{{% tab "binaries" %}}
+
 ## 1. Download tools
 
 Navigate to `/tillitis-key1/hw/application_fpga/` and download and
 unzip the binary for your OS
 
-https://github.com/tillitis/pynvcm/releases
+<https://github.com/tillitis/pynvcm/releases>
 
 ## 2. Program NVCM
+
 Use the appropriate executable for your OS, like
 
 ```
 ./pynvcm_0.0.1_linux-amd64 --my-design-is-good-enough --write application_fpga.bin --verify application_fpga.bin --ignore-blank --secure
 ```
 
-{{< /tab >}}
+{{% /tab %}}
 {{< /tabs >}}
-
 
 Even if the NVCM is a one-time-write only area, it can be read out if
 the security bit is not set. The `--secure` flag to `pynvcm` will set
@@ -180,6 +193,7 @@ Your TKey is now provisioned and ready to be taken out of the
 programmer.
 
 ## 3. Remove traces of build
+
 It is important to remove all traces of the UDS.
 
 To remove your previously created UDS, you have a few choices. Either

@@ -5,6 +5,7 @@ weight: 1
 # Build bitstream
 
 Building the bitstream consists of these steps:
+
 1. Install the toolchain
 2. Download the repository
 3. Start the container, if using `tkey-builder`
@@ -23,6 +24,7 @@ use Docker or build the tools natively by compiling from source:
 instructions](https://github.com/tillitis/tillitis-key1/blob/main/doc/toolchain_setup.md).
 
 ### Install and start Podman
+
 Start by installing [Podman](https://podman.io/docs/installation) for
 your specific OS.
 
@@ -35,13 +37,13 @@ podman machine start
 ```
 
 ## 2. Download the repository
+
 It is **highly recommended** to use the latest official release,
 especially if you are programming the NVCM.
 
 Download and unpack, or clone the repository
 
-https://github.com/tillitis/tillitis-key1/releases
-
+<https://github.com/tillitis/tillitis-key1/releases>
 
 All the paths in the instructions below are relative to where you
 unpacked the distribution or cloned the repo, so add the tag of the
@@ -63,45 +65,50 @@ it. Then add it to the commands below, for example such as
 `ghcr.io/tillitis/tkey-builder:4`.
 
 {{< tabs >}}
-{{< tab "Linux" >}}
+{{% tab "Linux" %}}
 
 If you have `make` installed, use our make target
 
 ```
 make -C contrib run
 ```
+
 or use this podman command
+
 ```
 podman run --rm --mount type=bind,source="$(pwd)",target=/src -w /src -it ghcr.io/tillitis/tkey-builder /usr/bin/bash
 ```
 
-{{< /tab >}}
-{{< tab "macOS" >}}
+{{% /tab %}}
+{{% tab "macOS" %}}
 
 If you have `make` installed, use our make target
 
 ```
 make -C contrib run
 ```
+
 or use this podman command
+
 ```
 podman run --rm --mount type=bind,source="$(pwd)",target=/src -w /src -it ghcr.io/tillitis/tkey-builder /usr/bin/bash
 ```
-{{< /tab >}}
-{{< tab "Windows" >}}
+
+{{% /tab %}}
+{{% tab "Windows" %}}
 
 ```
 podman run --rm --mount type=bind,source="./",target=/src -w /src -it ghcr.io/tillitis/tkey-builder /usr/bin/bash
 ```
 
-{{< /tab >}}
+{{% /tab %}}
 {{< /tabs >}}
-
 
 which will give you a shell prompt inside the running container. Keep
 this open to run later commands.
 
 ## 4. Generate a unique UDS and UDI
+
 Before generating the bitstream, the UDS and UDI needs to be generated.
 We provide a tool, Tillitis TKey Provisioning Tool[^1] (TPT), to generate a
 unique UDS and the UDI.
@@ -135,6 +142,7 @@ make -C hw/application_fpga secret
 Note that if running outside a container, you need Python installed.
 
 You will be prompted to input additional data in the form of:
+
 - additional entropy; user controlled string of entropy, can be
   arbitrarily long (string)
 - Vendor ID, use `16` (decimal)

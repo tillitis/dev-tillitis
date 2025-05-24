@@ -44,7 +44,7 @@ correctly in the programming jig. Close the lid by pushing on the
 middle of the lid.
 
 {{< tabs "flash nvcm" >}}
-{{< tab "Linux" >}}
+{{% tab "Linux" %}}
 
 ## 1. Download tools
 
@@ -152,7 +152,7 @@ when completed, deactivate the venv using
 deactivate
 ```
 {{< /tab >}}
-{{< tab "binaries" >}}
+{{% tab "binaries" %}}
 ## 1. Download tools
 
 Navigate to `/tillitis-key1/hw/application_fpga/` and download and

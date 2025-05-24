@@ -16,11 +16,12 @@ you should instead program the [NVCM](unlocked/nvcm).
 {{< /hint >}}
 
 Programming the SPI flash is done in two steps:
+
 1. Download tools.
 2. Program the SPI flash.
 
 {{< tabs "flash SPI" >}}
-{{< tab "Linux" >}}
+{{% tab "Linux" %}}
 
 The SPI flash can be programmed either in the container or natively.
 If you are using our container you can go directly to step 2.
@@ -30,7 +31,7 @@ If you are using our container you can go directly to step 2.
 When programming the SPI flash we are using `iceprog` from our fork of
 the Yosys icestorm project:
 
-https://github.com/tillitis/icestorm/
+<https://github.com/tillitis/icestorm/>
 
 If you want to use `iceprog` natively you will need to compile only
 `icestorm/iceprog` in the "interfaces" branch with:
@@ -84,14 +85,15 @@ In a native shell or your container shell:
 tillitis-iceprog hw/application_fpga/application_fpga.bin
 ```
 
-{{< /tab >}}
-{{< tab "macOS" >}}
+{{% /tab %}}
+{{% tab "macOS" %}}
+
 ## 1. Download tools
 
 When programming the SPI flash we are using `iceprog` from our fork of
 the Yosys icestorm project:
 
-https://github.com/tillitis/icestorm/
+<https://github.com/tillitis/icestorm/>
 
 If you want to use `iceprog` natively you will need to compile only
 `icestorm/iceprog` in the "interfaces" branch with:
@@ -104,7 +106,7 @@ By default it installs with `make install` in `/usr/local/bin`.
 
 You can also download a binary release here:
 
-https://github.com/tillitis/icestorm/releases
+<https://github.com/tillitis/icestorm/releases>
 
 ## 2. Program SPI flash
 
@@ -117,8 +119,8 @@ After installing `tillitis-iceprog`, run:
 tillitis-iceprog hw/application_fpga/application_fpga.bin
 ```
 
-{{< /tab >}}
-{{< tab "Windows" >}}
+{{% /tab %}}
+{{% tab "Windows" %}}
 
 {{< hint info >}}
 At the current state Tillitis does not provide a simple way of
@@ -128,7 +130,7 @@ solution.
 When programming the SPI flash we are using `iceprog` from our fork of
 the Yosys icestorm project:
 
-https://github.com/tillitis/icestorm/
+<https://github.com/tillitis/icestorm/>
 
 Use the "interfaces" branch.
 
@@ -137,9 +139,8 @@ not yet explored this solution, please see the bottom of [Yosys
 download page](https://yosyshq.net/yosys/download.html) if you want to
 try.
 
-{{< /tab >}}
+{{% /tab %}}
 {{< /tabs >}}
-
 
 Your Tkey is now ready to be taken out of the programmer.
 
