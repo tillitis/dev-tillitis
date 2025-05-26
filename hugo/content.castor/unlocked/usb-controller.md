@@ -9,8 +9,8 @@ The USB controller on the TKey is a WCH CH552 with its own firmare.
 
 The TKey, even the TKey Unlocked, usually comes with the USB
 controller firmware already flashed. If you need to change it for some
-reason, perhaps if you have an older Unlocked and changes has been
-done to the CH552 firmware, you need to flash it yourself.
+reason, perhaps if you have an older TKey Unlocked and changes have
+been done to the CH552 firmware, you need to flash it yourself.
 
 The firmware is kept in
 [usb_interface/ch552_fw](https://github.com/tillitis/tillitis-key1/tree/main/hw/usb_interface/ch552_fw).
@@ -26,7 +26,7 @@ or build it yourself. You need to perform this sequence:
 3. Connect the power and USB data lines to the device.
 4. After a short delay, disconnect the 10k resistor from the device.
 
-To use the Blinkinlabs one:
+To use the Blinkinlabs Reset Controller:
 
 1. Connect your computer to `DUT_IN`.
 2. Connect the TKey to be flashed to `DUT_OUT`
