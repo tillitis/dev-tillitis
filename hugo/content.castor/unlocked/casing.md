@@ -4,6 +4,7 @@ weight: 4
 ---
 
 # Casing
+
 Once you have completed the provisioning of your TKey Unlocked, it is
 time to glue the case around it. There has been two cases in
 production and depending on which one you have, the glue needed are
@@ -17,18 +18,21 @@ both astetic and the fact how well the parts stick together.
 The glue is not today provided in the order of a TKey Unlocked, but
 has to be purchased separately. Below you can find the recommended
 glue, other brands might also work but since we have not tested them
-we cannot guarantee the longterm adhesiveness or the blooming effect. 
+we cannot guarantee the longterm adhesiveness or the blooming effect.
 
 ## Injection-molded Case
+
 From December 2023 this is the case all TKeys are shipped with. This
 casing has improved durability, production quality and asthetics.
 
 ### Tech Sheet
+
 - Production method: Injection-molded
 - Material: PA12-Grilamid TR 90 Transparent
 - Color: Transparent, blasted
 
 ### Glue
+
 Recommended glue: Bostik Born2Bond Light Lock, MV. (or similar
 cyanoacrylate adhesive)
 
@@ -42,6 +46,7 @@ glued without special tools or knowledge - but be aware, it dries
 quickly so you can easily glue your fingers together.
 
 #### Instructions
+
 1. Apply glue on the back of the TKey, along the pads on both sides.
 2. Place the TKey centered in the bottom case (without the ant) with
 the pads pointing into the case.
@@ -60,15 +65,18 @@ closer to a window. The curing time wihtout a UV-lamp should still be
 less than a minute.
 
 ## 3D-printed Case
+
 This is the first production case, and provided before December of
 2023.
 
 ### Tech sheet
+
 - Prodction method: SLA 3D-printed
 - Resin: Formlabs Clear Resin (SLA)
 - Color: Translucent white
 
 ### Glue
+
 Recommended glue: Bostik Born2Bond Ultra, LV. (or similar instant
 adhesive)
 
@@ -77,6 +85,7 @@ without special tools or knowledge - but be aware, it dries quickly so
 you can easily glue your fingers together.
 
 #### Instructions
+
 1. Put the TKey in the bottom case (without the ant)
 2. Apply a few drips of glue all the way around the outer edge of the
 bottom case. You don't need much!

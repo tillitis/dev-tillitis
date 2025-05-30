@@ -72,11 +72,11 @@ To make development easier a sample Makefile is provided in
 
 ### Memory
 
-RAM starts at 0x4000\_0000 and ends at 0x4002\_0000 (128 kiB). The
-device app will be loaded by firmware at RAM start. The stack for the
-app is set up by the C runtime `libcrt0` to start just below the end
-of RAM and grows downwards. A larger app comes at the tradeoff of
-having a smaller stack.
+RAM starts at 0x4000\_0000 and ends at 0x4000\_ffff (128 kiB). The
+device app will be loaded by firmware at the start of RAM. The stack
+for the app is set up by the C runtime `libcrt0` to start just below
+the end of RAM and grows downwards. A larger app comes at the tradeoff
+of having a smaller stack.
 
 There are no heap allocation functions, no `malloc()` and friends. You
 can access memory directly yourself. `APP_ADDR` and `APP_SIZE` are
@@ -95,12 +95,13 @@ tkey-libs.
 ## Running TKey apps
 
 To run the TKey, plug it into a USB port on a computer. If the TKey
-status indicator LED is white, it has been programmed with the
-standard FPGA bitstream (including the firmware). If the status
-indicator LED is not white it is unprovisioned. For instructions on
-how to do the initial programming of an unprovisioned TKey, see:
-[quickstart.md](https://github.com/tillitis/tillitis-key1/blob/main/doc/quickstart.md)
-(in the tillitis-key1 repository).
+status indicator LED turns first white, then blue, it has been
+programmed with the standard FPGA bitstream (including the firmware),
+and then immediately starts the pre-loaded app.
+
+If the status indicator LED is not white it might be an unprovisioned
+TKey Unlocked. For instructions on how to do the initial programming
+of an unprovisioned TKey, see: [TKey Unlocked](/unlocked).
 
 ### Linux Users
 
@@ -175,6 +176,7 @@ Powershell, with the command:
 ```
 Get-PnpDevice -PresentOnly | Where-Object { $_.InstanceId -match '^USB' }
 ```
+
 The TKey will be listed under the class: 'Ports', with the name 'USB
 Serial Device'.
 
@@ -182,6 +184,7 @@ Alternatively, one can also find the device in Device Manager, under
 'Ports (COM & LPT)'. This will also show the status of the TKey.
 
 ### Running a TKey Device Application
+
 Most client applications embed the device app in their own binary to
 be able to automatically load the device app. This is the recommended
 approach for a smooth expereince when using the TKey. See, for
@@ -206,14 +209,15 @@ If you run a TKey device app in the [QEMU emulator](/tools/#qemu-emulator)
 there is a debug port on 0xfe00\_1000 (`TK1_MMIO_QEMU_DEBUG`).
 Anything written there is printed as a character by QEMU on stdout.
 
-`qemu_putchar()`, `qemu_puts()`, `qemu_putinthex()`, `qemu_hexdump()`
-and friends (see `libcommon/qemu_debug.c` and `include/qemu_debug.h`
-in `tkey-libs`) use this debug port to print out things. If you want
-to use this you should define `QEMU_DEBUG` when including
-`qemu_debug.h`. If you don't define `QEMU_DEBUG` the functions are
+`debug_putchar()`, `debug_puts()`, `debug_putinthex()`,
+`debug_hexdump()` and friends (see `include/tkey/debug.h` in
+`tkey-libs`) use this debug port to print out things.
+
+If you want to use this you should define `QEMU_DEBUG` when including
+`tkey/debug.h`. If you don't define `QEMU_DEBUG` the functions are
 void macros so you can still use them but they won't generate any
-code. Typically you would have something like this among your
-`CFLAGS` in your Makefile:
+code. Typically you would have something like this among your `CFLAGS`
+in your Makefile:
 
 ```
 CFLAGS = ... \
@@ -222,6 +226,15 @@ CFLAGS = ... \
 
 and uncomment it and recompile when you want to run an app with debug
 output using the QEMU debug port.
+
+If you instead want debug messages from real hardware, define
+`TKEY_DEBUG` and the debug functions will use the debug HID device for
+output.
+
+If you use `TKEY_DEBUG` you *must* have something listening on the
+corresponding HID device. It's usually the last HID device created. On
+Linux, for instance, this means the last reported hidraw in `dmesg` is
+the one you should do `cat /dev/hidrawX` on.
 
 The emulator can output some memory access (and other) logs. You can
 add `-d guest_errors` to the qemu command line to make QEMU send these
@@ -255,7 +268,6 @@ char device redirected to /dev/pts/12 (label chrid)"
 
 You can use this port later for communicating with your device app.
 
-
 If you're debugging an ordinary device app, you have to first load the
 device app, typically by using `tkey-runapp` from
 [tkey-devtools](https://github.com/tillitis/tkey-devtools) using the
@@ -274,9 +286,9 @@ riscv32-elf-gdb app.elf \
 ```
 
 Attaching GDB works with both firmware and apps. For firmware
-debugging you obviously don't need to use `tkey-runapp`. 
+debugging you obviously don't need to use `tkey-runapp`.
 
-**Note well**: 
+**Note well**:
 
 - You load the raw binary `app.bin` with `tkey-runapp` but you feed
   the ELF format binary `app.elf` to GDB.
@@ -332,6 +344,10 @@ After this, the client program and the device program talk their own
 protocol. You are encouraged to use the same framing protocol used
 for the firmware while still replying negatively to a frame meant for
 the firmware.
+
+Please reply NOK to everything where the `endpoint` in the framing
+header is `DST_FW` to allow a probing client app to know that it's
+speaking to a running device app.
 
 See the `tkeyclient` [Go
 doc](https://pkg.go.dev/github.com/tillitis/tkeyclient)

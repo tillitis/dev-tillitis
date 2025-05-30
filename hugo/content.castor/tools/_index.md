@@ -19,28 +19,16 @@ you don't want to use containers?
 
 ## Host toolchain
 
-To create applications you need at least `clang`, `llvm`, `lld`,
-`golang` packages installed. Version 15 or later of LLVM/Clang is
-required (with riscv32 support and the Zmmul extension,
-`-march=rv32iczmmul`). Packages on Ubuntu 22.10 (Kinetic) are known to
-work.
+To create applications you need at least `make`, `clang`, `llvm`,
+`lld`, and `go` or `golang` packages installed. Version 15 or later of
+LLVM/Clang is required (with riscv32 support and the Zmmul extension,
+`-march=rv32iczmmul`).
+
 
 ### Linux
 
-Packages on Ubuntu 22.10 (Kinetic) are known to work. You can install
-the required packages with the following command:
-
-```
-sudo apt install build-essential clang lld llvm bison flex libreadline-dev \
-                 gawk tcl-dev libffi-dev git mercurial graphviz \
-                 xdot pkg-config python3 libftdi-dev \
-                 python3-dev libeigen3-dev \
-                 libboost-dev libboost-filesystem-dev \
-                 libboost-thread-dev libboost-program-options-dev \
-                 libboost-iostreams-dev cmake libusb-1.0-0-dev \
-                 ninja-build libglib2.0-dev libpixman-1-dev \
-                 golang clang-format
-```
+Many Linux distributions have the above as packages. Ubuntu 23.04 is
+known to work.
 
 ### macOS
 
@@ -52,8 +40,8 @@ xcode-select --install
 
 This will give you `make` and other useful tools for development. Even
 if macOS provides `llvm` it does not seem to support our target,
-`riscv32-unknown-none-elf`. Hence we recommend to also installing
-`llvm`, among other packages, via brew.
+`riscv32-unknown-none-elf`, so we recommend to also installing `llvm`,
+among other packages, with [Homebrew](https://brew.sh/):
 
 ```
 brew install llvm go
@@ -288,11 +276,13 @@ socat` should be enough. Then you can just run the script like:
 This will let you run client apps with `--port ./tkey-qemu-pty` and it
 will find the running emulator.
 
+TODO: Mention the scripts to use to handle the USB Mode Protocol and
+attach a soft HID device.
+
 ### Running manually
 
-If you want to run QEMU without using the OCI image, for instance
-because you are developing firmware, you have to first build or QEMU
-fork (see below)
+If you want to run QEMU without using the OCI image you have to first
+build our QEMU fork (see below).
 
 Build the TKey firmware:
 
@@ -302,11 +292,9 @@ cd tillitis-key1/hw/application_fpga
 make qemu_firmware.elf
 ```
 
-Or just `firmware.elf` if you're using a Bellatrix release.
-
 Generate a flash image file `flash.bin` using the
-`application_fpga/tools/partition_table` and copy it to where you are
-going to run QEMU.
+`application_fpga/tools/tkeyimage` and copy it to where you are going
+to run QEMU.
 
 Run QEMU using the `qemu_firmware.elf` file you built and the
 `flash.bin` file you generated:
@@ -319,6 +307,8 @@ tk1-castor,fifo=chrid -bios qemu_firmware.elf -chardev pty,id=chrid -s
 
 If you're trying to emulate the earlier releases of the TKey, use `-M
 tk1` and drop the `-drive` flag.
+
+TODO: Move the above to Bellatrix part?
 
 QEMU tells you which serial port it's using, for instance
 `/dev/pts/1`. This is what you need to set with `--port` when running

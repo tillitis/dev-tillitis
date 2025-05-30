@@ -11,8 +11,9 @@ reprogramming multiple times.
 
 {{< hint warning >}}
 The entire content of the SPI flash can be read by anyone who has
-access to the TKey. If you want a secure, locked-down version of TKey,
-you should instead program the [NVCM](unlocked/nvcm).
+access to the TKey. Use this only for development. If you want a
+secure, locked-down version of TKey, you should instead program the
+NVCM.
 {{< /hint >}}
 
 Programming the SPI flash is done in two steps:

@@ -99,8 +99,7 @@ status indicator LED is white, it has been programmed with the
 standard FPGA bitstream (including the firmware). If the status
 indicator LED is not white it is unprovisioned. For instructions on
 how to do the initial programming of an unprovisioned TKey, see:
-[quickstart.md](https://github.com/tillitis/tillitis-key1/blob/main/doc/quickstart.md)
-(in the tillitis-key1 repository).
+[TKey Unlocked](/unlocked).
 
 ### Linux Users
 

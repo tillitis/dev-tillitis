@@ -5,21 +5,26 @@ weight: 3
 
 The firmware in TKey from the Castor release and onwards supports
 system calls. You will typically use them through the system call
-wrappers in tkey-libs.
+wrappers in [tkey-libs](https://github.com/tillitis/tkey-libs/)
 
 ## `sys_reset`
 
-`sys_reset(struct reset *rst, size_t len)`
+`int sys_reset(struct reset *rst, size_t len)`
 
-Reset the TKey. Leave the reset type (enum reset_start) in rst as well
-as an optional app_digest, forcing firmware to only allow that
+Reset the TKey. Leave the reset type (`enum reset_start`) in `rst` as
+well as an optional `app_digest`, forcing firmware to only allow that
 specific app digest, as well as some data to leave to the next app in
-chain in next_app_data. Send the length of the next_app_data in len.
+chain in `next_app_data`. Send the length of the `next_app_data` in
+`len`.
 
-Doesn't return. The TKey is reset and firmware starts again. void
+Typically doesn't return. The TKey is reset and firmware starts again.
 
+If it returns, it returns an error, probably because the reset length
+being too large or that `rst` was pointing to memory outside of RAM.
 
 ## `sys_alloc`
+
+`int sys_alloc(void)`
 
 Allocate a flash area for the current app. Must be done before
 `sys_write()` or `sys_read()`. If the current app already has an area

@@ -22,7 +22,7 @@ functionality they implement from a developer point of view.
 
 The CPU of the TKey is a modified version of
 [PicoRV32](https://github.com/YosysHQ/picorv32), 32-bit RISC-V running
-at 18 MHz. Modifications includes a fast 32x32 multiplier implemented
+at 24 MHz. Modifications includes a fast 32x32 multiplier implemented
 using the multiplier blocks in the iCE40 DSPs as well as a HW trap
 function.
 
@@ -36,7 +36,7 @@ instructions for:
 - CSR access
 - Change level
 - Trap redirect
-- Interrupt
+- Interrupt (except a PicoRV32-specific one)
 - MMU
 
 The instruction set implemented by the CPU also includes
@@ -48,8 +48,11 @@ is detected by the hardware, which will blink the RGB LED with red to
 indicate the error state. There is no way for the CPU to exit the
 trap state besides a power cycle of the device.
 
-Note that the CPU has no support for interrupts. No instructions,
-ports or logic.
+Note that the CPU has no support for ordinary interrupts. Your device
+app will never get an interrupt. Instead the CPU uses a specific
+PicoRV32-specific interrupt for one purpose only: increasing the
+privielege of the execution mode during a system call. You call this
+interrupt manually when executing any of the system calls.
 
 ## Security Monitor
 
@@ -69,17 +72,20 @@ cannot be disabled and the addresses cannot be altered.
 The monitor also protects the special firmware RAM, FW\_RAM. This area
 is always protected.
 
+It also protects access to memory that doesn't map to any hardware
+cores or real memory.
+
 ## Firmware ROM
 
 The ROM (Read-Only Memory) contains the firmware. After a reset, the
-CPU will start executing the code at the beginning of the ROM, thus
-running the firmware. The firmware is then responsible for receiving,
-measuring and starting a device application. The ROM image is part of
-the FPGA bitstream.
+CPU will start executing the code at the beginning of the ROM, the
+firmware. The firmware is then responsible for receiving, measuring
+and starting a device application. The ROM image is part of the FPGA
+bitstream.
 
 ## RAM
 
-The RAM begins at 0x4000\_0000 and ends at 0x4002\_0000 (128 kiB).
+The RAM begins at 0x4000\_0000 and ends at 0x4000\_ffff (128 kiB).
 
 The firmware clears and fills the RAM with randomized words on
 power up.
@@ -101,8 +107,9 @@ as the RAM address. This is set up by the firmware as part of loading
 the TKey device app. The addresses will be transparent to the device
 app and developers don't have to do anything to use it.
 
-For more information about this, please see the Tillitis Key [system
-description](https://github.com/tillitis/tillitis-key1/blob/main/doc/system_description/system_description.md)
+For more information about this, please see the Tillitis Key
+[application\_fpga
+README](https://github.com/tillitis/tillitis-key1/blob/main/hw/application_fpga/)
 (in the tillitis-key1 repository).
 
 Note that this is not randomising offsets to the stack or well-known
@@ -130,8 +137,8 @@ sequences (minutes, hours, days) there is also a 32-bit prescaler.
 Typical use:
 
 1. Set the prescaler by writing to `TK1_MMIO_TIMER_PRESCALER`. Default
-   is 1. If you set the prescaler to 18\_000\_000, the timer ticks
-   every second because the CPU is running at 18 MHz.
+   is 1. If you set the prescaler to 24\_000\_000, the timer ticks
+   every second because the CPU is running at 24 MHz.
 2. Set the initialization value of the timer by writing to
    `TK1_MMIO_TIMER_TIMER`.
 3. Start the timer by setting bit 0 in `TK1_MMIO_TIMER_CTRL`.
@@ -150,7 +157,7 @@ controller on the TKey.
 
 The UART configuration is:
 
-- baudrate: 62500 bps
+- baudrate: 500,000 bps
 - data bits: 8
 - stop bit: 1
 - parity: none
@@ -220,7 +227,9 @@ of the FPGA design, changed when provisioning a TKey. It is available
 between the words `TK1_MMIO_UDS_FIRST` and `TK1_MMIO_UDS_LAST`.
 
 The UDS is only readable once per power cycle. The protection is done
-per word, so make sure to only access UDS by words.
+per word, so make sure to only access UDS by words. It also completely
+unavailable after leaving ROM for the first time, even if you do a
+system call into ROM later.
 
 ## TK1
 
@@ -263,28 +272,23 @@ has:
   loaded. They are available between `TK1_MMIO_TK1_CDI_FIRST` and
   `TK1_MMIO_TK1_CDI_LAST`.
 
-- Application-Firmware execution mode control, available at
-  `TK1_MMIO_TK1_SWITCH_APP`. Can be written to by the firmware, and
-  read by device app. When the firmware writes to it, the hardware
-  will switch to application mode, which closes off some of the memory
-  app for reading and or writing. See the table in [the memory
-  map](/memory).
-
-  If read in application mode it returns `0xffffffff`.
-
 - Two words of Unique Device Identifier (UDI) available between
   `TK1_MMIO_TK1_UDI_FIRST` and `TK1_MMIO_TK1_UDI_LAST`. Only available
   in firmware mode.
 
-- An address to the built-in BLAKE2s hash function in the firmware on
-  `TK1_MMIO_TK1_BLAKE2S`. Wrapped in tkey-libs so you can use it like
-  an ordinary C function:
+- Access to the flash through an SPI interface. Only available in
+  firmware mode.
 
-  ```c
-  int blake2s(void *out, unsigned long outlen, const void *key,
-	    unsigned long keylen, const void *in, unsigned long inlen,
-	    blake2s_ctx *ctx)
-  ```
+  - First enable the SPI by writing to `TK1_MMIO_TK1_SPI_EN`.
+  - Write to load a byte to send, read to get received byte: `TK1_MMIO_TK1_SPI_DATA`.
+  - Trigger an actual transfer by writing to: `TK1_MMIO_TK1_SPI_XFER`.
+
+- A write to 0xe1000000 triggers the syscall mechanism in the
+  firmware. See [System calls](/syscalls/).
+
+- Write 1 to `TK1_MMIO_TK1_SYSTEM_RESET` to trigger a reset. Only
+  available in firmware mode. A reset expects data `struct reset` from
+  `tkey/syscall.h` in `TK1_MMIO_RESETINFO_BASE`
 
 ## QEMU
 
@@ -294,4 +298,5 @@ TKey emulator](https://github.com/tillitis/qemu/tree/tk1).
 Write a byte to `TK1_MMIO_QEMU_DEBUG` to get it printed in the qemu
 console.
 
-See `qemu_debug.h` in tkey-libs for helper functions.
+See `tkey/debug.h` in tkey-libs for helper functions that can use this
+or use the `tkey/io.h` functions with target `IO_QEMU`.

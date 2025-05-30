@@ -67,6 +67,7 @@ crw-rw---- 1 root dialout 189, 22 Feb 16 14:58 /dev/bus/usb/001/023
 ```
 
 ## Onboard firmware
+
 The TP board runs a custom firmware developed by Blinkinlabs. The
 source code for this firmware can be found at
 [github.com/tillitis/tp1/fw](https://github.com/tillitis/tp1/blob/main/fw).
@@ -111,6 +112,8 @@ See
 for further instructions.
 
 ## Hardware
+
 The hardware is, as everything around the TKey is, open source and can
-be found here
-https://github.com/tillitis/tp1.
+be found here:
+
+https://github.com/tillitis/tp1

@@ -64,9 +64,9 @@ Note the description.
 In the following table **r** mean read, **r/w** means read and write
 access, **i** means invisible.
 
-| *Name*                       | *Word Address* | *FW* | *Syscall* | *App* | *Description *                                                                                                                                     |
+| *Name*                       | *Word Address* | *FW* | *Syscall* | *App* | *Description*                                                                                                                                      |
 |------------------------------|----------------|------|-----------|-------|----------------------------------------------------------------------------------------------------------------------------------------------------|
-| `TK1_FW_RAM_BASE`            | 0xd0000000     | r/w  | r/w       | i     | Start of firmware RAM (2 kiB).                                                                                                                     |
+| `TK1_FW_RAM_BASE`            | 0xd0000000     | r/w  | r/w       | i     | Start of firmware RAM (4 kiB).                                                                                                                     |
 | `TK1_MMIO_TRNG_STATUS`       | 0xc0000024     | r    | r         | r     | If bit 1 set `TRNG_ENTROPY` is ready to be read.                                                                                                   |
 | `TK1_MMIO_TRNG_ENTROPY`      | 0xc0000080     | r    | r         | r     | A word of entropy.                                                                                                                                 |
 | `TK1_MMIO_TIMER_CTRL`        | 0xc1000020     | r/w  | r/w       | r/w   | If bit 0 in `TK1_MMIO_TIMER_STATUS` is 0, setting bit 0 starts the timer. If bit 0 in `TK1_MMIO_TIMER_STATUS` is 1, setting bit 1 stops the timer. |

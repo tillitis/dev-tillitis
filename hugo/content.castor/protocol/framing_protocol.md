@@ -9,8 +9,7 @@ Tillitis provides a framing protocol for client applications to
 communicate with the TKey firmware and device applications. Developers
 can optionally use this framing protocol as a basis for their own TKey
 device applications - but client applications *must* use it when
-communicating with the firmware using the firmware protocol defined
-below.
+communicating with the firmware using the firmware protocol.
 
 The communication is driven by the client application running on the
 host computer and the protocol is command-response based. The client
@@ -35,6 +34,7 @@ command/response -- essentially indicating if it is sent to/by the
 firmware, or a device application.
 
 The bits in the command header byte should be interpreted as:
+
 * Bit [7] (1 bit). Reserved - possible protocol version.
 
 * Bits [6..5] (2 bits). Frame ID tag.
@@ -87,6 +87,7 @@ protocol:
 A response consists of a single header byte followed by one or more bytes.
 
 The bits in the response header byte should be interpreted as follows:
+
 * Bit [7] (1 bit). Reserved - possible protocol version.
 
 * Bits [6..5] (2 bits). Frame ID tag.

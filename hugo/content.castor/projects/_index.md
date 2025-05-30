@@ -7,11 +7,16 @@ weight: 20
 
 This page includes a list of projects involving a TKey.
 
-This page can be used both as inspiration and to find useful use cases for your TKey. This is in no way a complete list; if you know of a project involving a TKey, feel free to contribute to the list using the `Edit this page` button at the bottom of the page.
+This page can be used both as inspiration and to find useful use cases
+for your TKey. This is in no way a complete list; if you know of a
+project involving a TKey, feel free to contribute to the list using
+the `Edit this page` button at the bottom of the page.
 
-**Disclaimer**: The below list does not guarantee the status of each given project; please check each project for details.
+**Disclaimer**: The below list does not guarantee the status of each
+given project; please check each project for details.
 
 ## Device applications
+
 - [Ed25519 signing tool](https://github.com/tillitis/tkey-device-signer)
 - [TKey Loader app](https://github.com/tillitis/tkey-device-loader)
 - [Ed25519 signing tool with Sigsum](https://git.glasklar.is/nisse/tkey-sign-if-logged)
@@ -22,6 +27,7 @@ This page can be used both as inspiration and to find useful use cases for your 
 - [rusTkey ("rusty key") a library for developing TKey applications in rust](https://codeberg.org/rustkey/rustkey)
 
 ## Client applications
+
 - [TKey ssh agent](https://tillitis.se/app/tkey-ssh-agent/)
 - [Verification tool for your TKey](https://tillitis.se/app/tkey-device-verification/)
 - [Signing tool](https://github.com/tillitis/tkey-sign-cli)
@@ -34,4 +40,5 @@ This page can be used both as inspiration and to find useful use cases for your 
 - [Use TKey for PAM authentication](https://github.com/Eliot-Roxbergh/tillitis_hello/blob/main/tkey_authentication.md)
 - [U2F/FIDO/Webauthn](https://github.com/tillitis/tkey-fido)
 
-Applications officially supported by Tillitis can be found [here](https://tillitis.se/getstarted/#supported-applications-table).
+Applications officially supported by Tillitis can be found
+[here](https://tillitis.se/getstarted/#supported-applications-table).

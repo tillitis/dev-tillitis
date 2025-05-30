@@ -101,9 +101,9 @@ as the RAM address. This is set up by the firmware as part of loading
 the TKey device app. The addresses will be transparent to the device
 app and developers don't have to do anything to use it.
 
-For more information about this, please see the Tillitis Key [system
-description](https://github.com/tillitis/tillitis-key1/blob/main/doc/system_description/system_description.md)
-(in the tillitis-key1 repository).
+For more information about this, please see the Tillitis Key
+`doc/system description.md` file of earlier releases (in the
+tillitis-key1 repository).
 
 Note that this is not randomising offsets to the stack or well-known
 functions. This is address randomisation as seen from *outside* of the

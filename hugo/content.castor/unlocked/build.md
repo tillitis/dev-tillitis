@@ -16,12 +16,16 @@ Building the bitstream consists of these steps:
 
 Our recommendation is to build using our OCI image,
 [tkey-builder](https://ghcr.io/tillitis/tkey-builder), in combination
-with Podman, which is supported on Linux, macOS, and Windows.
+with Podman, which is supported on Linux, macOS, and Windows, but
+please aware that we develop stuff on Linux.
 
 If Podman is not a valid choice for you, it is also possible to either
-use Docker or build the tools natively by compiling from source:
-[native toolchain setup
-instructions](https://github.com/tillitis/tillitis-key1/blob/main/doc/toolchain_setup.md).
+use Docker or build the tools natively by compiling from source.
+Please see the
+[Dockerfile](https://github.com/tillitis/tillitis-key1/blob/main/contrib/Dockerfile)
+and
+[buildtools.sh]((https://github.com/tillitis/tillitis-key1/blob/main/contrib/buildtools.sh)
+to see what tools and versions you need.
 
 ### Install and start Podman
 
@@ -38,10 +42,11 @@ podman machine start
 
 ## 2. Download the repository
 
-It is **highly recommended** to use the latest official release,
-especially if you are programming the NVCM.
+It is **highly recommended** to use the latest official *release*,
+especially if you are programming the NVCM. Please don't just clone
+the main branch. Use a tagged release!
 
-Download and unpack, or clone the repository
+Download and unpack, or clone the repository with a specific tag.
 
 <https://github.com/tillitis/tillitis-key1/releases>
 
@@ -155,7 +160,6 @@ The output is two generated files, `uds.hex` and `udi.hex`, in the
 `/data` folder.
 
 {{< hint warning >}}
-**NOTE:**
 Remember to remove the generated secrets and binaries after the
 provision is completed. See [instructions on how to remove
 secrets](unlocked/nvcm/#3-remove-traces-of-build).

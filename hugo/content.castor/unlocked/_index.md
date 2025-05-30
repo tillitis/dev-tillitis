@@ -28,10 +28,9 @@ Tkey](https://shop.tillitis.se/products/tkey) is probably right for
 you.
 
 {{< hint danger >}}
-The below instructions require some computer knowledge and are only
-recommended for advanced users. If you do not know what you are doing,
-you can either brick your TKey or create a TKey that has security
-vulnerabilities.
+The below instructions are only recommended for advanced users. If you
+do not know what you are doing, you can either brick your TKey or
+create a TKey that has security vulnerabilities.
 
 If you are unsure, please reach out to Tillitis and friends at the
 `#tillitis` channel on the [OFTC IRC network](https://www.oftc.net/)
@@ -94,7 +93,6 @@ It is recommended to power up the TKey once it is recieved to control this
 behavior. If your device does not blink, you should contact Tillitis.
 
 {{< hint info >}}
-**NOTE:**
 TKeys not provisioned by Tillitis cannot be verified with TKey Device
 Verification. It is, however, possible to follow the same process to
 be able to later verify that your self-provisioned TKey has not been

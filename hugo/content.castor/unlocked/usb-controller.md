@@ -14,8 +14,11 @@ been done to the CH552 firmware, you need to flash it yourself.
 
 The firmware is kept in
 [usb_interface/ch552_fw](https://github.com/tillitis/tillitis-key1/tree/main/hw/usb_interface/ch552_fw).
-To build it you need `sdcc`. It's included in the `tkey-builder`
-image.
+To build it you need `sdcc`. It's included in the
+[tkey-builder]((https://ghcr.io/tillitis/tkey-builder) OCI image.
+
+You also need [chprog](https://github.com/ole00/chprog/) to actually
+flash the firmware.
 
 You need a CH55x Reset Controller. You can buy it from
 [Blinkinlabs](https://shop-nl.blinkinlabs.com/products/ch55x-reset-controller)
@@ -26,18 +29,20 @@ or build it yourself. You need to perform this sequence:
 3. Connect the power and USB data lines to the device.
 4. After a short delay, disconnect the 10k resistor from the device.
 
+To be able to use chprog without having to be root you have to install:
+
+```
+# CH552 bootloader (for unprogrammed CH552 chips)
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="4348", ATTR{idProduct}=="55e0", MODE="0666", GROUP="dialout"
+```
+
+in `/etc/udev/rules.d` and do `udevadm control --reload`.
+
 To use the Blinkinlabs Reset Controller:
 
 1. Connect your computer to `DUT_IN`.
 2. Connect the TKey to be flashed to `DUT_OUT`
 3. Press the button marked "bootloader". Note that there are two
    buttons.
-
-This will make the CH552 enter its internal bootloader. When it does,
-use [chprog](https://github.com/ole00/chprog/) to feed it with the
-firmware.
-
-Use `make flash_patched` in the controller source to actually write it
-to the CH552's waiting bootloader.
-
-TODO: Do they need to do something with `inject_serial_number.py`?
+4. Run `make flash_patched` in `hw/usb_interface/ch552_fw` which runs
+   chprog.

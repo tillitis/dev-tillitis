@@ -16,7 +16,6 @@ Programming the NVCM consists of these steps:
 3. Remove traces of build.
 
 {{< hint warning >}}
-**NOTE:**
 The NVCM of the FPGA is a one-time-write only! There is no way of
 restoring or reprogramming the FPGA. If you want the possbility to
 reprogram the TKey multiple times, consider [programming the SPI
@@ -24,13 +23,11 @@ flash](unlocked/spiflash) instead.
 {{< /hint >}}
 
 {{< hint warning >}}
-**NOTE:**
 Only use bitstreams built by yourself or someone you trust. Anyone who
 has your bitstream can create copies.
 {{< /hint >}}
 
 {{< hint warning >}}
-**NOTE:**
 If the security bit is **not** set in the FPGA, the TKey should not be
 considered secure, and anyone who gets their hands on the TKey can
 read out the entire configuration and its secrets.

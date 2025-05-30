@@ -8,34 +8,35 @@ weight: 1
 <img src="../images/tkey-case-interaction-points.png" alt="TKey with interaction points marked" title="TKey with interaction points marked" width="85%">
 
 The Tillitis TKey is a small computer in a USB stick form factor that
-can run small device applications that are loaded onto it. The
-purpose of the TKey is to be a secure environment for applications that
-provide some kind of security function. Some examples of such security
-functions are:
+can run small device applications. The purpose of the TKey is to be a
+secure environment for applications that provide some kind of security
+function. Some examples of such security functions are:
 
 - Time-based one-time password (TOTP) token generators
 - Digital signatures
 - Secure random numbers
 - Encryption
 
-There is no way of storing a device application (or any other data) on
-the TKey. A device app has to be loaded onto the TKey every time you
-plug it in.
+There is a flash chip with a very simple filesystem on the TKey from
+the Castor release. It contains space for two pre-loaded apps and four
+storage areas for device apps. On an end-user version the preloaded
+apps are a loader app and a FIDO2 app.
 
 ## TKey specifications
 
-- 32-bit RISC-V CPU running at 18 MHz
+- 32-bit RISC-V CPU running at 24 MHz
 - Execution monitor
 - Hardware-assisted address randomization and RAM scrambling
 - 128 kiB RAM for TKey device applications
-- 2 kiB firmware RAM
-- 6 kiB ROM
+- 4 kiB firmware RAM
+- 8 kiB ROM
 - True random number generator
-- USB CDC (Communications Device Class) over a Type-C connector
+- USB CDC, FIDO, HID, and CCID endpoints over a Type-C connector
 - Timer
-- Two levels of hardware privilege modes: firmware mode and application mode
+- Two levels of hardware privilege modes: firmware mode and
+  application mode
 - CPU-controlled LED
-- No persistent storage
+- 1 MByte flash, 128 kByte accessible per application.
 
 {{< hint info >}}
 **Note well**: In the end-user version (not TKey Unlocked) the FPGA
@@ -66,6 +67,7 @@ the keys are based on both something the user has -- the specific TKey
 -- and something the user knows -- the USS.
 
 This is the algorithm for the CDI:
+
 ```go
 cdi = blake2s(UDS, blake2s(device_app), USS)
 ```
