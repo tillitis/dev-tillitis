@@ -107,7 +107,7 @@ as the RAM address. This is set up by the firmware as part of loading
 the TKey device app. The addresses will be transparent to the device
 app and developers don't have to do anything to use it.
 
-For more information about this, please see the Tillitis Key
+For more information about this, please see the Tillitis TKey
 [application\_fpga
 README](https://github.com/tillitis/tillitis-key1/blob/main/hw/application_fpga/)
 (in the tillitis-key1 repository).

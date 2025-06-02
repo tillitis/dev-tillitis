@@ -101,7 +101,7 @@ as the RAM address. This is set up by the firmware as part of loading
 the TKey device app. The addresses will be transparent to the device
 app and developers don't have to do anything to use it.
 
-For more information about this, please see the Tillitis Key
+For more information about this, please see the Tillitis TKey
 `doc/system description.md` file of earlier releases (in the
 tillitis-key1 repository).
 
@@ -145,6 +145,7 @@ If you want to stop the timer, set bit 1 in `TK1_MMIO_TIMER_CTRL`.
 A standard UART (Universal Asynchronous Receiver/Transmitter)
 interface is used for sending and receiving bytes to a TKey device app
 via the interface microcontroller on the TKey. The UART configuration is:
+
 - baudrate: 62500 bps
 - data bits: 8
 - stop bit: 1
@@ -271,8 +272,8 @@ has:
 
   ```c
   int blake2s(void *out, unsigned long outlen, const void *key,
-	    unsigned long keylen, const void *in, unsigned long inlen,
-	    blake2s_ctx *ctx)
+     unsigned long keylen, const void *in, unsigned long inlen,
+     blake2s_ctx *ctx)
   ```
 
 ## QEMU
