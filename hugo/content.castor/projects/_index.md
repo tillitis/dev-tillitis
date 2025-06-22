@@ -39,6 +39,7 @@ given project; please check each project for details.
 - [Cryptum: Encrypted file storage](https://github.com/0xMihir/Cryptum)
 - [Use TKey for PAM authentication](https://github.com/Eliot-Roxbergh/tillitis_hello/blob/main/tkey_authentication.md)
 - [U2F/FIDO/Webauthn](https://github.com/tillitis/tkey-fido)
+- [Python module to communicate with a TKey](https://github.com/tillitis/tkeyclient-py)
 
 Applications officially supported by Tillitis can be found
 [here](https://tillitis.se/getstarted/#supported-applications-table).
