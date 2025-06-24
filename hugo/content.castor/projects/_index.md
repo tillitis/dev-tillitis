@@ -15,6 +15,9 @@ the `Edit this page` button at the bottom of the page.
 **Disclaimer**: The below list does not guarantee the status of each
 given project; please check each project for details.
 
+**Disclaimer 2:** Compatibility with Castor by listed projects is not
+known nor guaranteed. Check information on each project page.
+
 ## Device applications
 
 - [Ed25519 signing tool](https://github.com/tillitis/tkey-device-signer)
