@@ -15,9 +15,9 @@ been done to the CH552 firmware, you need to flash it yourself.
 The firmware is kept in
 [usb_interface/ch552_fw](https://github.com/tillitis/tillitis-key1/tree/main/hw/usb_interface/ch552_fw).
 To build it you need `sdcc`. It's included in the
-[tkey-builder]((https://ghcr.io/tillitis/tkey-builder) OCI image.
+[tkey-builder](https://ghcr.io/tillitis/tkey-builder) OCI image.
 
-You also need [chprog](https://github.com/ole00/chprog/) to actually
+You also need [chprog](https://github.com/tillitis/chprog/) to actually
 flash the firmware.
 
 You need a CH55x Reset Controller. You can buy it from
