@@ -7,10 +7,9 @@ weight: 3
 
 To communicate between the USB controller and the UART on the FPGA we
 use a small protocol to indicate the USB endpoint on the client side.
-There are three different endpoints:
 
-- QEMU (0x02).
-- CH552 (0x04).
+- CH552 (0x04): Internal communication between the USB controller and the
+  FPGA.
 - CDC (0x08): USB CDC-ACM, a serial port on the client.
 - FIDO (0x10): A USB HID security token device, useful for FIDO-type
   applications.

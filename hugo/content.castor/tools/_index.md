@@ -244,80 +244,10 @@ podman run --rm --mount type=bind,source=.,target=/src --mount type=bind,source=
 
 ## QEMU Emulator
 
-Tillitis provides a TKey emulator based on QEMU.
-
-### Running with OCI image
-
-The easiest way to run the TKey emulator is to use our OCI image (~120
-MiB). It currently only works on a Linux system (specifically, it does
-not work when containers are run in Podman's virtual machine, which is
-required on macOS and Windows). So for non-Linux users, see [Building
-QEMU](/tools/#building-qemu).
-
-```
-ghcr.io/tillitis/tkey-qemu-tk1-23.03.1:latest
-```
-
-The OCI image also contains the TKey firmware and starts QEMU with it.
-
-We provide a script `run-tkey-qemu` that runs this image and binds the
-serial port to a pty called `tkey-qemu-pty` in the current directory.
-
-You can find `run-tkey-qemu` in the
-[tkey-devtools](https://github.com/tillitis/tkey-devtools) repo. It
-assumes a working rootless Podman setup and `socat` installed. On
-Ubuntu 22.10, running `apt install podman rootlesskit slirp4netns
-socat` should be enough. Then you can just run the script like:
-
-```
-./run-tkey-qemu
-```
-
-This will let you run client apps with `--port ./tkey-qemu-pty` and it
-will find the running emulator.
-
-TODO: Mention the scripts to use to handle the USB Mode Protocol and
-attach a soft HID device.
-
-### Running manually
-
-If you want to run QEMU without using the OCI image you have to first
-build our QEMU fork (see below).
-
-Build the TKey firmware:
-
-```
-git clone https://github.com/tillitis/tillitis-key1
-cd tillitis-key1/hw/application_fpga
-make qemu_firmware.elf
-```
-
-Generate a flash image file `flash.bin` using the
-`application_fpga/tools/tkeyimage` and copy it to where you are going
-to run QEMU.
-
-Run QEMU using the `qemu_firmware.elf` file you built and the
-`flash.bin` file you generated:
-
-```
-$ /path/to/qemu/build/qemu-system-riscv32  -nographic -M
-tk1-castor,fifo=chrid -bios qemu_firmware.elf -chardev pty,id=chrid -s
--d guest_errors -drive file=flash.bin,if=mtd,format=raw,index=0
-```
-
-If you're trying to emulate the earlier releases of the TKey, use `-M
-tk1` and drop the `-drive` flag.
-
-TODO: Move the above to Bellatrix part?
-
-QEMU tells you which serial port it's using, for instance
-`/dev/pts/1`. This is what you need to set with `--port` when running
-a client application.
-
-### QEMU on macOS
-
-Note that on macOS you need to add `--speed 9600` on the client apps
-when you use the QEMU pty.
+Tillitis provides a TKey emulator based on QEMU. It's still in
+development for Castor but can be used with some caveats. For
+instance, there is no real system call protection in the emulation
+right now.
 
 ### Building QEMU
 
@@ -325,12 +255,370 @@ To build QEMU, fetch and build the `tk1` branch in our [qemu
 repository](https://github.com/tillitis/qemu):
 
 ```
-git clone -b tk1 https://github.com/tillitis/qemu
-mkdir qemu/build
+git clone -b tk1 --depth 1 https://github.com/tillitis/qemu
+mkdir -p qemu/build
 cd qemu/build
-../configure --target-list=riscv32-softmmu --disable-werror --without-default-features
+../configure --target-list=riscv32-softmmu --without-default-features
 make -j $(nproc) qemu-system-riscv32
 ```
 
-(Built with warnings-as-errors disabled, see [this
-issue](https://github.com/tillitis/qemu/issues/3).)
+Remove `--depth 1` if you want all history.
+
+**NOTE WELL**: 
+
+- The tk1 branch is a development branch. There is currently no
+QEMU release for Castor support.
+- Currently only well supported on Linux.
+
+### Running manually
+
+To run QEMU you need to build the TKey firmware and the filesystem
+image.
+
+Clone the tillitis-key1 repo:
+
+```
+git clone --depth 1 https://github.com/tillitis/tillitis-key1
+cd tillitis-key1/hw/application_fpga
+```
+
+(Remove `--depth 1` if you really want all history.)
+
+Build the flash image file `flash_image.bin` that QEMU uses for storage:
+
+```
+make clean && make flash_image.bin
+```
+
+Build the TKey QEMU firmware:
+
+```
+make qemu_firmware.elf
+```
+
+Run QEMU using the `qemu_firmware.elf` and `flash_image.bin` files:
+
+```
+/path/to/qemu/build/qemu-system-riscv32 \
+    -nographic \
+    -M tk1-castor,fifo=chrid \
+    -bios qemu_firmware.elf \
+    -chardev pty,id=chrid \
+    -d guest_errors \
+    -drive file=flash_image.bin,if=mtd,format=raw,index=0 \
+    -s
+```
+
+QEMU tells you which serial port it's using, for instance
+`/dev/pts/1`.
+
+**Please note**: Below we're using `/dev/pts/1` all the time for the
+QEMU port.
+
+Because of Castor's new USB mode protocol between the USB controller
+and the FPGA you will need to use the `qemu_usb_mux.py` script below
+that handles communication with `/dev/pts/1`.
+
+There are a number of other Python scripts that can be useful,
+documented below. They are available in `qemu/tools/tk1`.
+
+### The endpoint multiplexor script
+
+The `qemu_usb_mux.py` script creates separate PTYs for communication
+with each of the CDC, FIDO, CCID, and DEBUG endpoints. When data is
+sent to/received from each PTY the script handles Castor's USB mode
+protocol and multiplexes/demultiplexes data.
+
+Typical use:
+
+1. Start QEMU in a shell. Use the `-S` flag if you want to stop the
+   execution to be able able to see the char device QEMU is using.
+
+   ```
+   /path/to/qemu/build/qemu-system-riscv32 \
+     -nographic \
+     -M tk1-castor,fifo=chrid \
+     -bios qemu_firmware.elf \
+     -chardev pty,id=chrid \
+     -d guest_errors \
+     -drive file=flash_image.bin,if=mtd,format=raw,index=0 \
+     -s \
+     -S
+   char device redirected to /dev/pts/1 (label chrid)
+   HTIF not enabled (no debug output from firmware)
+   QEMU X.Y.Z monitor - type 'help' for more information
+   (qemu)
+   ```
+
+   Note the serial port used, for instance `/dev/pts/1`.
+
+2. Start `qemu_usb_mux.py` in another shell with QEMU's char device as
+   argument:
+
+    ```
+    python qemu_usb_mux.py /dev/pts/1
+    CDC PTY created at: /dev/pts/2
+    FIDO PTY created at: /dev/pts/3
+    CCID PTY created at: /dev/pts/4
+    DEBUG PTY created at: /dev/pts/5
+    ```
+
+3. Start the QEMU execution if it was stopped.
+
+4. Load app into QEMU over the CDC PTY:
+
+    ```
+    tkey-runapp --port /dev/pts/2 app.bin
+    ```
+
+### Emulating a FIDO token
+
+The `fido2_token_emulator.py` script can be used with the Linux UHID
+framework (a user-space I/O driver support for HID subsystem) to
+create a hidraw device that emulates a FIDO2 token. The FIDO2 data
+sent to the hidraw device will be output on `/dev/uhid` and is then
+sent in to the FIDO PTY created above. Access to `/dev/uhid` is
+restricted to root so use sudo when starting `fido2_token_emulator.py`
+or change the mode of the `/dev/uhid` file before running.
+
+Typical use:
+
+1. Start QEMU as shown above.
+
+2. Start `qemu_usb_mux.py` as shown above.
+
+3. Start the QEMU execution if it was stopped.
+
+4. Load FIDO2 app for debugging to QEMU to the CDC PTY:
+
+    ```
+    tkey-runapp --port /dev/pts/2 app.bin
+    ```
+
+5. Start `fido2_token_emulator.py` with the FIDO PTY:
+
+   ```
+   sudo python fido2_token_emulator.py /dev/pts/3
+   ```
+
+   If you're uncomfortable running the script as root you can do:
+
+   ```
+   sudo chgrp dialout /dev/uhid
+   sudo chmod 660 /dev/uhid
+   python fido2_token_emulator.py /dev/pts/3
+   ```
+
+   Replace "dialout" to the group you're in and want to allow to
+   create HID devices.
+
+6. Check the created FIDO2 device with:
+
+    ```
+    fido2-token -L
+    ```
+
+7. Try communicating with the FIDO2 device:
+
+    ```
+    fido2-token -I /dev/hidrawX
+    ```
+
+### Using the loopback device app
+
+We have developed a small loopback device app. It is used when you
+want to loop the I/O through a real TKey but you're actually running
+your own device app somewhere else, like under emulation in QEMU. The
+use case is for example to test how Windows would interact with a
+physical TKey that present itself as a CDC device, FIDO token or CCID
+device.
+
+When running the loppback device app, all data coming in on the USB
+endpoints CDC, FIDO, or CCID on the physical TKey will be sent out on
+the DEBUG endpoint back to the client. If you want to, you can listen
+on the DEBUG endpoint, forward the data over a network to a QEMU on
+another computer.
+
+First build the `loopbackapp.bin` device app:
+
+```
+git clone --depth 1 https://github.com/tillitis/tillitis-key1
+cd tillitis-key1/hw/application_fpga/apps
+make
+```
+
+Helper scripts:
+
+- `tkey_to_udp_linux.py`: Sends data from the DEBUG endpoint over the
+  network. For Linux hosts.
+
+- `tkey_to_udp_win_mac.py`: Sends data from the DEBUG endpoint over the
+  network. For Windows and macOS.
+
+- `hid.py`: USB HID helper script.
+
+#### Example 1: Debugging FIDO2 app locally on Linux
+
+Typical use:
+
+1. Start QEMU as shown above.
+
+2. Start `qemu_usb_mux.py` as shown above.
+
+3. Start the QEMU execution if it was stopped.
+
+4. Load FIDO2 app for debugging to QEMU with the CDC PTY (note what
+   `qemu_usb_mux.py` says is the CDC PTY):
+
+    ```
+    tkey-runapp --port /dev/pts/2 app.bin
+    ```
+
+5. Shutdown the `qemu_usb_mux.py` script.
+
+6. Start the UDP listening server to forward data to QEMU. Localhost
+   is used as an example here but it can be the real network and send
+   to another host. Use the QEMU PTY from when you started QEMU, in
+   this example `/dev/pts/1`:
+
+    ```
+    python udp_to_qemu_linux.py \
+        --pty /dev/pts/1 \
+        --listen-ip 127.0.0.1 \
+        --listen-port 5678 \
+        --verbose
+    ```
+
+7. Insert the TKey in the physical computer and load
+   `loopbackapp.bin`. Make sure you have added the Linux udev rules
+   for TKey from [Linux Users](/devapp/#linux-users).
+
+    ```
+    tkey-runapp loopbackapp.bin
+    ```
+
+8. Start TKey listener to forward data from computer with TKey to
+   server (dest-ip, dest-port) with QEMU. Make sure you have installed
+   the `hidapi` library from https://github.com/libusb/hidapi For
+   Ubuntu: `sudo apt-get install libhidapi-dev`.
+
+   ```
+   python tkey_to_udp_linux.py \
+       --dest-ip 127.0.0.1 \
+       --dest-port 5678 \
+       --listen-ip 127.0.0.1 \
+       --listen-port 5679 \
+       --verbose
+   ```
+
+9. Check FIDO2 device:
+
+    ```
+    fido2-token -L
+    ```
+
+10. Try communicating with the FIDO2 device and see the data
+    forwarded to QEMU.
+
+    ```
+    fido2-token -I /dev/hidrawX
+    ```
+
+#### Example 2: Debugging FIDO2 using Windows on VirtualBox
+
+In this scenario we're running Windows in VirtualBox on a Linux host
+with QEMU emulating the TKey on Linux computer, not necessarily the
+same Linux host as is running the VirtualBox.
+
+Typical use:
+
+1. Start QEMU on Linux computer as shown above.
+
+2. Start `qemu_usb_mux.py` as shown above.
+
+3. Start the QEMU execution if it was stopped.
+
+4. Load FIDO2 app for debugging to QEMU using the CDC PTY:
+
+    ```
+    tkey-runapp --port /dev/pts/2 app.bin
+    ```
+
+5. Shutdown `qemu_usb_mux.py` script.
+
+6. Start a UDP listening server on the Linux host computer to forward
+   data to QEMU. In this example the Linux host IP address is
+   192.168.100.10. Since we are going to do port forwarding to
+   Windows, the IP address needs to be routable and can't be
+   localhost.
+
+    ```
+    python udp_to_qemu_linux.py \
+        --pty /dev/pts/1 \
+        --listen-ip 192.168.100.10 \
+        --listen-port 5678 \
+        --verbose
+   ```
+
+7. Start a VirtualBox with Windows.
+
+   Add a port forward to the VirtualBox Windows instance:
+
+   - Right click on Windows instance -> Settings -> Network
+   - Enable network adapter
+   - Set "Attached to: NAT"
+   - Go "Advanced" -> Port Forwarding
+   - Add new rule
+   - Select UDP as protocol
+   - Set Host Port to 5679
+   - Set Guest Port to 5679
+
+8. On Windows, install the following.
+
+   - Python3 from https://www.python.org/downloads/windows/
+
+     Make sure to select to install "py launcher" and "Add Python to
+     environment variables".
+
+   - hidapi version from https://github.com/libusb/hidapi/releases/
+
+     Copy hidapi.dll and hidapi.lib to C:\Windows\System32\
+
+   - libfido2 (fido2-token) from
+
+     https://developers.yubico.com/libfido2/Releases/
+
+9. Get the main IP address of your Windows computer, for example: 10.0.2.15
+
+10. Connect the TKey to the VirtualBox environment in the USB
+    settings, make sure Windows says:
+
+    "Device is ready, Tillitis TKEY-USB-V2 is set up and ready to go"
+
+11. On Windows, start the `tkey_to_udp_win_mac.py` script, using a
+    PowerShell with `Admin` privliges.
+
+     ```
+     python tkey_to_udp_win_mac.py \
+         --dest-ip 192.168.100.10 \
+         --dest-port 5678 \
+         --listen-ip 10.0.2.15 \
+         --listen-port 5679 \
+         --verbose
+     ```
+
+12. Using a PowerShell with `Admin` privliges, check that the TKey's
+    FIDO interface is visible with fido2-token.exe from the libfido2
+    library.
+
+     ```
+     .\fido2-token.exe -L
+     \\?\hid#vid_1209&pid_8885&mi_02#7&180c60dc&0&0000#{4d1e55b2-f16f-11cf-88cb-001111000030}: vendor=0x1209, product=0x8885 (Tillitis FIDO)
+      ```
+
+13. Try communicating with the FIDO2 device and see the data forwarded to
+    QEMU.
+
+     ```
+     .\fido2-token.exe -I "\\?\hid#vid_1209&pid_8885&mi_02#7&180c60dc&0&0000#{4d1e55b2-f16f-11cf-88cb-001111000030}
+     ```

@@ -105,8 +105,8 @@ of an unprovisioned TKey, see: [TKey Unlocked](/unlocked).
 
 ### Linux Users
 
-Running `lsusb` should list the USB stick as `1207:8887 Tillitis
-MTA1-USB-V1`. On Linux, the TKey's serial port device path is
+Running `lsusb` should list the USB stick as `1209:8885 Generic
+Tillitis TKEY-USB-V2`. On Linux, the TKey's serial port device path is
 typically `/dev/ttyACM0` (but it may end with another digit, if you
 have other devices plugged in already). The client applications try to
 auto-detect TKeys, but if more than one TKey is found you need to
@@ -119,8 +119,7 @@ access as your ordinary user is by installing a udev rule like this:
 # Mark Tillitis TKey as a security token. /usr/lib/udev/rules.d/70-uaccess.rules
 # will add TAG "uaccess", which will result in file ACLs so that local user
 # (see loginctl) can read/write to the serial port in /dev.
-ATTRS{idVendor}=="1207", ATTRS{idProduct}=="8887",\
-ENV{ID_SECURITY_TOKEN}="1"
+ATTRS{idVendor}=="1209", ATTRS{idProduct}=="8885", ENV{ID_SECURITY_TOKEN}="1"
 ```
 
 Put this in `/etc/udev/rules.d/60-tkey.rules` and run `udevadm control
