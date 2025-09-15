@@ -14,8 +14,8 @@ wrappers in [tkey-libs](https://github.com/tillitis/tkey-libs/)
 Reset the TKey. Leave the reset type (`enum reset_start`) in `rst` as
 well as an optional `app_digest`, forcing firmware to only allow that
 specific app digest, as well as some data to leave to the next app in
-chain in `next_app_data`. Send the length of the `next_app_data` in
-`len`.
+the chain in `next_app_data`. Send the length of the `next_app_data`
+in `len`.
 
 Typically doesn't return. The TKey is reset and firmware starts again.
 

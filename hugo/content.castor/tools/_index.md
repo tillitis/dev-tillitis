@@ -433,7 +433,7 @@ use case is for example to test how Windows would interact with a
 physical TKey that present itself as a CDC device, FIDO token or CCID
 device.
 
-When running the loppback device app, all data coming in on the USB
+When running the loopback device app, all data coming in on the USB
 endpoints CDC, FIDO, or CCID on the physical TKey will be sent out on
 the DEBUG endpoint back to the client. If you want to, you can listen
 on the DEBUG endpoint, forward the data over a network to a QEMU on
