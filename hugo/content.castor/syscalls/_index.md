@@ -26,7 +26,7 @@ being too large or that `rst` was pointing to memory outside of RAM.
 
 `int sys_alloc(void)`
 
-Allocate a flash area for the current app. Must be done before
+Allocate 128 kiB storage area for the current app. Must be done before
 `sys_write()` or `sys_read()`. If the current app already has an area
 allocated no new area will be allocated.
 
