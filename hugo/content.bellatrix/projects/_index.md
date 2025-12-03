@@ -20,6 +20,9 @@ This page can be used both as inspiration and to find useful use cases for your 
 - [Test apps](https://github.com/tillitis/tkey-testapps): Test apps
   for LED, execution monitor, TRNG, timer, and touch.
 - [rusTkey ("rusty key") a library for developing TKey applications in rust](https://codeberg.org/rustkey/rustkey)
+- [Sigsum apps](https://git.glasklar.is/nisse/tkey-sigsum-apps).
+  Client and device apps for use with the [Sigsum transparency
+  log](https://www.sigsum.org/).
 
 ## Client applications
 - [TKey ssh agent](https://tillitis.se/app/tkey-ssh-agent/)
@@ -33,6 +36,10 @@ This page can be used both as inspiration and to find useful use cases for your 
 - [Cryptum: Encrypted file storage](https://github.com/0xMihir/Cryptum)
 - [Use TKey for PAM authentication](https://github.com/Eliot-Roxbergh/tillitis_hello/blob/main/tkey_authentication.md)
 - [U2F/FIDO/Webauthn](https://github.com/tillitis/tkey-fido)
-- [Python module to communicate with a TKey](https://github.com/tillitis/tkeyclient-py)
+- [Python module to communicate with a
+  TKey](https://github.com/tillitis/tkeyclient-py)
+- [Sigsum apps](https://git.glasklar.is/nisse/tkey-sigsum-apps).
+  Client and device apps for use with the [Sigsum transparency
+  log](https://www.sigsum.org/).
 
 Applications officially supported by Tillitis can be found [here](https://tillitis.se/getstarted/#supported-applications-table).
