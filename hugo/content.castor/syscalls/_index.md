@@ -120,12 +120,12 @@ resulting signature in `app_signature`.
 
 Returns 0 on success.
 
-## `sys_get_digsig`
+## `sys_preload_get_metadata`
 
-`int sys_get_digsig(uint8_t digest[32], uint8_t signature[64])`
+`int sys_preload_get_metadata(uint8_t digest[32], uint8_t signature[64], uint8_t pubkey[32])`
 
-Copies the digest and signature of app in flash slot 1 to
-`app_digest` and `app_signature`. Returns 0 on success. Only
+Copies the digest, signature and pubkey for app in flash slot 1 to
+`app_digest`, `app_signature` and `pubkey`. Returns 0 on success. Only
 available for the verified management app.
 
 Returns 0 on success.
