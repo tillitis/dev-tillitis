@@ -130,6 +130,15 @@ available for the verified management app.
 
 Returns 0 on success.
 
+## `sys_preload_set_pubkey`
+
+`int sys_preload_set_pubkey(uint8_t pubkey[32])`
+
+Stores `pubkey` for app in flash slot 1. Only available for the
+verified management app.
+
+Returns 0 on success.
+
 ## `sys_status`
 
 `int sys_status(void)`
