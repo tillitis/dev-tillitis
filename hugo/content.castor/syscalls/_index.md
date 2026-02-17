@@ -71,6 +71,15 @@ Both `len` and  `offset` must be a multiple of 4096 bytes.
 
 Returns 0 on success.
 
+## `sys_erase_areas`
+
+`int sys_erase_areas(void)`
+
+Erase all app storage areas. Only available for the verified
+management app.
+
+Returns 0 on success.
+
 ## `sys_get_vidpid`
 
 `int sys_get_vidpid(void)`
