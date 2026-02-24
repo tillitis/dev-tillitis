@@ -22,6 +22,13 @@ the Castor release. It contains space for two pre-loaded apps and four
 storage areas for device apps. On an end-user version the preloaded
 apps are a loader app and a FIDO2 app.
 
+All of the TKey software, firmware, FPGA Verilog source code,
+schematics, and PCB design files are released under open
+source/hardware licenses, like all trustworthy security software and
+hardware should be. This, in itself, makes the TKey different, as
+other security tokens use at least some closed source hardware for
+security-critical operations.
+
 ## TKey specifications
 
 - 32-bit RISC-V CPU running at 24 MHz
@@ -46,38 +53,81 @@ from the configuration memory, even if you break the case and insert
 it into a programmer board.
 {{< /hint >}}
 
-## Measured boot & secrets
+## Measured and verified boot and chaining apps
 
-A unique feature of the TKey is that it measures the loaded device
-application before starting it. A hash digest measurement (using
-BLAKE2s) combined with a Unique Device Secret (UDS) makes up a base
-secret we call a Compound Device Identifier (CDI) which can then used
-by the TKey device app.
+The TKey creates a secret for the device application before starting
+it. It does this by computing a hash function over the entire app and
+mixing it together with a Unique Device Secret (UDS) embedded in the
+hardware and an optional User Supplied Secret, typically based on a
+passphrase.
 
-If the TKey device app is altered in any way the CDI is also changed.
-If the keys derived from the CDI are the same as the last time the
-given device app was loaded onto the same TKey the device app's
-integrity is guaranteed.
+This means that the resulting secret is based on:
 
-The UDS is unique per TKey. The same device app loaded onto another
-TKey results in a different CDI.
+1. Something the user *has*, the specific TKey device.
+2. Something the user *knows*, the User Supplied Secret.
+3. The *integrity* of the software, the device app they are about to
+   use.
 
-The key derivation can also include a User Supplied Secret (USS). Then
-the keys are based on both something the user has -- the specific TKey
--- and something the user knows -- the USS.
+If any of these three changes, the secret is also different. If the
+secret and the resulting cryptographics keys are the same as before
+it's guaranteed that this is the right device, with the right software
+and that the user knows the passphrase.
 
-This is the algorithm for the CDI:
+This is the algorithm for the secret:
 
 ```go
-cdi = blake2s(UDS, blake2s(device_app), USS)
+secret = blake2s(UDS, domain + blake2s(device_app) + USS)
 ```
 
-All of the TKey software, firmware, FPGA Verilog source code,
-schematics, and PCB design files are released under open
-source/hardware licenses, like all trustworthy security software and
-hardware should be. This, in itself, makes the TKey different, as
-other security tokens use at least some closed source hardware for
-security-critical operations.
+The UDS is used as a key in a keyed version of BLAKE2s. The `domain`
+here is a domain separation between if the app was using measured boot
+or was chained (explained below) and with or without USS.
+
+We call this secret the Compound Device Identity (CDI). The TKey
+unconditional measured boot is inspired by, but not exactly the same
+as part of [TCG
+DICE](https://trustedcomputinggroup.org/work-groups/dice-architectures/).
+
+From this version the TKey also supports a form of verified boot in
+order to be able to update device apps without losing key material.
+
+In this mode the TKey uses measured boot as above to start a verifier
+app, then verifies a signature over the next app against a public key,
+and leaves an app digest and some data to the next app. Then it resets
+the TKey.
+
+After reset, the TKey will only accept and start and app which has the
+already verified digest.
+
+In this case, the CDI for the verified app is computed like this:
+
+```go
+CDI = blake2s(UDS, domain + blake2s(app[n-1]'s CDI, seed)¹ + USS)
+```
+
+¹ This part is actually computed by the firmware before actually doing
+the reset in order not to leak the CDI over the reset. Neither
+firmware/app on any side of the reset knows about the other's CDI.
+
+UDS is used as the key in a keyed BLAKE2s. So is `app[n-1]'s CDI`.
+
+The `seed` is, if using Tillitis'
+[tkey-boot-verifier](https://github.com/tillitis/tkey-boot-verifier) a
+digest of the vendor public key used.
+
+The `domain`, again, is a domain separation between if the app was
+using measured boot or was chained (explained below) and with or
+without USS.
+
+This means that the resuling secret/CDI is based on:
+
+1. Something the user *has*, the specific TKey device.
+2. Something the user *knows*, the User Supplied Secret.
+3. The *integrity* of the verifier, the device app that verifies the
+   app they are about to use.
+4. The vendor public key.
+
+Change any of those four and you create a different secret.
 
 ## Getting Started
 
