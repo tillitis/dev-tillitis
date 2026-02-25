@@ -132,10 +132,10 @@ host <-
 It's recommended to check if the TKey is in firmware mode before
 attempting to load a device application. Typically this firmware probe
 is implemented by sending `FW_CMD_NAME_VERSION` with a header byte
-indicating endpoint 2, firmware.
+indicating domain 2, firmware.
 
 We encourage device app developers to support a firmware probe and
-reply `NOK` to anything that comes with a header byte for endpoint 2.
+reply `NOK` to anything that comes with a header byte for domain 2.
 
 The sequence looks like this:
 
