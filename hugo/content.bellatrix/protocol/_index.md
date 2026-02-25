@@ -25,23 +25,26 @@ the responsibility of the client app to determine which command a
 received response belongs to.
 
 Commands and responses are sent as frames with a limited length. The
-communicating endpoints decide the meaning of the command and response
+communicating parties decide the meaning of the command and response
 frames, and whether the commands and responses are valid or not.
 
 ### Command Frame Format
 
 A command frame consists of a single header byte followed by one or
 more data bytes. The number of data bytes in the frame is given by the
-header byte. The header byte also specifies the endpoint for the
+header byte. The header byte also specifies the domain for the
 command/response -- essentially indicating if it is sent to/by the
-firmware, or a device application.
+firmware, or a device application. Note that "domain" was earlier
+referred to as an endpoint, but it has been renamed to distinguish it
+from USB endpoints.
+
 
 The bits in the command header byte should be interpreted as:
 * Bit [7] (1 bit). Reserved - possible protocol version.
 
 * Bits [6..5] (2 bits). Frame ID tag.
 
-* Bits [4..3] (2 bits). Endpoint number.
+* Bits [4..3] (2 bits). Domain number.
 
   0. Reserved
   1. HW in application_fpga (unused)
@@ -73,7 +76,7 @@ particular app or firmware command request typically occupies the
 first byte in the data (following the frame header byte), which makes
 1 byte less available for actual command content.
 
-These examples clarify endpoints and commands using the framing
+These examples clarify domains and commands using the framing
 protocol:
 
 * 0x13: A command to the firmware with 128 bytes of data. The data
@@ -93,7 +96,7 @@ The bits in the response header byte should be interpreted as follows:
 
 * Bits [6..5] (2 bits). Frame ID tag.
 
-* Bits [4..3] (2 bits). Endpoint number.
+* Bits [4..3] (2 bits). Domain number.
 
   0. Reserved
   1. HW in application_fpga (unused)
@@ -264,10 +267,10 @@ host <-
 It's recommended to check if the TKey is in firmware mode before
 attempting to load a device application. Typically this firmware probe
 is implemented by sending `FW_CMD_NAME_VERSION` with a header byte
-indicating endpoint 2, firmware.
+indicating domain 2, firmware.
 
 We encourage device app developers to support a firmware probe and
-reply `NOK` to anything that comes with a header byte for endpoint 2.
+reply `NOK` to anything that comes with a header byte for domain 2.
 
 The sequence looks like this:
 
