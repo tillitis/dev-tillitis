@@ -181,6 +181,9 @@ Start an application loading session by setting the size of the
 expected device application and a User-Supplied Secret, if
 `uss-provided` is 1. Otherwise the `uss` is ignored.
 
+The `uss` should be the BLAKE2s hash of a passphrase selected by the
+user.
+
 #### `FW_RSP_LOAD_APP` (0x04)
 
 Response to `FW_CMD_LOAD_APP`
