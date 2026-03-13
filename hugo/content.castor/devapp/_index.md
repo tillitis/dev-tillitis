@@ -344,7 +344,7 @@ protocol. You are encouraged to use the same framing protocol used
 for the firmware while still replying negatively to a frame meant for
 the firmware.
 
-Please reply NOK to everything where the `endpoint` in the framing
+Please reply NOK to everything where the `domain` in the framing
 header is `DST_FW` to allow a probing client app to know that it's
 speaking to a running device app.
 
