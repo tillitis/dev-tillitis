@@ -2,7 +2,15 @@
 title: Tillitis TKey Developer Handbook
 ---
 
-# Tillitis TKey Developer Handbook
+# Tillitis TKey Developer Handbook, Upcoming Release Castor
+
+{{< hint danger >}}
+
+Castor is still evolving, so the information in
+this section of the Developer Handbook may change and may not always
+reflect the latest design state.
+
+{{< /hint >}}
 
 Welcome to the TKey Developer Handbook. With this handbook you can
 learn how to build and use current TKey device applications (runs on
