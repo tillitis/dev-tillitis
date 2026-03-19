@@ -200,7 +200,7 @@ Safe Pseudo Random Number Generator (CSPRNG). Examples of such
 generators are Hash\_DRGG, CTR\_DRBG, HKDF.
 
 Getting a word of entropy is done by polling `TK1_MMIO_TRNG_STATUS`
-until non-zero, then reading the word from `TK1_MMIO_TRNG_ENTROPY`.
+until bit 0 is 1, then reading the word from `TK1_MMIO_TRNG_ENTROPY`.
 
 ## Touch Sensor
 
