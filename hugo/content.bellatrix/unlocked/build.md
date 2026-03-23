@@ -143,6 +143,12 @@ You will be prompted to input additional data in the form of:
 - Serial number, use any you like in the range `0 - 4 294 967 295
   (2**32-1)` (decimal)
 
+
+{{% hint warning %}}
+**NOTE:**
+All unspecified Product IDs and Revisions are reserved for future use.
+{{% /hint %}}
+
 The output is two generated files, `uds.hex` and `udi.hex`, in the
 `/data` folder.
 
