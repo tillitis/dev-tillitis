@@ -37,13 +37,13 @@ plug it in.
 - CPU-controlled LED
 - No persistent storage
 
-{{< hint info >}}
+{{% hint info %}}
 **Note well**: In the end-user version (not TKey Unlocked) the FPGA
 configuration is locked down. This means you cannot change the FPGA
 bitstream or read out the bitstream (or the Unique Device Secret, UDS)
 from the configuration memory, even if you break the case and insert
 it into a programmer board.
-{{< /hint >}}
+{{% /hint %}}
 
 ## Measured boot & secrets
 

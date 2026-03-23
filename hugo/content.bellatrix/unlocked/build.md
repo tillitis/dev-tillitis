@@ -146,12 +146,12 @@ You will be prompted to input additional data in the form of:
 The output is two generated files, `uds.hex` and `udi.hex`, in the
 `/data` folder.
 
-{{< hint warning >}}
+{{% hint warning %}}
 **NOTE:**
 Remember to remove the generated secrets and binaries after the
 provision is completed. See [instructions on how to remove
 secrets](unlocked/nvcm/#3-remove-traces-of-build).
-{{< /hint >}}
+{{% /hint %}}
 
 ## 5. Build the bitstream
 

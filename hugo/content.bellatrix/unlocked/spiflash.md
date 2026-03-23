@@ -9,11 +9,11 @@ Programming the SPI flash of the TKey makes it possible to develop and
 test different FPGA configurations and firmwares while
 reprogramming multiple times.
 
-{{< hint warning >}}
+{{% hint warning %}}
 The entire content of the SPI flash can be read by anyone who has
 access to the TKey. If you want a secure, locked-down version of TKey,
 you should instead program the [NVCM](unlocked/nvcm).
-{{< /hint >}}
+{{% /hint %}}
 
 Programming the SPI flash is done in two steps:
 1. Download tools.
@@ -120,11 +120,11 @@ tillitis-iceprog hw/application_fpga/application_fpga.bin
 {{< /tab >}}
 {{< tab "Windows" >}}
 
-{{< hint info >}}
+{{% hint info %}}
 At the current state Tillitis does not provide a simple way of
 programming the SPI flash from a Windows machine. We are working on a
 solution.
-{{< /hint >}}
+{{% /hint %}}
 When programming the SPI flash we are using `iceprog` from our fork of
 the Yosys icestorm project:
 
@@ -143,11 +143,11 @@ try.
 
 Your Tkey is now ready to be taken out of the programmer.
 
-{{< hint info >}}
+{{% hint info %}}
 If you plan to later lock down your Tkey by flashing the NVCM, it
 is highly recommended to generate a new bitstream with a new unique
 UDS and UDI.
-{{< /hint >}}
+{{% /hint %}}
 
 Once you are done, continue to [casing](unlocked/casing) to assemble
 the plastic case.
