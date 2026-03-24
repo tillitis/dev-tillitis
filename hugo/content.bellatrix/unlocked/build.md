@@ -75,8 +75,8 @@ or use this podman command
 podman run --rm --mount type=bind,source="$(pwd)",target=/src -w /src -it ghcr.io/tillitis/tkey-builder /usr/bin/bash
 ```
 
-{{< /tab >}}
-{{< tab "macOS" >}}
+{{% /tab %}}
+{{% tab "macOS" %}}
 
 If you have `make` installed, use our make target
 
@@ -87,14 +87,14 @@ or use this podman command
 ```
 podman run --rm --mount type=bind,source="$(pwd)",target=/src -w /src -it ghcr.io/tillitis/tkey-builder /usr/bin/bash
 ```
-{{< /tab >}}
-{{< tab "Windows" >}}
+{{% /tab %}}
+{{% tab "Windows" %}}
 
 ```
 podman run --rm --mount type=bind,source="./",target=/src -w /src -it ghcr.io/tillitis/tkey-builder /usr/bin/bash
 ```
 
-{{< /tab >}}
+{{% /tab %}}
 {{< /tabs >}}
 
 

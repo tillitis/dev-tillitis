@@ -84,8 +84,8 @@ In a native shell or your container shell:
 tillitis-iceprog hw/application_fpga/application_fpga.bin
 ```
 
-{{< /tab >}}
-{{< tab "macOS" >}}
+{{% /tab %}}
+{{% tab "macOS" %}}
 ## 1. Download tools
 
 When programming the SPI flash we are using `iceprog` from our fork of
@@ -117,8 +117,8 @@ After installing `tillitis-iceprog`, run:
 tillitis-iceprog hw/application_fpga/application_fpga.bin
 ```
 
-{{< /tab >}}
-{{< tab "Windows" >}}
+{{% /tab %}}
+{{% tab "Windows" %}}
 
 {{% hint info %}}
 At the current state Tillitis does not provide a simple way of
@@ -137,9 +137,8 @@ not yet explored this solution, please see the bottom of [Yosys
 download page](https://yosyshq.net/yosys/download.html) if you want to
 try.
 
-{{< /tab >}}
+{{% /tab %}}
 {{< /tabs >}}
-
 
 Your Tkey is now ready to be taken out of the programmer.
 
