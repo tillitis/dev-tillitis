@@ -42,4 +42,5 @@ This page can be used both as inspiration and to find useful use cases for your 
   Client and device apps for use with the [Sigsum transparency
   log](https://www.sigsum.org/).
 
-Applications officially supported by Tillitis can be found [here](https://tillitis.se/getstarted/#supported-applications-table).
+Applications officially supported by Tillitis can be found
+[here](https://tillitis.se/download/).

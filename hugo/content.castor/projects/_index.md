@@ -51,4 +51,4 @@ known nor guaranteed. Check information on each project page.
   log](https://www.sigsum.org/).
 
 Applications officially supported by Tillitis can be found
-[here](https://tillitis.se/getstarted/#supported-applications-table).
+[here](https://tillitis.se/download/).
