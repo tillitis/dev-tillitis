@@ -15,16 +15,6 @@ the `Edit this page` button at the bottom of the page.
 **Disclaimer**: The below list does not guarantee the status of each
 given project; please check each project for details.
 
-## Device applications
-
-- [TKey Loader app](https://github.com/tillitis/tkey-device-loader)
-- [Ed25519 signing tool with Sigsum](https://git.glasklar.is/nisse/tkey-sign-if-logged)
-- [X25519 key exchange, ECDH key agreement protocol for Curve25519](https://github.com/quite/tkey-device-x25519)
-- [Blinking LED using Zig](https://github.com/Foxboron/tillitis-blink-zig)
-- [Test apps](https://github.com/tillitis/tkey-testapps): Test apps
-  for LED, execution monitor, TRNG, timer, and touch
-- [rusTkey ("rusty key") a library for developing TKey applications in rust](https://codeberg.org/rustkey/rustkey)
-
 ## Client applications
 
 - [TKey Development tools](https://github.com/tillitis/tkey-devtools)
@@ -40,6 +30,16 @@ certifiate authoroty backed by TKey
   Client and device apps for use with the [Sigsum transparency
   log](https://www.sigsum.org/)
 - [Cryptum: Encrypted file storage](https://github.com/0xMihir/Cryptum)
+
+## Device applications
+
+- [TKey Loader app](https://github.com/tillitis/tkey-device-loader)
+- [Ed25519 signing tool with Sigsum](https://git.glasklar.is/nisse/tkey-sign-if-logged)
+- [X25519 key exchange, ECDH key agreement protocol for Curve25519](https://github.com/quite/tkey-device-x25519)
+- [Blinking LED using Zig](https://github.com/Foxboron/tillitis-blink-zig)
+- [Test apps](https://github.com/tillitis/tkey-testapps): Test apps
+  for LED, execution monitor, TRNG, timer, and touch
+- [rusTkey ("rusty key") a library for developing TKey applications in rust](https://codeberg.org/rustkey/rustkey)
 
 Applications officially supported by Tillitis can be found
 [at tillitis.se](https://tillitis.se/download/).
