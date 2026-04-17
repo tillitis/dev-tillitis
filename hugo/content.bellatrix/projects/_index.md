@@ -5,21 +5,21 @@ weight: 20
 
 # TKey Projects
 
-This page includes a list of projects involving a TKey.
-
-This page can be used both as inspiration and to find useful use cases
-for your TKey. This is in no way a complete list; if you know of a
-project involving a TKey, feel free to contribute to the list using
-the `Edit this page` button at the bottom of the page.
+This page includes a list of third party projects involving a TKey as
+well as some good-to-have tools. Use it as inspiration and to find
+useful use cases for your TKey.
 
 **Disclaimer**: The below list does not guarantee the status of each
 given project; please check each project for details.
+
+Applications officially supported by Tillitis can be found
+[at tillitis.se](https://tillitis.se/download/).
 
 ## Client applications
 
 - [TKey Development tools](https://github.com/tillitis/tkey-devtools)
 - [minica-tkey](https://github.com/dylangerdaly/minica-tkey) Mini
-certifiate authoroty backed by TKey
+certifiate authority backed by TKey
 - [age plugin using TKey](https://github.com/quite/age-plugin-tkey)
 - [Use TKey for PAM authentication](https://github.com/Eliot-Roxbergh/tillitis_hello/blob/main/tkey_authentication.md)
 - [tkey-luks](https://github.com/No-0n3/tkey-luks)
@@ -40,6 +40,3 @@ certifiate authoroty backed by TKey
 - [Test apps](https://github.com/tillitis/tkey-testapps): Test apps
   for LED, execution monitor, TRNG, timer, and touch
 - [rusTkey ("rusty key") a library for developing TKey applications in rust](https://codeberg.org/rustkey/rustkey)
-
-Applications officially supported by Tillitis can be found
-[at tillitis.se](https://tillitis.se/download/).
