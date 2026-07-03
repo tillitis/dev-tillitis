@@ -30,6 +30,9 @@ certifiate authority backed by TKey
   Client and device apps for use with the [Sigsum transparency
   log](https://www.sigsum.org/)
 - [Cryptum: Encrypted file storage](https://github.com/0xMihir/Cryptum)
+- [tillitis-ethereum](https://github.com/monperrus/tillitis-ethereum):
+  Ethereum wallet backed by TKey — hardware-bound key derivation,
+  transaction signing, live verifier flow, and offline two-key ceremony
 
 ## Device applications
 
