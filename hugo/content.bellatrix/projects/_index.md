@@ -21,18 +21,22 @@ Applications officially supported by Tillitis can be found
 - [minica-tkey](https://github.com/dylangerdaly/minica-tkey) Mini
 certifiate authority backed by TKey
 - [age plugin using TKey](https://github.com/quite/age-plugin-tkey)
-- [Use TKey for PAM authentication](https://github.com/Eliot-Roxbergh/tillitis_hello/blob/main/tkey_authentication.md)
+- [Use TKey for PAM
+authentication](https://github.com/Eliot-Roxbergh/tillitis_hello/blob/main/tkey_authentication.md)
 - [tkey-luks](https://github.com/No-0n3/tkey-luks)
 - [U2F/FIDO/Webauthn](https://github.com/tillitis/tkey-fido)
 - [Python module to communicate with a
-  TKey](https://github.com/tillitis/tkeyclient-py)
+TKey](https://github.com/tillitis/tkeyclient-py)
 - [Sigsum apps](https://git.glasklar.is/nisse/tkey-sigsum-apps).
-  Client and device apps for use with the [Sigsum transparency
-  log](https://www.sigsum.org/)
-- [Cryptum: Encrypted file storage](https://github.com/0xMihir/Cryptum)
+Client and device apps for use with the [Sigsum transparency
+log](https://www.sigsum.org/)
+- [Cryptum: Encrypted file
+storage](https://github.com/0xMihir/Cryptum)
 - [tillitis-ethereum](https://github.com/monperrus/tillitis-ethereum):
-  Ethereum wallet backed by TKey — hardware-bound key derivation,
-  transaction signing, live verifier flow, and offline two-key ceremony
+Ethereum wallet backed by TKey — hardware-bound key derivation,
+transaction signing, live verifier flow, and offline two-key ceremony
+- [tkey-tpm-luks](https://github.com/unamed01/tkey-tpm-luks): Full
+Disk Encryption and measured boot solution for Linux and Qubes
 
 ## Device applications
 
