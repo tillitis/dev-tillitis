@@ -17,7 +17,8 @@ Applications officially supported by Tillitis can be found
 
 ## Client applications
 
-- [TKey Development tools](https://github.com/tillitis/tkey-devtools)
+- [TKey Development
+tools](https://github.com/tillitis/tkey-devtools)
 - [minica-tkey](https://github.com/dylangerdaly/minica-tkey) Mini
 certifiate authority backed by TKey
 - [age plugin using TKey](https://github.com/quite/age-plugin-tkey)
@@ -37,6 +38,9 @@ Ethereum wallet backed by TKey — hardware-bound key derivation,
 transaction signing, live verifier flow, and offline two-key ceremony
 - [tkey-tpm-luks](https://github.com/unamed01/tkey-tpm-luks): Full
 Disk Encryption and measured boot solution for Linux and Qubes
+- [Keylet](https://github.com/jku/keylet): Python client library and
+CLI tool, that implements a Post-Quantum Crypto (ML-DSA) signer
+application for TKey.
 
 ## Device applications
 
